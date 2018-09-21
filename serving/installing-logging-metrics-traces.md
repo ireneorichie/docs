@@ -1,31 +1,73 @@
-# Monitoring, Logging and Tracing Installation
+# Installing the Monitoring, Logging, and Tracing Components
 
-Knative Serving offers two different monitoring setups:
-[Elasticsearch, Kibana, Prometheus and Grafana](#elasticsearch-kibana-prometheus--grafana-setup)
-or
-[Stackdriver, Prometheus and Grafana](#stackdriver-prometheus--grafana-setup)
-You can install only one of these two setups and side-by-side installation of
-these two are not supported.
+You can install and run components that allow you to collect and log data,
+view metrics, and trace requests.
+
+If you already have monitoring installed and configured, see the following
+topics for details about accessing the data:
+
+  * [Accessing Logs](./accessing-logs.md)
+  * [Accessing Metrics](./accessing-metrics.md)
+  * [Accessing Traces](./accessing-traces.md)
 
 ## Before you begin
 
-The following instructions assume that you cloned the Knative Serving repository.
-To clone the repository, run the following commands:
+Ensure that you have the Knative Serving repository cloned. For example, in a
+`knative` working directory, you can run the following commands:
 
    ```shell
-   git clone https://github.com/knative/serving knative-serving
-   cd knative-serving
+   git clone https://github.com/knative/serving.git
+   cd serving
    git checkout v0.1.1
    ```
 
-## Elasticsearch, Kibana, Prometheus & Grafana Setup
+If you do not have Knative Serving installed and running, see
+[Installing Knative](https://github.com/knative/docs/tree/master/install) for
+details.
 
-If you installed the
-[full Knative release](../install/README.md#installing-knative),
-the monitoring component is already installed and you can skip down to the
-[Create Elasticsearch Indices](#create-elasticsearch-indices) section.
+### Viewing what monitoring components are installed
 
-To configure and setup monitoring:
+To determine which monitoring components are already installed, you can run the
+following command:
+
+  ```shell
+  kubectl get pods --namespace monitoring
+  ```
+
+## Choose how to monitor Knative Serving
+
+There are two configurations that you can choose to use for monitoring Knative
+Serving:
+
+* [Elasticsearch & Kibana](#elasticsearch-kibana-prometheus--grafana-setup)
+* [Stackdriver](#stackdriver-prometheus--grafana-setup)
+
+Both configuration types utilize Prometheus and Grafana for monitoring.
+
+Note: Simultaneously monitoring Knative Serving with both Elasticsearch
+and Stackdriver is unsupported. Only a single monitoring configuration can be
+configured and run per Knative Serving installation.
+
+
+### Monitoring with Elasticsearch, Kibana, Prometheus, & Grafana
+
+You can use [Elasticsearch](https://www.elastic.co/products/elasticsearch),
+[Kibana](https://www.elastic.co/products/kibana),
+[Prometheus](https://prometheus.io/) & [Grafana](https://grafana.com/) in
+combination to monitor your installation of Knative Serving.
+
+This monitoring configuration gets installed by default with the Knative Serving
+component. To see if you have th
+
+After you install the monitoring components, you need to
+[create Elasticsearch Indices](#create-elasticsearch-indices) before you can
+start monitoring.
+
+#### Installing the Elasticsearch and Kibana monitoring components
+
+If you previously uninstalled the monitoring components, use the following steps
+to install the Elasticsearch, Kibana, Prometheus, and Grafana monitoring
+components:
 
 1. Choose a container image that meets the
    [Fluentd image requirements](fluentd/README.md#requirements). For example, you can use the
@@ -53,8 +95,8 @@ To configure and setup monitoring:
      ```shell
      kubectl get pods --namespace monitoring --watch
      ```
-
-     ```
+     For example:
+     ```shell
      NAME                                  READY     STATUS    RESTARTS   AGE
      elasticsearch-logging-0               1/1       Running   0          2d
      elasticsearch-logging-1               1/1       Running   0          2d
@@ -73,7 +115,7 @@ To configure and setup monitoring:
 
   CTRL+C to exit watch.
 
-### Create Elasticsearch Indices
+#### Create Elasticsearch Indices
 
 To visualize logs with Kibana, you need to set which Elasticsearch indices to explore. We will
 create two indices in Elasticsearch using `Logstash` for application logs and `Zipkin`
@@ -104,14 +146,25 @@ for request traces.
   from `Time Filter field name` and click on `Create` button.
 
 
-## Stackdriver, Prometheus & Grafana Setup
+### Monitoring with Stackdriver, Prometheus & Grafana
 
-You must configure and build your own Fluentd image if either of the following are true:
+You can use [Stackdriver](https://cloud.google.com/stackdriver/),
+[Prometheus](https://prometheus.io/), and [Grafana](https://grafana.com/) in
+combination to monitor your installation of Knative Serving, especially when
+your Knative Serving installation runs on Google Cloud Platform (GCP).
 
- * Your Knative Serving component is not hosted on a Google Cloud Platform (GCP) based cluster.
+Note: The sample Stackdriver configuration file works only with GCP. You must
+configure and build your own Fluentd container image if either of the following
+are true:
+
+ * Your Knative Serving component is not hosted on a GCP based cluster.
  * You want to send logs to another GCP project.
 
-To configure and setup monitoring:
+#### Installing the Elasticsearch and Kibana monitoring components
+
+If you previously [uninstalled the monitoring components](), use the following steps
+to install the Stackdriver, Prometheus, and Grafana monitoring
+components:
 
 1. Choose a container image that meets the
    [Fluentd image requirements](fluentd/README.md#requirements). For example, you can use a
@@ -137,8 +190,9 @@ To configure and setup monitoring:
      ```shell
      kubectl get pods --namespace monitoring --watch
      ```
+     For example:
 
-     ```
+     ```shell
      NAME                                  READY     STATUS    RESTARTS   AGE
      fluentd-ds-5kc85                      1/1       Running   0          2d
      fluentd-ds-vhrcq                      1/1       Running   0          2d
@@ -153,12 +207,17 @@ To configure and setup monitoring:
      ```
 
   CTRL+C to exit watch.
-## Learn More
 
-- Learn more about accessing logs, metrics, and traces:
-  - [Accessing Logs](./accessing-logs.md)
-  - [Accessing Metrics](./accessing-metrics.md)
-  - [Accessing Traces](./accessing-traces.md)
+## Uninstalling all the monitoring components
+
+To uninstall a logging plugin, run:
+
+```shell
+kubectl delete -f <the-fluentd-config-for-daemonset> \
+    -f third_party/config/monitoring/common/kubernetes/fluentd/fluentd-ds.yaml \
+    -f config/monitoring/200-common/100-fluentd.yaml
+    -f config/monitoring/200-common/100-istio.yaml
+```
 
 ---
 

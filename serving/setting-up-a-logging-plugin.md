@@ -19,16 +19,24 @@ commands mentioned below from the root directory of `knative/serving`.
 
 ### Configure the DaemonSet for stdout/stderr logs
 
-Operators can do the following steps to configure the Fluentd DaemonSet for
-collecting `stdout/stderr` logs from the containers:
+The sample configuration files for Elasticsearch and Stackdriver include default
+settings that you can use without change.
 
-1. Replace `900.output.conf` part in
-   [100-fluentd-configmap.yaml](https://https://github.com/knative/serving/blob/master/config/monitoring/150-elasticsearch/100-fluentd-configmap.yaml) with the
-   desired output configuration. Knative provides a sample for sending logs to
-   Elasticsearch or Stackdriver. Developers can simply use `100-fluentd-configmap.yaml`
-   or override any with other configuration.
+To customize the monitoring settings:
+
+Operators can do the following steps to configure the Fluentd
+[DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)
+for collecting `stdout/stderr` logs from the containers:
+
+1. Replace `900.output.conf` part in one of the following sample files to
+   include the desired output configuration.
+
+   Elasticsearch: [`100-fluentd-configmap.yaml`](https://github.com/knative/serving/blob/master/config/monitoring/150-elasticsearch/100-fluentd-configmap.yaml)
+
+   Stackdriver: [`fluentd-configmap.yaml`](https://github.com/knative/serving/blob/master/config/monitoring/150-stackdriver/fluentd-configmap.yaml)
+
 2. Replace the `image` field of `fluentd-ds` container
-   in [fluentd-ds.yaml](https://github.com/knative/serving/blob/master/third_party/config/monitoring/common/kubernetes/fluentd/fluentd-ds.yaml)
+   in [`fluentd-ds.yaml`](https://github.com/knative/serving/blob/master/third_party/config/monitoring/common/kubernetes/fluentd/fluentd-ds.yaml))
    with the Fluentd image including the desired Fluentd output plugin.
    See [here](image/fluentd/README.md) for the requirements of Flunetd image
    on Knative.
