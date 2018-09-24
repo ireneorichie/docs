@@ -87,7 +87,7 @@ your Knative Serving installation:
 
 Both plugins utilize Prometheus and Grafana for monitoring.
 
-Note: Simultaneously monitoring Knative Serving with both Elasticsearch
+**Note**: Simultaneously monitoring your Knative cluster with both Elasticsearch
 and Stackdriver is unsupported. Only a single monitoring plugin can be
 configured and run per Knative Serving installation.
 
@@ -103,18 +103,17 @@ You can use [Elasticsearch](https://www.elastic.co/products/elasticsearch),
 [Prometheus](https://prometheus.io/) & [Grafana](https://grafana.com/) in
 combination to monitor your installation of Knative Serving.
 
-This monitoring configuration gets installed by default with the Knative Serving
-component. To see if you have th
+This daemonset configuration gets installed by default during the Knative
+Serving component installation.
 
-After you install the monitoring components, you need to
+If this monitoring plugin is already installed, you need to
 [create Elasticsearch Indices](#create-elasticsearch-indices) before you can
-start monitoring.
+start monitoring your Knative cluster.
 
-#### Installing the Elasticsearch and Kibana monitoring components
+#### Installing the Elasticsearch and Kibana monitoring plugin
 
-If you previously uninstalled the monitoring components, use the following steps
-to install the Elasticsearch, Kibana, Prometheus, and Grafana monitoring
-components:
+Use the following steps to run a daemonset that is configured to monitor your
+Knative cluster with Elasticsearch, Kibana, Prometheus, and Grafana:
 
 1. Choose a container image that meets the
    [Fluentd image requirements](fluentd/README.md#requirements). For example, you can use the
@@ -136,8 +135,8 @@ components:
       --filename config/monitoring/200-common/100-istio.yaml
    ```
 
-   The installation is complete when logging & monitoring components are all
-   reported `Running` or `Completed`:
+1. Verify that the daemonset installation successfully completes. Run the
+   following command to ensure that all the monitoring pods are all `Running`:
 
      ```shell
      kubectl get pods --namespace monitoring --watch
@@ -160,7 +159,8 @@ components:
      prometheus-system-1                   1/1       Running   0          2d
      ```
 
-  CTRL+C to exit watch.
+1. When all pods are running, hit `CTRL+C` to exit the *watch* mode in the
+   terminal.
 
 #### Create Elasticsearch Indices
 
@@ -209,10 +209,8 @@ are true:
 
 #### Installing the Stackdriver monitoring components
 
-If you previously
-[uninstalled your monitoring plugin](#uninstalling-your-monitoring-plugin), use the following steps
-to install the Stackdriver, Prometheus, and Grafana monitoring
-components:
+Use the following steps to run a daemonset that is configured to monitor your
+Knative cluster with  Stackdriver, Prometheus, and Grafana:
 
 1. Choose a container image that meets the
    [Fluentd image requirements](fluentd/README.md#requirements). For example, you can use a
@@ -232,8 +230,8 @@ components:
         --filename config/monitoring/200-common/100-istio.yaml
       ```
 
-   The installation is complete when logging & monitoring components are all
-   reported `Running` or `Completed`:
+1. Verify that the daemonset installation successfully completes. Run the
+   following command to ensure that all the monitoring pods are all `Running`:
 
      ```shell
      kubectl get pods --namespace monitoring --watch
@@ -254,7 +252,8 @@ components:
      prometheus-system-1                   1/1       Running   0          2d
      ```
 
-  CTRL+C to exit watch.
+1. When all pods are running, hit `CTRL+C` to exit the *watch* mode in the
+   terminal.
 
 ## Uninstalling your monitoring plugin
 
