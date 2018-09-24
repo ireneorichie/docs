@@ -6,7 +6,7 @@ cluster.
 
 The monitoring plugin is based on Fluentd, and Knative Serving currently
 supports a daemonset configuration for either Elasticsearch or Stackdriver.
-[Learn more about the Fluentd container image and requirements](/fluentd/README.md).
+[Learn more about the Fluentd container image and requirements](./fluentd/README.md).
 
 If you already have a monitoring plugin installed and configured, see the
 following topics for details about accessing the data:
