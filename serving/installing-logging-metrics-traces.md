@@ -1,19 +1,26 @@
-# Installing the Monitoring, Logging, and Tracing Components
+# Installing the Monitoring, Logging, and Tracing Plugin
 
-You can install and run components that allow you to collect and log data,
-view metrics, and trace requests.
+You can install a monitoring plugin in your Knative Serving installation to
+enable data collection and logging, metrics, and request tracing in that
+cluster.
 
-If you already have monitoring installed and configured, see the following
-topics for details about accessing the data:
+If you already have a monitoring plugin installed and configured, see the
+following topics for details about accessing the data:
 
   * [Accessing Logs](./accessing-logs.md)
   * [Accessing Metrics](./accessing-metrics.md)
   * [Accessing Traces](./accessing-traces.md)
 
+To check if you already have monitoring installed, see
+[Viewing which monitoring plugin is installed](#viewing-which-monitoring-plugin-is-installed).
+
 ## Before you begin
 
-Ensure that you have the Knative Serving repository cloned. For example, in a
-`knative` working directory, you can run the following commands:
+Ensure that you have the Knative Serving repository cloned. Some of the commands
+in this topic require the configuration files located in the
+['knative/serving/config/monitoring'](https://github.com/knative/serving/tree/master/config/monitoring) directory. For example, from in a `knative` working directory, you
+can run the following commands to clone and then switch to the `serving`
+directory:
 
    ```shell
    git clone https://github.com/knative/serving.git
@@ -25,31 +32,62 @@ If you do not have Knative Serving installed and running, see
 [Installing Knative](https://github.com/knative/docs/tree/master/install) for
 details.
 
-### Viewing what monitoring components are installed
+### Viewing which monitoring plugin is installed
 
-To determine which monitoring components are already installed, you can run the
-following command:
+To determine if you already have a monitoring plugin installed, you can run the
+following command to list all the monitoring related pods in your Knative
+cluster:
 
   ```shell
   kubectl get pods --namespace monitoring
   ```
 
-## Choose how to monitor Knative Serving
+If you have a monitoring plugin installed, see the corresponding section below
+for details about configuring that plugin. The following pods are common
+between the two types of monitoring plugins:
 
-There are two configurations that you can choose to use for monitoring Knative
-Serving:
+  ```shell
+  fluentd-ds-5kc85
+  fluentd-ds-vhrcq
+  fluentd-ds-xghk9
+  grafana-798cf569ff-v4q74
+  kube-state-metrics-75bd4f5b8b-8t2h2
+  node-exporter-cr6bh
+  node-exporter-mf6k7
+  node-exporter-rhzr7
+  prometheus-system-0
+  prometheus-system-1
+  ```
+
+  * See the
+    [Elasticsearch](#monitoring-with-elasticsearch-kibana-prometheus-and-grafana)
+    section, if the `elasticsearch` and `kibana` pods are also listed, for
+    example:
+
+    elasticsearch-logging-0
+    elasticsearch-logging-1
+    kibana-logging-7d474fbb45-6qb8x
+
+  * Otherwise, see the
+    [Stackdriver](#monitoring-with-stackdriver-prometheus-and-grafana) section.
+
+
+## Choosing and installing a monitoring plugin
+
+There are two monitoring plugins that you can choose from and use for monitoring
+your Knative Serving installation:
 
 * [Elasticsearch & Kibana](#elasticsearch-kibana-prometheus--grafana-setup)
 * [Stackdriver](#stackdriver-prometheus--grafana-setup)
 
-Both configuration types utilize Prometheus and Grafana for monitoring.
+Both plugins utilize Prometheus and Grafana for monitoring.
 
 Note: Simultaneously monitoring Knative Serving with both Elasticsearch
-and Stackdriver is unsupported. Only a single monitoring configuration can be
+and Stackdriver is unsupported. Only a single monitoring plugin can be
 configured and run per Knative Serving installation.
 
 
-### Monitoring with Elasticsearch, Kibana, Prometheus, & Grafana
+### Monitoring with Elasticsearch, Kibana, Prometheus, and Grafana
 
 You can use [Elasticsearch](https://www.elastic.co/products/elasticsearch),
 [Kibana](https://www.elastic.co/products/kibana),
@@ -146,7 +184,7 @@ for request traces.
   from `Time Filter field name` and click on `Create` button.
 
 
-### Monitoring with Stackdriver, Prometheus & Grafana
+### Monitoring with Stackdriver, Prometheus, and Grafana
 
 You can use [Stackdriver](https://cloud.google.com/stackdriver/),
 [Prometheus](https://prometheus.io/), and [Grafana](https://grafana.com/) in
@@ -160,7 +198,7 @@ are true:
  * Your Knative Serving component is not hosted on a GCP based cluster.
  * You want to send logs to another GCP project.
 
-#### Installing the Elasticsearch and Kibana monitoring components
+#### Installing the Stackdriver monitoring components
 
 If you previously [uninstalled the monitoring components](), use the following steps
 to install the Stackdriver, Prometheus, and Grafana monitoring
@@ -208,9 +246,10 @@ components:
 
   CTRL+C to exit watch.
 
-## Uninstalling all the monitoring components
+## Uninstalling all monitoring components
 
-To uninstall a logging plugin, run:
+To remove all of the monitoring components from your Knative Serving
+installation logging plugin, run:
 
 ```shell
 kubectl delete -f <the-fluentd-config-for-daemonset> \
