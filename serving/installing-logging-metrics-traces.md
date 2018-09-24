@@ -18,6 +18,17 @@ following topics for details about accessing the data:
 To check if you already have monitoring installed, see
 [Viewing which monitoring plugin is installed](#viewing-which-monitoring-plugin-is-installed).
 
+### Table of contents
+
+* [Before you begin](#before-you-begin)
+  * [Viewing which monitoring plugin is installed](#viewing-which-monitoring-plugin-is-installed)
+* [Choosing and installing a monitoring plugin](#choosing-and-installing-a-monitoring-plugin)
+  * [Monitoring with Elasticsearch, Kibana, Prometheus, and Grafana](#monitoring-with-elasticsearch-kibana-prometheus-and-grafana)
+    * [Installing the Elasticsearch and Kibana monitoring plugin](#installing-the-elasticsearch-and-kibana-monitoring-plugin)
+    * [Creating index patterns for visualization](#creating-index-patterns-for-visualization)
+  * [Monitoring with Stackdriver, Prometheus, and Grafana](#monitoring-with-stackdriver-prometheus-and-grafana)
+* [Uninstalling your monitoring plugin](#uninstalling-your-monitoring-plugin)
+
 ## Before you begin
 
 * Before you can install a monitoring plugin, you need to have
@@ -162,10 +173,11 @@ Knative cluster with Elasticsearch, Kibana, Prometheus, and Grafana:
 1. When all pods are running, hit `CTRL+C` to exit the *watch* mode in the
    terminal.
 
-#### Create Elasticsearch Indices
+#### Creating index patterns for visualization
 
-To visualize logs with Kibana, you need to set which Elasticsearch indices to explore. We will
-create two indices in Elasticsearch using `Logstash` for application logs and `Zipkin`
+To visualize logs with Kibana, you need to specify index patterns to identify
+the Elasticsearch index the search and analytics are to run against. You should
+create the two indices in Elasticsearch using `Logstash` for application logs and `Zipkin`
 for request traces.
 
 - To open the Kibana UI (the visualization tool for [Elasticsearch](https://info.elastic.co)),
