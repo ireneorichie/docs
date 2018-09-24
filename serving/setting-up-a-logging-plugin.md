@@ -36,7 +36,7 @@ for collecting `stdout/stderr` logs from the containers:
    Stackdriver: [`fluentd-configmap.yaml`](https://github.com/knative/serving/blob/master/config/monitoring/150-stackdriver/fluentd-configmap.yaml)
 
 2. Replace the `image` field of `fluentd-ds` container
-   in [`fluentd-ds.yaml`](https://github.com/knative/serving/blob/master/third_party/config/monitoring/common/kubernetes/fluentd/fluentd-ds.yaml))
+   in [`fluentd-ds.yaml`](https://github.com/knative/serving/blob/master/third_party/config/monitoring/common/kubernetes/fluentd/fluentd-ds.yaml)
    with the Fluentd image including the desired Fluentd output plugin.
    See [here](image/fluentd/README.md) for the requirements of Flunetd image
    on Knative.
