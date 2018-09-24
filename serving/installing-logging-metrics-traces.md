@@ -4,6 +4,10 @@ You can install a monitoring plugin in your Knative Serving installation to
 enable data collection and logging, metrics, and request tracing in that
 cluster.
 
+The monitoring plugin is based on Fluentd, and Knative Serving currently
+supports a daemonset configuration for either Elasticsearch or Stackdriver.
+[Learn more about the Fluentd container image and requirements](/fluentd/README.md).
+
 If you already have a monitoring plugin installed and configured, see the
 following topics for details about accessing the data:
 
@@ -16,21 +20,20 @@ To check if you already have monitoring installed, see
 
 ## Before you begin
 
-Ensure that you have the Knative Serving repository cloned. Some of the commands
-in this topic require the configuration files located in the
-['knative/serving/config/monitoring'](https://github.com/knative/serving/tree/master/config/monitoring) directory. For example, from in a `knative` working directory, you
-can run the following commands to clone and then switch to the `serving`
-directory:
+* Before you can install a monitoring plugin, you need to have
+  [Knative Serving installed and running](https://github.com/knative/docs/tree/master/install).
 
-   ```shell
-   git clone https://github.com/knative/serving.git
-   cd serving
-   git checkout v0.1.1
-   ```
+* Ensure that you have the Knative Serving repository cloned. Some commands in
+  this topic require the daemonset configuration files located in the
+  [`knative/serving/config/monitoring`](https://github.com/knative/serving/tree/master/config/monitoring)
+  directory. For example, from in a `knative` working directory, you can run the
+  following commands to clone and then switch to the `serving` directory:
 
-If you do not have Knative Serving installed and running, see
-[Installing Knative](https://github.com/knative/docs/tree/master/install) for
-details.
+     ```shell
+     git clone https://github.com/knative/serving.git
+     cd serving
+     git checkout v0.1.1
+     ```
 
 ### Viewing which monitoring plugin is installed
 
@@ -64,9 +67,11 @@ between the two types of monitoring plugins:
     section, if the `elasticsearch` and `kibana` pods are also listed, for
     example:
 
-    elasticsearch-logging-0
-    elasticsearch-logging-1
-    kibana-logging-7d474fbb45-6qb8x
+      ```shell
+      elasticsearch-logging-0
+      elasticsearch-logging-1
+      kibana-logging-7d474fbb45-6qb8x
+      ```
 
   * Otherwise, see the
     [Stackdriver](#monitoring-with-stackdriver-prometheus-and-grafana) section.
@@ -85,6 +90,10 @@ Both plugins utilize Prometheus and Grafana for monitoring.
 Note: Simultaneously monitoring Knative Serving with both Elasticsearch
 and Stackdriver is unsupported. Only a single monitoring plugin can be
 configured and run per Knative Serving installation.
+
+If you have a monitoring plugin installed but want to switch to the other type,
+see [Uninstalling your monitoring plugin](#uninstalling-your-monitoring-plugin)
+for details about uninstalling that monitoring daemonset.
 
 
 ### Monitoring with Elasticsearch, Kibana, Prometheus, and Grafana
@@ -200,7 +209,8 @@ are true:
 
 #### Installing the Stackdriver monitoring components
 
-If you previously [uninstalled the monitoring components](), use the following steps
+If you previously
+[uninstalled your monitoring plugin](#uninstalling-your-monitoring-plugin), use the following steps
 to install the Stackdriver, Prometheus, and Grafana monitoring
 components:
 
@@ -246,17 +256,49 @@ components:
 
   CTRL+C to exit watch.
 
-## Uninstalling all monitoring components
+## Uninstalling your monitoring plugin
 
-To remove all of the monitoring components from your Knative Serving
-installation logging plugin, run:
+You must completely uninstall the daemonset before you can install a different
+monitoring plugin configuration.
 
-```shell
-kubectl delete -f <the-fluentd-config-for-daemonset> \
-    -f third_party/config/monitoring/common/kubernetes/fluentd/fluentd-ds.yaml \
-    -f config/monitoring/200-common/100-fluentd.yaml
-    -f config/monitoring/200-common/100-istio.yaml
-```
+To remove all of the pods of the monitoring plugin from your Knative Serving
+installation, run the following commands:
+
+1. Set a variable to specify which monitoring plugin you wanted uninstalled:
+
+   Tip: To verify which plugin is installed, see
+   [Viewing which monitoring plugin is installed](#viewing-which-monitoring-plugin-is-installed).
+
+  * If the Elasticsearch and Kibana pods are installed, run the following
+    command to set the variable to the Elasticsearch daemonset configuration:
+
+    ```shell
+    export FLUENTD_DAEMONSET_CONFIG="config/monitoring/150-elasticsearch"
+    ```
+
+  * Otherwise, set the variable to the Stackdriver daemonset configuration:
+
+    ```shell
+    export FLUENTD_DAEMONSET_CONFIG="config/monitoring/150-stackdriver"
+    ```
+
+1. Run the following command to uninstall the monitoring plugin, including the
+   specified daemonset configuration:
+
+
+  ```shell
+  kubectl delete -f $FLUENTD_DAEMONSET_CONFIG \
+      -f third_party/config/monitoring/common/kubernetes/fluentd/fluentd-ds.yaml \
+      -f config/monitoring/200-common/100-fluentd.yaml
+      -f config/monitoring/200-common/100-istio.yaml
+  ```
+
+1. You can verify that all the pods are no longer running with the following
+   command:
+
+  ```shell
+  kubectl get pods --namespace monitoring
+  ```
 
 ---
 
