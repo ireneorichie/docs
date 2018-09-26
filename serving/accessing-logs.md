@@ -1,10 +1,57 @@
 # Accessing logs
 
+You can
+
 If you have not yet installed the logging and monitoring components, go through the
 [installation instructions](./installing-logging-metrics-traces.md) to set up the
 necessary components first.
 
-## Kibana and Elasticsearch
+## Table of contents
+
+* []()
+* []()
+* []()
+
+## Elasticsearch and Kibana
+
+Use Kibana to visual the logs collected by Elasticsearch. Before you can
+visualize your data, you must first configure Kibana by
+
+1. Start a local proxy for the Kibana UI by running the following command:
+
+   ```shell
+   kubectl proxy
+   ```
+
+   Kibana uses port 8001. For security reasons, Kibana is only accessible within
+   the cluster.
+
+1. Access Kibana through your browser by navigating to
+   http://localhost:8001/api/v1/namespaces/knative-monitoring/services/kibana-logging/proxy/app/kibana.
+
+   Note: It might take a minute or two for proxy to work.
+
+1. If you have not specified any index patterns, the
+   **Configure an index pattern** page opens.
+
+   For Knative, you should create index patterns for the following indices:
+
+    * `Logstash` - Specifies the index for application logs.
+    * `Zipkin` - Specifies the index for request traces.
+
+    1. To create an index pattern, enter the index followed by the `*` wildcard
+       in the `Index pattern`. For example, `logstash*` or `zipkin*`.
+
+    1.   select `@timestamp` from `Time Filter field name`
+
+      Enter zipkin* to Index pattern and select timestamp_millis from Time Filter field name
+
+    1. Click `Create` to save the index pattern.
+
+       ![Create logstash-* index](images/kibana-landing-page-configure-index.png)
+
+    1. To configure another index pattern, click **Create Index Pattern** near
+       the top of the page to open the **Configure an index pattern** page.
 
 * To open the Kibana UI (the visualization tool for [Elasticsearch](https://info.elastic.co)),
 start a local proxy with the following command:

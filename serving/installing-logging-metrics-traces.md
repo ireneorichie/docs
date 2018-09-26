@@ -1,8 +1,7 @@
 # Installing the Monitoring, Logging, and Tracing Plugin
 
 You can install a monitoring plugin in your Knative Serving installation to
-enable data collection and logging, metrics, and request tracing in that
-cluster.
+enable data logging, metrics, and request tracing in that cluster.
 
 The monitoring plugin is based on Fluentd, and Knative Serving currently
 supports a
@@ -213,40 +212,6 @@ Elasticsearch, Kibana, Prometheus, and Grafana:
 
 1. When all pods are running, hit `CTRL+C` in the terminal to exit the *watch*
    mode.
-
-#### Creating index patterns for visualization
-
-To visualize your logs with Kibana, you need to specify index patterns and
-identify which Elasticsearch index that the search and analytics are to run
-against. You should create two indices in Elasticsearch, including:
-
-* `Logstash` - Specifies the index for application logs.
-* `Zipkin` - Specifies the index for request traces.
-
-- To open the Kibana UI (the visualization tool for [Elasticsearch](https://info.elastic.co)),
-  you must start a local proxy by running the following command:
-
-  ```shell
-  kubectl proxy
-  ```
-
-  This command starts a local proxy of Kibana on port 8001. For security
-  reasons, the Kibana UI is exposed only within the cluster.
-
-- Navigate to the
-  [Kibana UI](http://localhost:8001/api/v1/namespaces/knative-monitoring/services/kibana-logging/proxy/app/kibana).
-  _It might take a couple of minutes for the proxy to work_.
-
-- Within the "Configure an index pattern" page, enter `logstash-*` to
-  `Index pattern` and select `@timestamp` from `Time Filter field name` and
-  click on `Create` button.
-
-![Create logstash-* index](images/kibana-landing-page-configure-index.png)
-
-- To create the second index, select `Create Index Pattern` button on top left
-  of the page. Enter `zipkin*` to `Index pattern` and select `timestamp_millis`
-  from `Time Filter field name` and click on `Create` button.
-
 
 ### Monitoring with Stackdriver, Prometheus, and Grafana
 
