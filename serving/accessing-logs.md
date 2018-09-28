@@ -141,9 +141,9 @@ events by:
  * Using the list of **Available Fields**. You click **Add** to select and view
    those fields.
  * Running a search query. First obtain the name of the resource by using the
-   `kubectl get` command, and then search for events that match.
+   `kubectl get` command, and then run a query in the `Discover` page.
 
-Knative resources:
+Knative resources that you can view:
 
 * [`Configuration`](https://github.com/knative/serving/blob/master/docs/spec/spec.md#configuration)
   resources: `kubernetes.labels.serving_knative_dev\/configuration: [RESOURCE_NAME]`
@@ -167,45 +167,42 @@ If the following search query is run in the
 [Discover](http://localhost:8001/api/v1/namespaces/monitoring/services/kibana-logging/proxy/app/kibana#/discover)
 page:
 
-    ```text
-    tag: "requestlog.logentry.istio-system"
-    ```
+  ```text
+  tag: "requestlog.logentry.istio-system"
+  ```
 
 The following example event might get listed. If you click that event,
 you can view the details for that that HTTP request, including the
 `configuration-example-00001` revision and
 `route-example.default.example.com` host names:
 
-    ```text
-    @timestamp                   July 10th 2018, 10:09:28.000
-    destinationConfiguration     configuration-example
-    destinationNamespace         default
-    destinationRevision          configuration-example-00001
-    destinationService           configuration-example-00001-service.default.svc.cluster.local
-    latency                      1.232902ms
-    method                       GET
-    protocol                     http
-    referer                      unknown
-    requestHost                  route-example.default.example.com
-    requestSize                  0
-    responseCode                 200
-    responseSize                 36
-    severity                     Info
-    sourceNamespace              istio-system
-    sourceService                unknown
-    tag                          requestlog.logentry.istio-system
-    traceId                      986d6faa02d49533
-    url                          /
-    userAgent                    curl/7.60.0
-    ```
+  ```text
+  @timestamp                   July 10th 2018, 10:09:28.000
+  destinationConfiguration     configuration-example
+  destinationNamespace         default
+  destinationRevision          configuration-example-00001
+  destinationService           configuration-example-00001-service.default.svc.cluster.local
+  latency                      1.232902ms
+  method                       GET
+  protocol                     http
+  referer                      unknown
+  requestHost                  route-example.default.example.com
+  requestSize                  0
+  responseCode                 200
+  responseSize                 36
+  severity                     Info
+  sourceNamespace              istio-system
+  sourceService                unknown
+  tag                          requestlog.logentry.istio-system
+  traceId                      986d6faa02d49533
+  url                          /
+  userAgent                    curl/7.60.0
+  ```
 
 #### Configuration, Revision, or Build examples
 
 This example demonstrates how to access the log files for
-`Configuration`, `Revision`, or `Build` resources.
-
-First obtain the resource name is obtained with a `kubectl get` command and then
-that name is used to run a query in the `Discover` page:
+`Configuration`, `Revision`, or `Build` resources:
 
 1. If one of the following `kubectl get` commands are run to retrieve all the
    corresponding Knative resources:
