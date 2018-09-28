@@ -3,25 +3,30 @@
 Depending on the monitoring plugin, you can view and visualize your log files
 using either Elasticsearch and Kibana, or Stackdriver Logging.
 
-If you have not yet installed the logging and monitoring components, go through the
-[installation instructions](./installing-logging-metrics-traces.md) to set up the
-necessary components first.
-
 ## Table of contents
 
-* [Elasticsearch and Kibana](#accessing-log-files-with-elasticsearch-and-kibana)
-* [Stackdriver Logging](#accessing-log-files-with-stackdriver-logging)
+* [Before you begin](#before-you-begin)
+* [Accessing logs with Elasticsearch and Kibana](#accessing-log-files-with-elasticsearch-and-kibana)
+* [Accessing logs with Stackdriver Logging](#accessing-log-files-with-stackdriver-logging)
 
+## Before you begin
+
+You must have one of the monitoring plugins installed and configure in your
+Knative cluster, for details see
+[Installing the Monitoring, Logging, and Tracing Plugin](./installing-logging-metrics-traces.md).
 
 ## Accessing log files with Elasticsearch and Kibana
 
-If you have the monitoring plugin for Elasticsearch installed, you can use the
+If you have the monitoring plugin for Elasticsearch installed, you can use
 Kibana to view and visualize your log files.
 
-Before you can view and visualize your log files, you must first configure
+If you are unsure if you have the right plugin, you can
+[view which monitoring plugin is installed in your cluster](./installing-logging-metrics-traces.md#viewing-which-monitoring-plugin-is-installed).
+
+Before you can view and visualize log files, you must first configure
 Kibana by creating index patterns for the indices in Elasticsearch.
 
-The typical work flow for viewing log files is to:
+The typical work flow for viewing log files with Elasticsearch and Kibana is to:
 
 1. [Start Kibana](#starting-kibana)
 1. [Configure index patterns](#configuring-index-patterns)
@@ -63,8 +68,7 @@ For Knative, you should create index patterns for the following indices:
 To create index patterns:
 
 1. After [starting and opening Kibana](#starting-kibana), open the
-   [Configure an index pattern](http://localhost:8001/api/v1/namespaces/monitoring/services/kibana-logging/proxy/app/kibana#/management/kibana/indices)
-   page:
+   'Configure an index pattern' page:
 
    * If you have not specified any index patterns, the
      [Configure an index pattern](http://localhost:8001/api/v1/namespaces/monitoring/services/kibana-logging/proxy/app/kibana#/management/kibana/indices)
@@ -73,9 +77,9 @@ To create index patterns:
    * To manually navigate to the [Configure an index pattern](http://localhost:8001/api/v1/namespaces/monitoring/services/kibana-logging/proxy/app/kibana#/management/kibana/indices)
      page, you click **Management** > **Index Patterns**.
 
-1. Specify the index pattern by entering the corresponding Elasticsearch index
-   in the `Index pattern`. You should append the `*` wildcard to match all
-   variants, for example: `logstash-*` or `zipkin*`.
+1. Individually configure an index pattern by entering the corresponding
+   Elasticsearch index in the `Index pattern`. You should append the `*`
+   wildcard to match all variants, for example: `logstash-*` or `zipkin*`.
 
 1. In the `Time Filter field name`, indicate the value of the global time
    that you want to use to filter the data.
@@ -84,8 +88,8 @@ To create index patterns:
    * For `logstash-*`, use the `@timestamp` time filter.
    * For `zipkin*`, use the `timestamp_millis` time filter.
 
-   **Tip**: As events are ingested and the data is collected in your log files,
-   new `field names` become available as they are discovered.
+   **Tip**: The `field names` become available as events are ingested and those
+   names are discovered in the collected log file data.
 
 1. Click `Create` to save the index pattern.
 
@@ -107,14 +111,13 @@ log files:
 
  * Use the [Discover](http://localhost:8001/api/v1/namespaces/monitoring/services/kibana-logging/proxy/app/kibana#/discover)
    page to search, filter, and view the data of your log files. Quickly view the
-   events of the index patterns that you created. You can also run queries to
-   view the log files of your Knative resources, see
-   [accessing log files for Knative resources](accessing-log-files-for-Knative-resources)
-   for details.
+   events of the index patterns that you create, and also run queries to find
+   and view the log files of your Knative resources.
+   [More details in the section below](accessing-log-files-for-Knative-resources).
 
-   For example, in the `Discover` page, you can use the controls at the top to
-   view specific log files. Specify a time range to filter events or run queries
-   to specify Knative resources:
+   For example, you can use the controls at the top of the `Discover` page to
+   view specific log files, like Knative resource files, or filter by time
+   range:
 
    ![Kibana UI Discover tab](./images/kibana-discover-tab-annotated.png)
 
@@ -125,109 +128,143 @@ log files:
  * Use the [Graph](http://localhost:8001/api/v1/namespaces/monitoring/services/kibana-logging/proxy/app/graph)
    page to create and view graphs and explore connections in your log file data.
 
+[Learn more about Kibana](https://www.elastic.co/guide/en/kibana/current/index.html).
 
-#### Accessing log files for Knative resources
+#### Viewing log files for Knative resources
 
-You use Kibana to view the log files of specific Knative resources but you must
-first obtain the names and paths of those resource in your cluster. For example,
-you first run `kubectl get` commands to retrieve the name for the following
-resources:
+You can use the 'Discover' page of Kibana to view the log files of your
+[Knative resources](https://github.com/knative/serving/blob/master/docs/spec/overview.md#service).
 
-* `[configuration](https://github.com/knative/serving/blob/master/docs/spec/spec.md#configuration)
-* [revision]()
-* [build]()
-* requests
+Using either of the `logstash-*` or `zipkin*` index patterns, you can locate
+events by:
 
-To obtain resource names and paths of the log files for your Knative resources:
+ * Using the list of **Available Fields**. You click **Add** to select and view
+   those fields.
+ * Running a search query. First obtain the name of the resource by using the
+   `kubectl get` command, and then search for events that match.
 
-1. Run the `kubectl get` command to list the Knative resource to which you want
-   to view log files:
+Knative resources:
 
-   * configurations:
+* [`Configuration`](https://github.com/knative/serving/blob/master/docs/spec/spec.md#configuration)
+  resources: `kubernetes.labels.serving_knative_dev\/configuration: [RESOURCE_NAME]`
+* [`Revision`](https://github.com/knative/serving/blob/master/docs/spec/spec.md#revision)
+  resources: `kubernetes.labels.serving_knative_dev\/revision: [RESOURCE_NAME]`
+* [`Build`](https://github.com/knative/docs/tree/master/build)
+  resources: `kubernetes.labels.build\-name: [RESOURCE_NAME]`
+
+      Tip: Your `Build` resource names are also located in their [`.yaml`
+      configuration files](https://github.com/knative/docs/blob/master/build/builds.md#syntax).
+* Requests by revision - `istio-system` [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/): `tag: "requestlog.logentry.istio-system"`
+  To learn how to trace requests in Knative, see
+  [Accessing Traces](./accessing-traces.md).
+
+#### Requests example
+
+This example demonstrates how you can retrieve and view the available log files
+for the request data for an example `Revision` resource.
+
+If the following search query is run in the
+[Discover](http://localhost:8001/api/v1/namespaces/monitoring/services/kibana-logging/proxy/app/kibana#/discover)
+page:
+
+    ```text
+    tag: "requestlog.logentry.istio-system"
+    ```
+
+The following example event might get listed. If you click that event,
+you can view the details for that that HTTP request, including the
+`configuration-example-00001` revision and
+`route-example.default.example.com` host names:
+
+    ```text
+    @timestamp                   July 10th 2018, 10:09:28.000
+    destinationConfiguration     configuration-example
+    destinationNamespace         default
+    destinationRevision          configuration-example-00001
+    destinationService           configuration-example-00001-service.default.svc.cluster.local
+    latency                      1.232902ms
+    method                       GET
+    protocol                     http
+    referer                      unknown
+    requestHost                  route-example.default.example.com
+    requestSize                  0
+    responseCode                 200
+    responseSize                 36
+    severity                     Info
+    sourceNamespace              istio-system
+    sourceService                unknown
+    tag                          requestlog.logentry.istio-system
+    traceId                      986d6faa02d49533
+    url                          /
+    userAgent                    curl/7.60.0
+    ```
+
+#### Configuration, Revision, or Build examples
+
+This example demonstrates how to access the log files for
+`Configuration`, `Revision`, or `Build` resources.
+
+First obtain the resource name is obtained with a `kubectl get` command and then
+that name is used to run a query in the `Discover` page:
+
+1. If one of the following `kubectl get` commands are run to retrieve all the
+   corresponding Knative resources:
+
+   * `Configuration`:
 
       ```shell
       kubectl get configurations
       ```
 
-   * revisions:
+   * `Revision`:
 
       ```shell
       kubectl get revisions
       ```
 
-   * build:
+   * `Build`:
 
       ```shell
       kubectl get builds
       ```
 
-    Tip: Your build resource names are located in their `.yaml` configuration
-    files under,
-    [`metadata:` > `name:`](https://github.com/knative/docs/blob/master/build/builds.md#syntax).
+1. You can use the name of one of the listed resource names along with the
+   corresponding [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) to run a search query in the
+   [Discover](http://localhost:8001/api/v1/namespaces/monitoring/services/kibana-logging/proxy/app/kibana#/discover)
+   page of Kibana:
 
-1. Open the [Discover] page in Kibana and run the following search query:
-
-      * Replace `<CONFIGURATION_NAME>` and enter the following search query in Kibana:
-      ```
-      kubernetes.labels.serving_knative_dev\/configuration: <CONFIGURATION_NAME>
-      ```
-
-      * Replace `<REVISION_NAME>` and enter the following search query in Kibana:
-      ```
-      kubernetes.labels.serving_knative_dev\/revision: <REVISION_NAME>
-      ```
-
-      * Replace `<BUILD_NAME>` and enter the following search query in Kibana:
-      ```
-      kubernetes.labels.build\-name: <BUILD_NAME>
-      ```
-
-
-
-   * To view your Knative request log files:
-
-      To access the request logs, enter the following search in Kibana:
+   * `Configuration`:
 
       ```text
-      tag: "requestlog.logentry.istio-system"
+      kubernetes.labels.serving_knative_dev\/configuration: [RESOURCE_NAME]
       ```
 
-        Request logs contain details about requests served by the revision. Below is
-        a sample request log:
+   * `Revision`:
 
-        ```text
-        @timestamp                   July 10th 2018, 10:09:28.000
-        destinationConfiguration     configuration-example
-        destinationNamespace         default
-        destinationRevision          configuration-example-00001
-        destinationService           configuration-example-00001-service.default.svc.cluster.local
-        latency                      1.232902ms
-        method                       GET
-        protocol                     http
-        referer                      unknown
-        requestHost                  route-example.default.example.com
-        requestSize                  0
-        responseCode                 200
-        responseSize                 36
-        severity                     Info
-        sourceNamespace              istio-system
-        sourceService                unknown
-        tag                          requestlog.logentry.istio-system
-        traceId                      986d6faa02d49533
-        url                          /
-        userAgent                    curl/7.60.0
-        ```
+      ```text
+      kubernetes.labels.serving_knative_dev\/revision: [RESOURCE_NAME]
+      ```
 
-      To learn how to trace requests in Knative, see
-      [Accessing Traces](./accessing-traces.md).
+   * `Build`:
+
+      ```text
+      kubernetes.labels.build\-name: [RESOURCE_NAME]
+      ```
+   where [RESOURCE_NAME] is the name that you obtained using the `kubectl get`
+   command.
 
 ## Accessing log files with Stackdriver Logging
 
 If you have the monitoring plugin for Stackdriver installed, you can use the
 'Stackdriver Logging' page in Google Cloud Platform to view and visualize
-your log files: [**Go to Stackdriver Logging**](https://console.cloud.google.com/logs/viewer)
+your log files: [**Open Stackdriver Logging**](https://console.cloud.google.com/logs/viewer)
 
-[Learn more about Stackdriver](https://cloud.google.com/logging/docs/).
+If you are unsure if you have the right plugin, you can
+[view which monitoring plugin is installed in your cluster](./installing-logging-metrics-traces.md#viewing-which-monitoring-plugin-is-installed).
+
+  ![Stackdriver Logging](images/stackdriver-logging.png)
+
+[Learn more about Stackdriver Logging](https://cloud.google.com/logging/docs/).
 
 ---
 
