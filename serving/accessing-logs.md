@@ -89,7 +89,7 @@ To create index patterns:
    * For `zipkin*`, use the `timestamp_millis` time filter.
 
    **Tip**: The `field names` become available as events are ingested and those
-   names are discovered in the collected log file data.
+   names are discovered in the collected log files.
 
 1. Click `Create` to save the index pattern.
 
@@ -103,8 +103,8 @@ To create index patterns:
 ### 3. Viewing log files
 
 After [starting Kibana](#starting-kibana) and
-[configuring index patterns](#configuring-index-patterns), you can use the
-various pages in Kibana to view, graph, and visualize your logs.
+[initially configuring index patterns](#configuring-index-patterns), you can use
+the various pages in Kibana to view, graph, and visualize your logs.
 
 You can open one of the following pages depending on how you want to view your
 log files:
@@ -130,20 +130,19 @@ log files:
 
 [Learn more about Kibana](https://www.elastic.co/guide/en/kibana/current/index.html).
 
-#### Viewing log files for Knative resources
+#### Querying log files for Knative resources
 
 You can use the 'Discover' page of Kibana to view the log files of your
 [Knative resources](https://github.com/knative/serving/blob/master/docs/spec/overview.md#service).
 
-Using either of the `logstash-*` or `zipkin*` index patterns, you can locate
-events by:
+You can locate events in your log file by either:
 
  * Using the list of **Available Fields**. You click **Add** to select and view
    those fields.
  * Running a search query. First obtain the name of the resource by using the
    `kubectl get` command, and then run a query in the `Discover` page.
 
-Knative resources that you can view:
+You can query and view the following Knative resources:
 
 * [`Configuration`](https://github.com/knative/serving/blob/master/docs/spec/spec.md#configuration)
   resources: `kubernetes.labels.serving_knative_dev\/configuration: [RESOURCE_NAME]`
@@ -152,11 +151,16 @@ Knative resources that you can view:
 * [`Build`](https://github.com/knative/docs/tree/master/build)
   resources: `kubernetes.labels.build\-name: [RESOURCE_NAME]`
 
-      Tip: Your `Build` resource names are also located in their [`.yaml`
-      configuration files](https://github.com/knative/docs/blob/master/build/builds.md#syntax).
+    Tip: Your `Build` resource names are also located in their [`.yaml`
+    configuration files](https://github.com/knative/docs/blob/master/build/builds.md#syntax).
 * Requests by revision - `istio-system` [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/): `tag: "requestlog.logentry.istio-system"`
   To learn how to trace requests in Knative, see
   [Accessing Traces](./accessing-traces.md).
+
+### Examples
+
+Use the following examples to learn how to query the log files for your Knative
+resources.
 
 #### Requests example
 
