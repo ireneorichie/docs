@@ -23,10 +23,10 @@ Kibana to view and visualize your log files.
 If you are unsure if you have the right plugin, you can
 [view which monitoring plugin is installed in your cluster](./installing-logging-metrics-traces.md#viewing-which-monitoring-plugin-is-installed).
 
-Before you can view and visualize log files, you must first configure
-Kibana by creating index patterns for the indices in Elasticsearch.
+Before you can use Kibana, you must first configure Kibana by creating index
+patterns for the indices that exist in Elasticsearch.
 
-The typical work flow for viewing log files with Elasticsearch and Kibana is to:
+The typical work flow for viewing log files with Elasticsearch and Kibana is:
 
 1. [Start Kibana](#starting-kibana)
 1. [Configure index patterns](#configuring-index-patterns)
@@ -35,9 +35,9 @@ The typical work flow for viewing log files with Elasticsearch and Kibana is to:
 <!-- mdemirhan@ TODO: create a video walkthrough of the Kibana UI -->
 ---------------------
 
-### Starting Kibana
+### 1. Starting Kibana
 
-To use Kibana, you must start a proxy:
+To use Kibana, you must start a proxy server:
 
 1. Start a local proxy for the Kibana UI by running the following command:
 
@@ -51,14 +51,14 @@ To use Kibana, you must start a proxy:
 1. Access Kibana through your browser by navigating to
    http://localhost:8001/api/v1/namespaces/knative-monitoring/services/kibana-logging/proxy/app/kibana.
 
-   Note: It might take a minute or two for proxy to work.
+   Note: It might take a minute for the proxy server to start.
 
-### Configuring index patterns
+### 2. Configuring index patterns
 
-You need to set index patterns in Kibana that identify indices in Elasticsearch.
-
-After index patterns are initially configured, you only need perform this step
-when you want to add or modify patterns.
+Before you can use Kibana, you need to configure and specify index patterns that
+identify the indices in Elasticsearch. After index patterns are initially
+configured, you only need perform this step when you want to add or modify
+patterns.
 
 For Knative, you should create index patterns for the following indices:
 
@@ -100,7 +100,7 @@ To create index patterns:
    [Configure an index pattern](http://localhost:8001/api/v1/namespaces/monitoring/services/kibana-logging/proxy/app/kibana#/management/kibana/index)
    page.
 
-### Viewing log files
+### 3. Viewing log files
 
 After [starting Kibana](#starting-kibana) and
 [configuring index patterns](#configuring-index-patterns), you can use the
