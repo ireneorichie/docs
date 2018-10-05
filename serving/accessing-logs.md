@@ -28,9 +28,9 @@ patterns for the indices that exist in Elasticsearch.
 
 The typical work flow for viewing log files with Elasticsearch and Kibana is:
 
-1. [Start Kibana](#starting-kibana)
-1. [Configure index patterns](#configuring-index-patterns)
-1. [View your log files](#viewing-log-files)
+1. [Start Kibana](#1-starting-kibana)
+1. [Configure index patterns](#2-configuring-index-patterns)
+1. [View your log files](#3-viewing-log-files)
 
 <!-- mdemirhan@ TODO: create a video walkthrough of the Kibana UI -->
 ---------------------
@@ -144,18 +144,17 @@ You can locate events in your log file by either:
 
 You can query and view the following Knative resources:
 
-* [`Configuration`](https://github.com/knative/serving/blob/master/docs/spec/spec.md#configuration)
-  resources: `kubernetes.labels.serving_knative_dev\/configuration: [RESOURCE_NAME]`
-* [`Revision`](https://github.com/knative/serving/blob/master/docs/spec/spec.md#revision)
-  resources: `kubernetes.labels.serving_knative_dev\/revision: [RESOURCE_NAME]`
-* [`Build`](https://github.com/knative/docs/tree/master/build)
-  resources: `kubernetes.labels.build\-name: [RESOURCE_NAME]`
+| Resource            | Query           |
+| ------------------- | --------------- |
+| [`Configuration`][1]     | `kubernetes.labels.serving_knative_dev\/configuration: RESOURCE_NAME` |
+| [`Build`][2]             | `kubernetes.labels.build\-name: [RESOURCE_NAME]` <br> Tip: Your `Build` resource names are also located in their [`.yaml` configuration files](https://github.com/knative/docs/blob/master/build/builds.md#syntax). |
+| [`Revision`][3]          | `kubernetes.labels.serving_knative_dev\/revision: [RESOURCE_NAME]` |
+| Requests | `tag: "requestlog.logentry.istio-system"` <br> Requests in Knative are managed by the Istio service mesh and logs files are located in the `istio-system' [namespace][4]. Learn how to trace requests in [Accessing Traces](./accessing-traces.md). |
 
-    Tip: Your `Build` resource names are also located in their [`.yaml`
-    configuration files](https://github.com/knative/docs/blob/master/build/builds.md#syntax).
-* Requests by revision - `istio-system` [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/): `tag: "requestlog.logentry.istio-system"`
-  To learn how to trace requests in Knative, see
-  [Accessing Traces](./accessing-traces.md).
+[1]:https://github.com/knative/serving/blob/master/docs/spec/spec.md#configuration
+[2]:https://github.com/knative/docs/tree/master/build
+[3]:https://github.com/knative/serving/blob/master/docs/spec/spec.md#revision
+[4]:https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 
 ### Examples
 
@@ -211,22 +210,16 @@ This example demonstrates how to access the log files for
 1. If one of the following `kubectl get` commands are run to retrieve all the
    corresponding Knative resources:
 
-   * `Configuration`:
-
       ```shell
-      kubectl get configurations
+      kubectl get [RESOURCE_TYPE]
       ```
 
-   * `Revision`:
+   where [RESOURCE_TYPE] is either `configuration`, `build`, or `revision`.
+
+   Example:
 
       ```shell
-      kubectl get revisions
-      ```
-
-   * `Build`:
-
-      ```shell
-      kubectl get builds
+      kubectl get revision
       ```
 
 1. You can use the name of one of the listed resource names along with the
@@ -240,19 +233,24 @@ This example demonstrates how to access the log files for
       kubernetes.labels.serving_knative_dev\/configuration: [RESOURCE_NAME]
       ```
 
+   * `Build`:
+
+      ```text
+      kubernetes.labels.build\-name: [RESOURCE_NAME]
+      ```
+
    * `Revision`:
 
       ```text
       kubernetes.labels.serving_knative_dev\/revision: [RESOURCE_NAME]
       ```
 
-   * `Build`:
-
-      ```text
-      kubernetes.labels.build\-name: [RESOURCE_NAME]
-      ```
-   where [RESOURCE_NAME] is the name that you obtained using the `kubectl get`
+   where [RESOURCE_NAME] is the name that you obtained with the `kubectl get`
    command.
+
+   Exmaple:
+
+  ![Kibana query example](images/kibana-query.png)
 
 ## Accessing log files with Stackdriver Logging
 
