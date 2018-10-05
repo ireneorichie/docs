@@ -113,7 +113,7 @@ log files:
    page to search, filter, and view the data of your log files. Quickly view the
    events of the index patterns that you create, and also run queries to find
    and view the log files of your Knative resources.
-   [More details in the section below](accessing-log-files-for-Knative-resources).
+   [See details about querying log files in the following section](#querying-log-files-for-Knative-resources).
 
    For example, you can use the controls at the top of the `Discover` page to
    view specific log files, like Knative resource files, or filter by time
@@ -132,29 +132,42 @@ log files:
 
 #### Querying log files for Knative resources
 
-You can use the 'Discover' page of Kibana to view the log files of your
+You can use the 'Discover' page of Kibana to search and filter specific events
+to view the log files of your
 [Knative resources](https://github.com/knative/serving/blob/master/docs/spec/overview.md#service).
 
-You can locate events in your log file by either:
+In Kibana, you can view log files for resources by either:
 
- * Using the list of **Available Fields**. You click **Add** to select and view
-   those fields.
- * Running a search query. First obtain the name of the resource by using the
-   `kubectl get` command, and then run a query in the `Discover` page.
+ * Using the list of **Available Fields** to filter your log files. You click
+   **Add** to select a field and add their results to the view.
+ * Running a search query to view all the matching results. If you first obtain
+   the name of the resource by using the `kubectl get` command, you can then
+   view the log files for that specific resource. [See the examples below for
+   details](#examples).
 
-You can query and view the following Knative resources:
+View log files for specific Knative resources with the following search queries:
 
-| Resource            | Query           |
-| ------------------- | --------------- |
-| [`Configuration`][1]     | `kubernetes.labels.serving_knative_dev\/configuration: RESOURCE_NAME` |
-| [`Build`][2]             | `kubernetes.labels.build\-name: [RESOURCE_NAME]` <br> Tip: Your `Build` resource names are also located in their [`.yaml` configuration files](https://github.com/knative/docs/blob/master/build/builds.md#syntax). |
-| [`Revision`][3]          | `kubernetes.labels.serving_knative_dev\/revision: [RESOURCE_NAME]` |
-| Requests | `tag: "requestlog.logentry.istio-system"` <br> Requests in Knative are managed by the Istio service mesh and logs files are located in the `istio-system' [namespace][4]. Learn how to trace requests in [Accessing Traces](./accessing-traces.md). |
+| Resource             | Search Query           |
+| -------------------- | ---------------------- |
+| [`Configuration`][1] | `kubernetes.labels.serving_knative_dev\/configuration: RESOURCE_NAME` |
+| [`Build`][2]         | `kubernetes.labels.build\-name: [RESOURCE_NAME]` <br> Tip: Your `Build` resource names are also located in their [`.yaml` configuration files](https://github.com/knative/docs/blob/master/build/builds.md#syntax). |
+| [`Revision`][3]      | `kubernetes.labels.serving_knative_dev\/revision: [RESOURCE_NAME]` |
+| Requests             | `tag: "requestlog.logentry.istio-system"` <br> Requests in Knative are managed by the Istio service mesh and logs files are located in the `istio-system' [namespace][4]. To learn how to trace requests, see [Accessing Traces](./accessing-traces.md). |
 
 [1]:https://github.com/knative/serving/blob/master/docs/spec/spec.md#configuration
 [2]:https://github.com/knative/docs/tree/master/build
 [3]:https://github.com/knative/serving/blob/master/docs/spec/spec.md#revision
 [4]:https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+
+Where [RESOURCE_NAME] in the table above is the unique name of the resource in
+your Knative cluster. To retrieve the names of your Knative resources, you can
+run the `kubectl get` command, for example:
+
+  ```shell
+  kubectl get [RESOURCE_TYPE]
+  ```
+
+   where [RESOURCE_TYPE] is either `configuration`, `build`, or `revision`.
 
 ### Examples
 
