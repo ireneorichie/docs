@@ -1,15 +1,15 @@
-# Installing the Monitoring, Logging, and Tracing Plugin
+# Installing an Observability Plugin
 
-You can install a monitoring plugin in your Knative Serving installation to
+You can install an observability plugin in your Knative Serving installation to
 enable data logging, metrics, and request tracing in that cluster.
 
-The monitoring plugin is based on Fluentd, and Knative Serving currently
+The observability plugin is based on Fluentd, and Knative Serving currently
 supports a
 [daemonset](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)
 configuration for either Elasticsearch or Stackdriver.
 [Learn more about the Fluentd container image and requirements](./fluentd/README.md).
 
-If you already have a monitoring plugin installed and configured, see the
+If you already have an observability plugin installed and configured, see the
 following topics for details about accessing the data:
 
   * [Accessing Logs](./accessing-logs.md)
@@ -18,20 +18,20 @@ following topics for details about accessing the data:
 
 Optionally, you can
 [customize the default output configuration](setting-up-a-logging-plugin.md)
-of your monitoring plugin.
+of your observability plugin.
 
 ## Table of contents
 
 * [Before you begin](#before-you-begin)
-* [Viewing which monitoring plugin is installed](#viewing-which-monitoring-plugin-is-installed)
-* [Choosing and installing a monitoring plugin](#choosing-and-installing-a-monitoring-plugin)
+* [Viewing which observability plugin is installed](#viewing-which-observability-plugin-is-installed)
+* [Choosing and installing an observability plugin](#choosing-and-installing-a-observability-plugin)
   * [Monitoring with Elasticsearch](#monitoring-with-elasticsearch-kibana-prometheus-and-grafana)
   * [Monitoring with Stackdriver](#monitoring-with-stackdriver-prometheus-and-grafana)
-* [Uninstalling your monitoring plugin](#uninstalling-your-monitoring-plugin)
+* [Uninstalling your observability plugin](#uninstalling-your-observability-plugin)
 
 ## Before you begin
 
-* Before you can install a monitoring plugin, you need to have
+* Before you can install an observability plugin, you need to have
   [Knative Serving installed and running](https://github.com/knative/docs/tree/master/install).
 
 * Ensure that you have the Knative Serving repository cloned. Some commands in
@@ -46,24 +46,24 @@ of your monitoring plugin.
      git checkout v0.2.2
      ```
 
-* Before trying to install a monitoring plugin, you should first
-  [check to see if a monitoring plugin is already
-  installed](#viewing-which-monitoring-plugin-is-installed).
+* Before trying to install an observability plugin, you should first
+  [check to see if plugin is already installed on your cluster](#viewing-which-oberservability-plugin-is-installed).
 
-## Viewing which monitoring plugin is installed
+## Viewing which observability plugin is installed
 
-To determine if you already have a monitoring plugin installed, you can run the
-following command to list all the monitoring related pods in your Knative
-cluster:
+To determine if you already have an observability plugin installed, you can run the
+`kubectl get` command to list all the pods in `knative-monitoring` namespace:
 
   ```shell
   kubectl get pods --namespace knative-monitoring
   ```
 
-* If no pods are listed,
-  [learn how to choose and install a monitoring plugin](#choosing-and-installing-a-monitoring-plugin).
+  Note that the suffix of each pod differs in every cluster.
 
-* If either monitoring plugin is installed, the following common pods are
+* If no pods are listed,
+  [learn how to choose and install an observability plugin](#choosing-and-installing-a-monitoring-plugin).
+
+* If either observability plugin is installed, the following common pods are
   listed:
 
     ```shell
@@ -94,9 +94,9 @@ cluster:
       [Stackdriver](#monitoring-with-stackdriver-prometheus-and-grafana) section
       for more information if only the common set of pods are listed.
 
-  Note that the suffix of each pod will differ for every Knative cluster.
 
-## Choosing and installing a monitoring plugin
+
+## Choosing and installing an observability plugin
 
 You can choose from either an
 [Elasticsearch and Kibana](#monitoring-with-elasticsearch-kibana-prometheus-and-grafana)
@@ -106,12 +106,12 @@ to monitor your Knative cluster. Both types of monitoring
 plugin utilize Prometheus and Grafana for visualizing metrics data.
 
 **Important**: Simultaneously monitoring your Knative cluster with both
-Elasticsearch and Stackdriver is unsupported. Only a single monitoring plugin
+Elasticsearch and Stackdriver is unsupported. Only a single observability plugin
 can be configured and run per Knative Serving installation.
 
-If you have a monitoring plugin installed but want to switch to the other type,
+If you have an observability plugin installed but want to switch to another plugin,
 you must first
-[uninstall the existing monitoring plugin](#uninstalling-your-monitoring-plugin)
+[uninstall the existing observability plugin](#uninstalling-your-observability-plugin)
 before you can install another.
 
 
@@ -126,36 +126,32 @@ is supported across the various Knative cluster hosts.
 **Note**: This daemonset configuration gets installed by default during the
 Knative Serving component installation.
 
-#### Installing the Elasticsearch and Kibana based monitoring plugin
+#### Installing the Elasticsearch and Kibana based observability plugin
 
-Use the following steps to install and run a daemonset configuration for a
-monitoring plugin based on Elasticsearch, Kibana, Prometheus, and Grafana:
+Use the following steps to install and run a daemonset configuration for an
+observability plugin based on Elasticsearch, Kibana, Prometheus, and Grafana:
 
 1. Choose a Fluentd based container image to use for the daemonset that runs the
-   monitoring plugin:
+   observability plugin:
 
    * You can use the daemonset configuration files provided in the
      `knative/serving` repository, which use the public
      [`k8s.gcr.io/fluentd-elasticsearch:v2.0.4`](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image)
      container image.
 
-   * Alternatively, you can specify and configure a daemonset to create a custom
-     container image for a Fluentd-based monitoring plugin. Your custom
-     container image must meet the
-     [Knative requirements for Fluentd](./fluentd/README.md). Your custom
-     Fluentd container image must also be hosted in a container registry that
-     is accessible by your Knative cluster.
+   * Alternatively, you can create a daemonset that usese a custom container image.
+     Your custom Fluentd-based observability plugin must meet the
+     [Knative requirements for Fluentd](./fluentd/README.md).
 
-     Tip: You can create a custom Fluentd container image by reusing and
-     modifying the existing daemonset configuration file:
+     After creating your custom Fluentd container image, you must hosted that image
+     in a container registry that is accessible by your cluster.
+
+     Tip: You can create a custom Fluentd container image by modifying the
+     pre-configured daemonset file:
      [`fluentd-ds.yaml`](https://github.com/knative/serving/blob/master/third_party/config/monitoring/common/kubernetes/fluentd/fluentd-ds.yaml)
 
-     For example, you must modify the `image` and `version` elements in the
-     `fluentd-ds.yaml` file so that they align with your custom image. If your
-     custom Fluentd image had the fake `CUSTOM-VERSION` and
-     `gcr.io/FLUENT-CUSTOM-IMAGE` values, then you would modify the
-     corresponding `image` and `version` elements throughout the
-     `fluentd-ds.yaml` file:
+     For example, you can customize the `image` and `version` elements throughout the
+     `fluentd-ds.yaml` file so that they define your custom container image:
 
        ```shell
        ...
@@ -169,10 +165,12 @@ monitoring plugin based on Elasticsearch, Kibana, Prometheus, and Grafana:
        ...
        ```
 
-1. Optional: Customize the default monitoring plugin output. You can skip this
+       where `CUSTOM-VERSION` and `gcr.io/FLUENT-CUSTOM-IMAGE` are example values.
+
+1. Optional: Customize the default observability plugin output. You can skip this
    step if you want to keep the default settings.
 
-   To modify the default settings and specify how you want the monitoring plugin
+   To modify the default settings and specify how you want the observability plugin
    to output your data, follow the instructions in the
    ["Setting up a logging plugin"](setting-up-a-logging-plugin.md)
    topic.
@@ -238,36 +236,32 @@ are true:
  * Your Knative Serving component is not hosted on a GCP based cluster.
  * You want to send logs to another GCP project.
 
-#### Installing the Stackdriver based monitoring plugin
+#### Installing the Stackdriver based observability plugin
 
 Use the following steps to install and run a daemonset configuration for a
-monitoring plugin based on Stackdriver, Prometheus, and Grafana:
+observability plugin based on Stackdriver, Prometheus, and Grafana:
 
 1. Choose a Fluentd based container image to use for the daemonset that runs the
-   monitoring plugin:
+   observability plugin:
 
    * You can use the daemonset configuration files provided in the
      `knative/serving` repository, which use the public
      [`k8s.gcr.io/fluentd-elasticsearch:v2.0.4`](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image)
      container image.
 
-   * Alternatively, you can specify and configure a daemonset to create a custom
-     container image for a Fluentd-based monitoring plugin. Your custom
-     container image must meet the
-     [Knative requirements for Fluentd](./fluentd/README.md). Your custom
-     Fluentd container image must also be hosted in a container registry that
-     is accessible by your Knative cluster.
+   * Alternatively, you can create a daemonset that usese a custom container image.
+     Your custom Fluentd-based observability plugin must meet the
+     [Knative requirements for Fluentd](./fluentd/README.md).
 
-     Tip: You can create a custom Fluentd container image by reusing and
-     modifying the existing daemonset configuration file:
+     After creating your custom Fluentd container image, you must hosted that image
+     in a container registry that is accessible by your cluster.
+
+     Tip: You can create a custom Fluentd container image by modifying the
+     pre-configured daemonset file:
      [`fluentd-ds.yaml`](https://github.com/knative/serving/blob/master/third_party/config/monitoring/common/kubernetes/fluentd/fluentd-ds.yaml)
 
-     For example, you must modify the `image` and `version` elements in the
-     `fluentd-ds.yaml` file so that they align with your custom image. If your
-     custom Fluentd image had the fake `CUSTOM-VERSION` and
-     `gcr.io/FLUENT-CUSTOM-IMAGE` values, then you would modify the
-     corresponding `image` and `version` elements throughout the
-     `fluentd-ds.yaml` file:
+     For example, you can customize the `image` and `version` elements throughout the
+     `fluentd-ds.yaml` file so that they define your custom container image:
 
        ```shell
        ...
@@ -281,10 +275,12 @@ monitoring plugin based on Stackdriver, Prometheus, and Grafana:
        ...
        ```
 
-1. Optional: Customize the default monitoring plugin output. You can skip this
+       where `CUSTOM-VERSION` and `gcr.io/FLUENT-CUSTOM-IMAGE` are example values.
+
+1. Optional: Customize the default observability plugin output. You can skip this
    step if you want to keep the default settings.
 
-   To modify the default settings and specify how you want the monitoring plugin
+   To modify the default settings and specify how you want the observability plugin
    to output your data, follow the instructions in the
    ["Setting up a logging plugin"](setting-up-a-logging-plugin.md)
    topic.
@@ -333,18 +329,19 @@ monitoring plugin based on Stackdriver, Prometheus, and Grafana:
    * [Accessing Metrics](./accessing-metrics.md)
    * [Accessing Traces](./accessing-traces.md)
 
-## Uninstalling your monitoring plugin
+## Uninstalling your observability plugin
 
-You must completely uninstall the daemonset for your monitoring plugin before
-you can install and run a different monitoring plugin.
+You must completely uninstall the daemonset for your observability plugin before
+you can install and run a different plugin.
 
-To remove all of the pods of the monitoring plugin from your Knative Serving
+To remove all of the pods of the observability plugin from your Knative Serving
 installation, run the following commands:
 
-1. Set a variable to specify which monitoring plugin you wanted uninstalled:
+1. Create a command line variable to specify which observability plugin you
+   want removed from your cluster:
 
    Tip: To verify which plugin is installed, see
-   [Viewing which monitoring plugin is installed](#viewing-which-monitoring-plugin-is-installed).
+   [Viewing which observability plugin is installed](#viewing-which-observability-plugin-is-installed).
 
     * If the Elasticsearch and Kibana pods are installed, run the following
       command to set a variable for the Elasticsearch daemonset configuration:
@@ -359,8 +356,7 @@ installation, run the following commands:
       export FLUENTD_DAEMONSET_CONFIG="config/monitoring/150-stackdriver"
       ```
 
-1. Run the following command to uninstall the monitoring plugin that you
-   specified in the `FLUENTD_DAEMONSET_CONFIG` variable:
+1. Run the following command to uninstall the observability plugin:
 
     ```shell
     kubectl delete --filename $FLUENTD_DAEMONSET_CONFIG \
@@ -370,7 +366,7 @@ installation, run the following commands:
     ```
 
 1. You can run the following command to verify that all the pods of the
-   monitoring plugin have been deleted:
+   observability plugin have been deleted:
 
     ```shell
     kubectl get pods --namespace knative-monitoring
