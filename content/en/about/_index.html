@@ -1,0 +1,60 @@
+---
+title: About Knative
+linkTitle: About
+menu:
+  main:
+    weight: 10
+
+---
+
+
+{{< blocks/cover title="About Knative" image_anchor="bottom" height="min" >}}
+
+<p class="lead mt-5">Learn about what Knative is and if you should get involved.</p>
+
+{{< /blocks/cover >}}
+
+{{% blocks/lead %}}
+Knative (pronounced kay-nay-tiv) extends Kubernetes to provide a set of middleware
+components that are essential to build modern, source-centric, and container-based
+applications that can run anywhere: on premises, in the cloud, or even in a third-party
+data center.
+
+The Knative project attempts to identify common patterns and
+codify the best practices that are shared by successful real-world Kubernetes-based frameworks and
+applications.
+
+Developers on Knative can use familiar idioms, languages, and frameworks to deploy any workload: functions, applications, or containers.
+{{% /blocks/lead %}}
+
+
+{{< blocks/section >}}
+<div class="col-12">
+<h1 class="text-center">Build and use, what you want</h1>
+
+Install and use individual Knative components:
+
+<ul>
+  <li><a href="https://github.com/knative/build"><b>Build</b> - Source-to-container build orchestration</a></li>
+  <li><a href="https://github.com/knative/eventing"><b>Eventing</b> - Management and delivery of events</a></li>
+  <li><a href="https://github.com/knative/serving"><b>Serving</b> - Request-driven compute that can scale to zero</a></li>
+</ul>
+</div>
+{{< /blocks/section >}}
+
+
+
+{{< blocks/section >}}
+
+<div class="col-12">
+<h1 class="text-center">Solve your everyday tasks</h1>
+<ul>
+  <li><a href="./install/getting-started-knative-app">Deploying a container</li>
+  <li><a href="./serving/samples/source-to-url-go/">Orchestrating source-to-URL workflows on Kubernetes</a></li>
+  <li><a href="./serving/samples/blue-green-deployment">Routing and managing traffic with blue/green deployment</a></li>
+  <li><a href="./serving/samples/autoscale-go">Automatic scaling and sizing workloads based on demand</a></li>
+  <li><a href="./eventing/samples/event-flow/README">Binding running services to eventing ecosystems</a></li>
+</ul>
+</div>
+
+{{< /blocks/section >}}
