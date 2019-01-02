@@ -69,7 +69,7 @@ commonsLicense = "Creative Commons Attribution 4.0 License"
 commons_license = "https://creativecommons.org/licenses/by/4.0/"
 apacheLicense = "Apache 2.0 License"
 apache_license = "https://www.apache.org/licenses/LICENSE-2.0"
-github_repo = "https://github.com/knative"
+github_repo = "https://github.com/knative/docs"
 
 # Google Custom Search Engine ID. Remove or comment out to disable search.
 gcs_engine_id = "017267796498475278487:r6dlph2ctw0"
