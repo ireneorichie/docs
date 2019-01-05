@@ -11955,7 +11955,9 @@ readers do not read off random characters that represent icons */
     .td-navbar-cover {
       background: transparent !important; }
       .td-navbar-cover .nav-link {
-        text-shadow: 1px 1px 2px #403F4C; } }
+        text-shadow: 1px 1px 2px #403F4C; }
+      .td-navbar-cover .brand-name {
+        display: none; } }
   .td-navbar-cover.navbar-bg-onscroll .nav-link {
     text-shadow: none; }
 
@@ -11972,17 +11974,25 @@ readers do not read off random characters that represent icons */
     .td-navbar {
       position: fixed;
       top: 0;
-      width: 100%; } }
+      width: 100%; }
+      .td-navbar .brand-name {
+        display: none; } }
+  @media (max-width: 991.98px) {
+    .td-navbar .navbar-logo {
+      display: none; } }
   .td-navbar .navbar-brand {
     text-transform: none;
     text-align: middle; }
     .td-navbar .navbar-brand .nav-link {
       display: inline-block;
       margin-right: -30px; }
-    .td-navbar .navbar-brand svg {
+    .td-navbar .navbar-brand .navbar-logo svg {
       display: inline-block;
-      margin: 0 10px;
-      height: 30px; }
+      position: absolute;
+      z-index: 33;
+      margin: -39px 10px 0 10px;
+      padding: 10px;
+      height: 95px; }
   .td-navbar .nav-link {
     text-transform: none;
     font-weight: 700; }
@@ -12015,7 +12025,9 @@ readers do not read off random characters that represent icons */
           padding-bottom: 2rem;
           overflow-x: auto;
           white-space: nowrap;
-          -webkit-overflow-scrolling: touch; } }
+          -webkit-overflow-scrolling: touch; }
+      .td-navbar .navbar-logo {
+        display: none; } }
 
 .td-sidebar-nav {
   padding-right: 0.5rem;

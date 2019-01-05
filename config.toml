@@ -3,8 +3,11 @@ title = "Knative"
 
 enableRobotsTXT = true
 
+# Ignore files when rendering
+#ignoreFiles = [ "\\.foo$", "\\.boo$" ]
+
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
-theme = "docsy"
+theme = ["docsy"]
 
 # Will give values to .Lastmod etc.
 enableGitInfo = true
@@ -28,7 +31,7 @@ pygmentsUseClassic = false
 pygmentsStyle = "tango"
 
  # First one is picked as the Twitter card image if not set on page.
- #images = ["images/project-illustration.png"]
+ #images = "/docs/images/...."
 
 # Configure how URLs look like per section.
 [permalinks]
@@ -57,10 +60,16 @@ id = "UA-00000000-0"
 [languages]
 [languages.en]
 title = "Knative"
-description = "Provides a set of components for building modern, source-centric, and container-based applications that can run anywhere."
+description = "Knative provides a set of components for building modern, source-centric, and container-based applications that can run anywhere."
 languageName ="English"
 # Weight used for sorting.
 weight = 1
+# Example of another language: Norwegian
+#[languages.no]
+#title = "Docsy"
+#description = "Docsy er operativsystem for skyen"
+#languageName ="Norsk"
+#contentDir = "content/no"
 
 # Everything below this are Site Params
 
@@ -69,10 +78,51 @@ commonsLicense = "Creative Commons Attribution 4.0 License"
 commons_license = "https://creativecommons.org/licenses/by/4.0/"
 apacheLicense = "Apache 2.0 License"
 apache_license = "https://www.apache.org/licenses/LICENSE-2.0"
+
+#TODO: replace with Knative/docs
 github_repo = "https://github.com/RichieEscarez/docs"
 
 # Google Custom Search Engine ID. Remove or comment out to disable search.
 gcs_engine_id = "017267796498475278487:r6dlph2ctw0"
+
+# Product versions
+
+# Site default
+# TODO: Change this to the "last release" -> master should be v.next
+version = "master (0.2.x)"
+githubbranch = "master"
+
+# Create a separate [[params.versions]] set for every version / doc set branch
+# Use the ghbranchname param for specifying the GitHub branchname ->
+# Example: [thisisalink](https://github.com/..../tree/{{< params "ghbranchname" >}}/....)
+
+# Latest release
+[[params.versions]]
+  version = "master (0.2.x)"
+  ghbranchname = "master"
+  url = "https://knative-v1.netlify.com/"
+
+# In development (v.next) release
+#[[params.versions]] Example to use next
+#  version = "master (v.next)"
+#  ghbranchname = "master"
+#  url = "https://knative.dev/v0.3/docs"
+
+# TODO: Add other branches when those doc branches get created
+#[[params.versions]] Example to use next
+#  version = "v0.3.x"
+#  ghbranchname = "v0.3"
+#  url = "https://knative.dev/v0.3/docs"
+
+#[[params.versions]] Example to use next
+#  version = "v0.2.x"
+#  ghbranchname = "v0.2"
+#  url = "https://knative.dev/v0.2/docs"
+
+[[params.versions]]
+  version = "v0.1.x"
+  ghbranchname = "v0.1"
+  url = "https://github.com/knative/docs/tree/v0.1.x"
 
 # User interface configuration
 [params.ui]

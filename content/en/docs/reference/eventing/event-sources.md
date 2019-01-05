@@ -1,9 +1,3 @@
----
-title: "Knative Eventing-sources"
-linkTitle: "Eventing-sources"
-weight: 40
-type: "docs"
----
 <h1>API Reference Documentation</h1>
 <h2>
 sources.eventing.knative.dev

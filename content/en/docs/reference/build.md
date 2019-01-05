@@ -1,9 +1,3 @@
----
-title: "Knative Build Component"
-linkTitle: "Build API"
-weight: 20
-type: "docs"
----
 <h1>API Reference Documentation</h1>
 <h2>
 build.knative.dev

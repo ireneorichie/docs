@@ -5,5 +5,4 @@ weight: 40
 type: "docs"
 ---
 
-{{% readfile file="/reference/eventing/eventing.md" %}}
-
+{{% readfile file="/docs/reference/eventing/eventing.md" %}}

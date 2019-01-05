@@ -1,9 +1,3 @@
----
-title: "Knative Serving Component"
-linkTitle: "Build API"
-weight: 60
-type: "docs"
----
 <h1>API Reference Documentation</h1>
 <h2>
 networking.internal.knative.dev
