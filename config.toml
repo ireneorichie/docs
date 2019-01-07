@@ -82,6 +82,7 @@ apache_license = "https://www.apache.org/licenses/LICENSE-2.0"
 #TODO: replace with Knative/docs
 github_repo = "https://github.com/RichieEscarez/docs"
 
+#TODO: Update GCS Property - https://cse.google.com/cse/setup/basic?cx=017267796498475278487:r6dlph2ctw0
 # Google Custom Search Engine ID. Remove or comment out to disable search.
 gcs_engine_id = "017267796498475278487:r6dlph2ctw0"
 
