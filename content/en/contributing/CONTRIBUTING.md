@@ -1,4 +1,8 @@
-# Contributing to Knative
+---
+title: "Contributing to Knative"
+linkTitle: "Contributing"
+weight: 10
+---
 
 So, you want to hack on Knative? Yay!
 
