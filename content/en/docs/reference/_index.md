@@ -1,8 +1,7 @@
-
 ---
 title: "Reference Documentation"
 linkTitle: "API reference"
-weight: 120
+weight: 100
 type: "docs"
 ---
 

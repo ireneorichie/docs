@@ -1,0 +1,21 @@
+<div>
+  <div class="pt-3 pl-4">
+    {{ template "section-tree-nav-section" (dict "page" . "section" .CurrentSection)  }}
+  </div>
+</div>
+{{ define "section-tree-nav-section" }}
+{{ $s := .section }}
+{{ $p := .page }}
+
+<ul>
+  <li>
+    <a href="{{ $s.RelPermalink }}" class="pl-0 pr-2">{{ $s.LinkTitle }}</a>
+  </li>
+  <ul>
+    <li>
+      {{ template "section-tree-nav-section" (dict "page" $p "section" $s) }}
+    </li>
+  </ul>
+</ul>
+
+{{ end }}

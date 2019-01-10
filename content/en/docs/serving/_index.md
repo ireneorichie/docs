@@ -2,7 +2,7 @@
 ---
 title: "Serving Component Documentation"
 linkTitle: "Serving Component"
-weight: 100
+weight: 80
 type: "docs"
 ---
 

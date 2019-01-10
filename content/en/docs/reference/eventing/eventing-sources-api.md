@@ -1,8 +1,8 @@
 ---
 title: "Knative Eventing Sources"
-linkTitle: "Eventing-sources API"
+linkTitle: "Eventing-sources"
 weight: 60
 type: "docs"
 ---
 
-{{% readfile file="/docs/reference/eventing/event-sources.md" %}}
+{{% readfile file="/docs/reference/eventing/eventing-sources.md" %}}
