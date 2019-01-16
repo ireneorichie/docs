@@ -4,7 +4,7 @@ title = "Knative"
 enableRobotsTXT = true
 
 # Ignore files when rendering
-#ignoreFiles = [ "\\.foo$", "\\.boo$" ]
+ignoreFiles = [ "docs/README.md", "docs/reference/build.md", "docs/reference/serving.md", "docs/reference/eventing/eventing.md" ]
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
 theme = ["docsy"]

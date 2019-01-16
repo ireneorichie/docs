@@ -1,4 +1,3 @@
-
 ---
 title: "Eventing-sources Documentation"
 linkTitle: "Eventing-sources"

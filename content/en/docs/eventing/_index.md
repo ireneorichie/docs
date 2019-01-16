@@ -1,4 +1,3 @@
-
 ---
 title: "Eventing Component Documentation"
 linkTitle: "Eventing Component"

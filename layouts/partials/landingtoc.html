@@ -1,21 +1,30 @@
+{{/* In page TOC for landing pages (_index.md/.html) that exclude "readfile". */}}
+{{ if not (.HasShortcode "readfile") }}
 <div>
-  <div class="pt-3 pl-4">
-    {{ template "section-tree-nav-section" (dict "page" . "section" .CurrentSection)  }}
+  <div>
+    {{ template "inpage-toc" (dict "page" . "section" .CurrentSection) }}
   </div>
 </div>
-{{ define "section-tree-nav-section" }}
+{{ end }}
+{{ define "inpage-toc" }}
 {{ $s := .section }}
 {{ $p := .page }}
-
-<ul>
-  <li>
-    <a href="{{ $s.RelPermalink }}" class="pl-0 pr-2">{{ $s.LinkTitle }}</a>
+{{ $active := eq $p.CurrentSection $s }}
+{{ if or (not $active) (eq $p.URL .URL) }}<ul class="td-sidebar-nav__section">
+  <li class="td-sidebar-nav__section" >
+    <a  href="{{ $s.RelPermalink }}">{{ $s.LinkTitle }}</a>
   </li>
   <ul>
-    <li>
-      {{ template "section-tree-nav-section" (dict "page" $p "section" $s) }}
+    <li>{{ end }}
+      {{ $pages := (union $s.Pages $s.Sections).ByWeight }}
+      {{ range $pages }}
+      {{ if .IsPage }}
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      {{ else }}
+      {{ template "inpage-toc" (dict "page" $p "section" . ) }}
+      {{ end }}
+      {{ end }}
     </li>
   </ul>
-</ul>
-
+{{ if not $active }}</ul>{{ end }}
 {{ end }}

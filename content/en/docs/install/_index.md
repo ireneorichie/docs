@@ -1,4 +1,3 @@
-
 ---
 title: "Knative Installation Information"
 linkTitle: "Installing"

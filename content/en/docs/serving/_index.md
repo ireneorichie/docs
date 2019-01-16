@@ -1,4 +1,3 @@
-
 ---
 title: "Serving Component Documentation"
 linkTitle: "Serving Component"

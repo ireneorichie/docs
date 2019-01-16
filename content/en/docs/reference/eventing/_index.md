@@ -1,7 +1,7 @@
 ---
 title: "Knative Eventing Component"
 linkTitle: "Eventing API"
-weight: 40
+weight: 30
 type: "docs"
 ---
 

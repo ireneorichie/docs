@@ -1,4 +1,3 @@
-
 ---
 title: "Build Component Documentation"
 linkTitle: "Build Component"
