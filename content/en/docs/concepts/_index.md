@@ -1,5 +1,7 @@
 ---
-title: "Concepts"
+title: "Knative Concepts"
 linkTitle: "Concepts"
-weight: 80
+weight: 89
 ---
+
+Learn more about Knative.

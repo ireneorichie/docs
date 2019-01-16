@@ -3,8 +3,20 @@ title = "Knative"
 
 enableRobotsTXT = true
 
-# Ignore files when rendering
-ignoreFiles = [ "docs/README.md", "docs/reference/build.md", "docs/reference/serving.md", "docs/reference/eventing/eventing.md" ]
+# Ignore files when rendering (to hide from Nav tree and sitemap)
+# Add files here that you "include" in other files using the 'readfile' shortcode
+ignoreFiles = [
+  "docs/README.md",
+  "docs/build/README.md",
+  "docs/eventing/README.md",
+  "docs/eventing/sources/README.md",
+  "docs/install/README.md",
+  "docs/serving/README.md",
+  "docs/reference/build.md",
+  "docs/reference/serving.md",
+  "docs/serving/samples/README.md",
+  "docs/reference/eventing/eventing.md",
+  "docs/reference/eventing/eventing-sources.md" ]
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
 theme = ["docsy"]

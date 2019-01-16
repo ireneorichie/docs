@@ -1,6 +1,6 @@
 ---
 title: "Knative Installation Information"
-linkTitle: "Installing"
+linkTitle: "Installation"
 weight: 20
 type: "docs"
 ---

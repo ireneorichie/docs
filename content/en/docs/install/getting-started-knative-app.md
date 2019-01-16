@@ -1,4 +1,9 @@
-# Getting Started with Knative App Deployment
+---
+title: "Getting Started with Knative Serving: App Deployment"
+linkTitle: "Deploying an App"
+weight: 30
+type: "docs"
+---
 
 This guide shows you how to deploy an app using Knative, then interact with it
 using cURL requests.

@@ -1,9 +1,9 @@
 ---
-title: "Reference Documentation"
-linkTitle: "API reference"
+title: "Knative Reference Documentation"
+linkTitle: "Reference"
 weight: 100
 type: "docs"
 ---
 
-Knative reference documentation.
+Knative API and reference documentation.
 

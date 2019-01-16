@@ -1,4 +1,6 @@
-# Builders
+---
+title: Builders
+---
 
 This document defines builder images and the conventions to which they are
 expected to adhere.

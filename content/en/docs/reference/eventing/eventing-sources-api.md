@@ -1,6 +1,6 @@
 ---
 title: "Knative Eventing Sources"
-linkTitle: "Eventing-sources"
+linkTitle: "Eventing-sources API"
 weight: 50
 type: "docs"
 ---

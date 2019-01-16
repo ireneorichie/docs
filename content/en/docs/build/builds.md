@@ -1,4 +1,6 @@
-# Knative `Build` resources
+---
+title: Knative `Build` resources
+---
 
 Use the `Build` resource object to create and run on-cluster processes to
 completion.

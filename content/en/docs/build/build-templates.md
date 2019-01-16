@@ -1,4 +1,6 @@
-# Build Templates
+---
+title: Build Templates
+---
 
 This document defines "Build Templates" and their capabilities.
 

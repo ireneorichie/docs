@@ -1,4 +1,6 @@
-# Installing the Knative Build component
+---
+title: Installing the Knative Build component
+---
 
 Before you can run a Knative Build, you must install the Knative Build component
 in your Kubernetes cluster. Use this page to add the Knative Build component to

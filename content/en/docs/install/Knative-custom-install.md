@@ -1,7 +1,8 @@
 ---
 title: "Performing a Custom Knative Installation"
 linkTitle: "Custom Install"
-weight: 100
+weight: 80
+type: "docs"
 ---
 
 Use this guide to perform custom installations of Knative on your existing

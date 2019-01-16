@@ -1,4 +1,6 @@
-# Creating a simple Knative Build
+---
+title: Creating a simple Knative Build
+---
 
 Use this page to learn how to create and then run a simple build in Knative. In
 this topic, you create a Knative Build configuration file for a simple app,
