@@ -1,5 +1,4 @@
-This change is from the [submodule](https://github.com/RichieEscarez/docs) called from [here](https://github.com/RichieEscarez/knative.github.io/)
-
+TEST # 1001
 
 Knative (pronounced kay-nay-tiv) extends Kubernetes to provide a set of
 middleware components that are essential to build modern, source-centric, and
