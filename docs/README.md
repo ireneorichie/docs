@@ -11,10 +11,18 @@ patterns and codify the best practices that are shared by successful,
 real-world, Kubernetes-based frameworks and applications. Knative components
 focus on solving mundane but difficult tasks such as:
 
-- <a href="./install/getting-started-knative-app">Deploying a container</a>
-- <a href="install/getting-started-knative-app">Deploying a container</a>
-- <a href="./install/getting-started-knative-app.md">Deploying a container</a>
-- <a href="install/getting-started-knative-app.md">Deploying a container</a>
+- <a href="./install/getting-started-knative-app">Deploying a container (./ no .md)</a>
+- <a href="install/getting-started-knative-app">Deploying a container (no initlal / no .md)</a>
+- <a href="./install/getting-started-knative-app.md">Deploying a container (./ w/ .md)</a>
+- <a href="install/getting-started-knative-app.md">Deploying a container (no initial ./ w/ .md)</a>
+
+
+- <a href="../docs/install/getting-started-knative-app">Deploying a container (./ no .md)</a>
+- <a href="../../docs/install/getting-started-knative-app">Deploying a container (no initlal / no .md)</a>
+- <a href="../docs/install/getting-started-knative-app.md">Deploying a container (./ w/ .md)</a>
+- <a href="../../docs/install/getting-started-knative-app.md">Deploying a container (no initial ./ w/ .md)</a>
+
+
 - <a href="serving/samples/source-to-url-go/">Orchestrating source-to-URL workflows on Kubernetes</a>
 - <a href="./serving/samples/blue-green-deployment.md">Routing and managing traffic with blue/green deployment</a>
 - <a href="./serving/samples/autoscale-go">Scaling automatically and sizing workloads based on demand</a>
