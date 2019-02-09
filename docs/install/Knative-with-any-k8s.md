@@ -1,4 +1,8 @@
-# Knative Install on a Kubernetes Cluster
+---
+title: "Install on a Kubernetes Cluster"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 15
+---
 
 This guide walks you through the installation of the latest version of Knative
 using pre-built images.
@@ -50,14 +54,15 @@ rerun the command to see the current status.
 ## Installing Knative
 
 The following commands install all available Knative components. To customize
-your Knative installation, see [Performing a Custom Knative Installation](Knative-custom-install.md).
+your Knative installation, see [Performing a Custom Knative Installation](Knative-custom-install/).
 
 1. Run the `kubectl apply` command to install Knative and its dependencies:
     ```bash
     kubectl apply --filename https://github.com/knative/serving/releases/download/v0.3.0/serving.yaml \
     --filename https://github.com/knative/build/releases/download/v0.3.0/release.yaml \
     --filename https://github.com/knative/eventing/releases/download/v0.3.0/release.yaml \
-    --filename https://github.com/knative/eventing-sources/releases/download/v0.3.0/release.yaml
+    --filename https://github.com/knative/eventing-sources/releases/download/v0.3.0/release.yaml \
+    --filename https://github.com/knative/serving/releases/download/v0.3.0/monitoring.yaml
     ```
 1. Monitor the Knative components until all of the components show a
    `STATUS` of `Running`:
@@ -75,11 +80,11 @@ Now that your cluster has Knative installed, you can see what Knative has to
 offer.
 
 To deploy your first app with Knative, follow the step-by-step
-[Getting Started with Knative App Deployment](getting-started-knative-app.md)
+[Getting Started with Knative App Deployment](getting-started-knative-app/)
 guide.
 
 To get started with Knative Eventing, pick one of the
-[Eventing Samples](../eventing/samples/) to walk through.
+[Eventing Samples](../../eventing/samples/) to walk through.
 
 To get started with Knative Build, read the
-[Build README](../build/README.md), then choose a sample to walk through.
+[Build README](../../build/), then choose a sample to walk through.

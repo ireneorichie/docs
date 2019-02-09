@@ -1,8 +1,7 @@
 ---
-title: "Build Component Documentation"
+title: "Knative Build"
 linkTitle: "Build Component"
-weight: 40
-type: "docs"
+weight: 20
 ---
 
-Knative Build component documentation.
+{{% readfile file="docs/build/README.md" markdown="true" %}}

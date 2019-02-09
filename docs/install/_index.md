@@ -1,8 +1,7 @@
 ---
-title: "Knative Installation Information"
-linkTitle: "Installation"
+title: "Installing Knative"
+#linkTitle: "Installing"
 weight: 20
-type: "docs"
 ---
 
-Installing Knative.
+{{% readfile file="docs/install/README.md" markdown="true" %}}

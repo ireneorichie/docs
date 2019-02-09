@@ -1,4 +1,3 @@
-# Knative Serving
 
 Knative Serving builds on Kubernetes and Istio to support deploying and serving
 of serverless applications and functions. Serving is easy to get started with
@@ -55,30 +54,30 @@ in the Knative Serving repository.
 
 ## More samples and demos
 
-- [Autoscaling with Knative Serving](./samples/autoscale-go/README.md)
-- [Source-to-URL with Knative Serving](./samples/source-to-url-go/README.md)
-- [Telemetry with Knative Serving](./samples/telemetry-go/README.md)
-- [REST API sample](./samples/rest-api-go/README.md)
+- [Autoscaling with Knative Serving](samples/autoscale-go/)
+- [Source-to-URL with Knative Serving](samples/source-to-url-go/)
+- [Telemetry with Knative Serving](samples/telemetry-go/)
+- [REST API sample](samples/rest-api-go/)
 
 ## Setting up Logging and Metrics
 
-- [Installing Logging, Metrics and Traces](./installing-logging-metrics-traces.md)
-- [Accessing Logs](./accessing-logs.md)
-- [Accessing Metrics](./accessing-metrics.md)
-- [Accessing Traces](./accessing-traces.md)
-- [Setting up a logging plugin](./setting-up-a-logging-plugin.md)
+- [Installing Logging, Metrics and Traces](../installing-logging-metrics-traces/)
+- [Accessing Logs](../accessing-logs/)
+- [Accessing Metrics](../accessing-metrics/)
+- [Accessing Traces](../accessing-traces/)
+- [Setting up a logging plugin](../setting-up-a-logging-plugin/)
 
 ## Debugging Knative Serving issues
 
-- [Debugging Application Issues](./debugging-application-issues.md)
-- [Debugging Performance Issues](./debugging-performance-issues.md)
+- [Debugging Application Issues](../debugging-application-issues/)
+- [Debugging Performance Issues](../debugging-performance-issues/)
 
 ## Configuration and Networking
 
-- [Configuring outbound network access](./outbound-network-access.md)
-- [Configuring cluster local routes](./cluster-local-route.md)
-- [Using a custom domain](./using-a-custom-domain.md)
-- [Assigning a static IP address for Knative on Google Kubernetes Engine](./gke-assigning-static-ip-address.md)
+- [Configuring outbound network access](../outbound-network-access/)
+- [Configuring cluster local routes](../cluster-local-route/)
+- [Using a custom domain](../using-a-custom-domain/)
+- [Assigning a static IP address for Knative on Google Kubernetes Engine](../gke-assigning-static-ip-address/)
 
 ## Known Issues
 

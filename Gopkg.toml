@@ -2,16 +2,8 @@
 # for detailed Gopkg.toml documentation.
 
 required = [
-<<<<<<< HEAD
   "github.com/knative/test-infra/scripts",
   "github.com/knative/test-infra/tools/dep-collector",
-=======
-  "github.com/knative/test-infra",
-]
-
-ignored = [
-  "github.com/knative/docs/serving/samples/grpc-ping-go*",
->>>>>>> build files
 ]
 
 [prune]
@@ -21,8 +13,4 @@ ignored = [
 
 [[prune.project]]
   name = "github.com/knative/test-infra"
-<<<<<<< HEAD
-=======
-  unused-packages = false
->>>>>>> build files
   non-go = false

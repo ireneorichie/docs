@@ -1,4 +1,8 @@
-# Installing the Knative Build component
+---
+title: "Installing the Knative Build component"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 10
+---
 
 Before you can run a Knative Build, you must install the Knative Build component
 in your Kubernetes cluster. Use this page to add the Knative Build component to
@@ -11,7 +15,7 @@ want, for example Knative serving is not required to create and run builds.
 
 You must have a component of Knative installed and running in your Kubernetes
 cluster. For complete installation instructions, including how to install the
-Knative Build component, see [Installing Knative](../install/README.md).
+Knative Build component, see [Installing Knative](../../install/).
 
 ## Adding the Knative Build component
 
@@ -38,7 +42,7 @@ To add only the Knative Build component to an existing installation:
    time. Use CTRL + C to exit watch mode.
 
 You are now ready to create and run Knative Builds, see
-[Creating a simple Knative Build](../build/creating-builds.md) to get started.
+[Creating a simple Knative Build](../creating-builds/) to get started.
 
 ---
 

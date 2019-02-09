@@ -1,4 +1,3 @@
-# Buildpack Sample App
 
 A sample app that demonstrates using
 [Cloud Foundry](https://www.cloudfoundry.org/) buildpacks on Knative Serving,
@@ -10,7 +9,7 @@ sample app for Cloud Foundry.
 
 ## Prerequisites
 
-- [Install Knative Serving](../../../install/README.md)
+- [Install Knative Serving](../../../../install/)
 
 ## Running
 

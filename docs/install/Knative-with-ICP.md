@@ -1,4 +1,8 @@
-# Knative Install on IBM Cloud Private
+---
+title: "Install on IBM Cloud Private"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 15
+---
 
 This guide walks you through the installation of the latest version of
 [Knative Serving](https://github.com/knative/serving) and
@@ -7,7 +11,7 @@ demonstrates creating and deploying an image of a sample `hello world` app onto
 the newly created Knative cluster on
 [IBM Cloud Private](https://www.ibm.com/cloud/private).
 
-You can find [guides for other platforms here](README.md).
+You can find [guides for other platforms here](../).
 
 ## Before you begin
 
@@ -48,12 +52,13 @@ in IBM Cloud Private to allow the access to the Knative image:
    kubectl edit clusterimagepolicies ibmcloud-default-cluster-image-policy
    ```
 
-2. Update `spec.repositories` by adding `"gcr.io/knative-releases/*"`, for
-   example:
-   ```yaml
-   spec:
-     repositories:
-       - name: "gcr.io/knative-releases/*"
+2. Update `spec.repositories` by adding the following entries, for example:
+    ```yaml
+    spec:
+      repositories:
+      - name: gcr.io/knative-releases/*
+      - name: k8s.gcr.io/*
+      - name: quay.io/*
    ```
 
 #### Update pod security policy
@@ -123,7 +128,7 @@ the`knative-build` and `knative-monitoring` namespaces.
 
 The following commands install all available Knative components as well as the
 standard set of observability plugins. To customize your Knative installation,
-see [Performing a Custom Knative Installation](Knative-custom-install.md).
+see [Performing a Custom Knative Installation](Knative-custom-install/).
 
 1. Run the following commands to install Knative:
 
@@ -156,6 +161,10 @@ see [Performing a Custom Knative Installation](Knative-custom-install.md).
      | sed 's/LoadBalancer/NodePort/' \
      | kubectl apply --filename -
    ```
+   
+   See [Installing logging, metrics, and traces](../../serving/installing-logging-metrics-traces/)
+   for details about installing the various supported observability plug-ins.
+   
 
 1. Monitor the Knative components until all of the components show a
    `STATUS` of `Running`:
@@ -179,7 +188,7 @@ Now that your cluster has Knative installed, you can see what Knative has to
 offer.
 
 To deploy your first app with Knative, follow the step-by-step
-[Getting Started with Knative App Deployment](getting-started-knative-app.md)
+[Getting Started with Knative App Deployment](getting-started-knative-app/)
 guide.
 
 > **Note**: When looking up the IP address to use for accessing your app, you need
@@ -192,10 +201,10 @@ guide.
   ```
 
 To get started with Knative Eventing, walk through one of the
-[Eventing Samples](../eventing/samples/).
+[Eventing Samples](../../eventing/samples/).
 
 To get started with Knative Build, read the
-[Build README](../build/README.md), then choose a sample to walk through.
+[Build README](../../build/), then choose a sample to walk through.
 
 ## Cleaning up
 

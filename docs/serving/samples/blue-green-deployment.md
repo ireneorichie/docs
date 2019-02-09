@@ -1,4 +1,8 @@
-# Routing and managing traffic with blue/green deployment
+---
+title: "Routing and managing traffic with blue/green deployment"
+linkTitle: "Routing and managing traffic"
+weight:
+---
 
 This sample demonstrates updating an application to a new version using a
 blue/green traffic routing pattern. With Knative, you can safely reroute traffic
@@ -9,9 +13,9 @@ configuration.
 
 You need:
 
-- A Kubernetes cluster with [Knative installed](../../install/README.md).
+- A Kubernetes cluster with [Knative installed](../../../install/).
 - (Optional)
-  [A custom domain configured](../../serving/using-a-custom-domain.md) for use
+  [A custom domain configured](../../../serving/using-a-custom-domain/) for use
   with Knative.
 
 Note: The source code for the gcr.io/knative-samples/knative-route-demo image
@@ -81,7 +85,7 @@ route "blue-green-demo" configured
 You'll now be able to view the sample app at
 http://blue-green-demo.default.YOUR_CUSTOM_DOMAIN.com (replace
 `YOUR_CUSTOM_DOMAIN`) with the
-[custom domain](../../serving/using-a-custom-domain.md) you configured for use
+[custom domain](../using-a-custom-domain/) you configured for use
 with Knative.
 
 > Note: If you don't have a custom domain configured for use with Knative, you
@@ -92,7 +96,7 @@ with Knative.
 > and `example.com`, if you haven't configured a custom domain. For example, `[route-name].[namespace].example.com`.
 > You can get the IP address by entering `kubectl get svc istio-ingressgateway --namespace istio-system` (or
 > `kubectl get svc istio-ingressgateway --namespace istio-system` if using Knative 0.2.x or prior versions)
-> and copying the `EXTERNAL-IP` returned by that command. See [Interacting with your app](../../install/getting-started-knative-app.md#interacting-with-your-app)
+> and copying the `EXTERNAL-IP` returned by that command. See [Interacting with your app](../../../install/getting-started-knative-app/#interacting-with-your-app)
 > for more information.
 
 ## Deploying Revision 2 (Green)

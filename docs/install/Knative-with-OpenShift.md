@@ -1,4 +1,8 @@
-# Knative Install on OpenShift
+---
+title: "Install on OpenShift"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 15
+---
 
 This guide walks you through the installation of the latest version of
 [Knative Serving](https://github.com/knative/serving) on an
@@ -6,7 +10,7 @@ This guide walks you through the installation of the latest version of
 demonstrates creating and deploying an image of a sample "hello world" app onto
 the newly created Knative cluster.
 
-You can find [guides for other platforms here](README.md).
+You can find [guides for other platforms here](../).
 
 ## Before you begin
 
@@ -205,11 +209,11 @@ Now that your cluster has Knative installed, you're ready to deploy an app.
 
 If you'd like to follow a step-by-step guide for deploying your first app on
 Knative, check out the
-[Getting Started with Knative App Deployment](getting-started-knative-app.md)
+[Getting Started with Knative App Deployment](getting-started-knative-app/)
 guide.
 
 If you'd like to view the available sample apps and deploy one of your choosing,
-head to the [sample apps](../serving/samples/README.md) repo.
+head to the [sample apps](../../serving/samples/) repo.
 
 > Note: When looking up the IP address to use for accessing your app, you need
 > to look up the NodePort for the `istio-ingressgateway` well as the IP

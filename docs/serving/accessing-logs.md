@@ -1,7 +1,11 @@
-# Accessing logs
+---
+title: "Accessing logs"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 5
+---
 
 If you have not yet installed the logging and monitoring components, go through
-the [installation instructions](./installing-logging-metrics-traces.md) to set
+the [installation instructions](../../installing-logging-metrics-traces/) to set
 up the necessary components first.
 
 ## Kibana and Elasticsearch
@@ -23,7 +27,7 @@ up the necessary components first.
 
   The Discover tab of the Kibana UI looks like this:
 
-  ![Kibana UI Discover tab](./images/kibana-discover-tab-annotated.png)
+  ![Kibana UI Discover tab](../images/kibana-discover-tab-annotated.png)
 
   You can change the time frame of logs Kibana displays in the upper right
   corner of the screen. The main search bar is across the top of the Discover
@@ -34,6 +38,23 @@ up the necessary components first.
   right) > "Refresh fields".
 
 <!-- TODO: create a video walkthrough of the Kibana UI -->
+
+### Accessing stdout/stderr logs
+
+To find the logs sent to `stdout/stderr` from your application in the Kibana UI:
+
+1. Click `Discover` on the left side bar.
+1. Choose `logstash-*` index pattern on the left top.
+1. Input `tag: kubernetes*` in the top search bar then search.
+
+### Accessing request logs
+
+To find the request logs of your application in the Kibana UI :
+
+1. Click `Discover` on the left side bar.
+1. Choose `logstash-*` index pattern on the left top.
+1. Input `tag: "requestlog.logentry.istio-system"` in the top search bar then
+   search.
 
 ### Accessing configuration and revision logs
 
@@ -67,7 +88,7 @@ kubernetes.labels.serving_knative_dev\/revision: <REVISION_NAME>
 
 ### Accessing build logs
 
-To access logs for a [Knative Build](../build/README.md):
+To access logs for a [Knative Build](../../build/):
 
 - Find the build's name in the specified in the `.yaml` file:
 
@@ -126,7 +147,7 @@ userAgent                    curl/7.60.0
 
 ### Accessing end to end request traces
 
-See [Accessing Traces](./accessing-traces.md) page for details.
+See [Accessing Traces](../accessing-traces/) page for details.
 
 ## Stackdriver
 

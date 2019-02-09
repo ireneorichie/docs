@@ -1,4 +1,3 @@
-# gRPC Ping
 
 A simple gRPC server written in Go that you can use for testing.
 
@@ -7,7 +6,7 @@ This sample is dependent on
 
 ## Prerequisites
 
-1. [Install Knative](https://github.com/knative/docs/blob/master/install/README.md)
+1. [Install Knative](../../../../install/)
 1. Install [docker](https://www.docker.com/)
 
 ## Build and run the gRPC server
@@ -25,7 +24,7 @@ docker build \
 docker push "${REPO}/serving/samples/grpc-ping-go"
 
 # Replace the image reference with our published image.
-perl -pi -e "s@github.com/knative/docs/serving/samples/grpc-ping-go@${REPO}/serving/samples/grpc-ping-go@g" serving/samples/grpc-ping-go/*.yaml
+perl -pi -e "s@github.com/knative/docs/docs/serving/samples/grpc-ping-go@${REPO}/serving/samples/grpc-ping-go@g" serving/samples/grpc-ping-go/*.yaml
 
 # Deploy the Knative sample.
 kubectl apply --filename serving/samples/grpc-ping-go/sample.yaml

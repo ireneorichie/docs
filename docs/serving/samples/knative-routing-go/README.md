@@ -1,4 +1,3 @@
-# Routing across Knative Services
 
 This example shows how to map multiple Knative services to different paths under
 a single domain name using the Istio VirtualService concept. Istio is a
@@ -16,7 +15,7 @@ the Login service.
 ## Prerequisites
 
 1. A Kubernetes cluster with
-   [Knative Serving](https://github.com/knative/docs/blob/master/install/README.md)
+   [Knative Serving](../../../../install/)
    installed.
 2. Install
    [Docker](https://docs.docker.com/get-started/#prepare-your-docker-environment).
@@ -27,7 +26,7 @@ the Login service.
 4. Check out the code:
 
 ```
-go get -d github.com/knative/docs/serving/samples/knative-routing-go
+go get -d github.com/knative/docs/docs/serving/samples/knative-routing-go
 ```
 
 ## Setup
@@ -68,7 +67,7 @@ docker push "${REPO}/serving/samples/knative-routing-go"
    configuration file `serving/samples/knative-routing-go/sample.yaml`:
 
    - Manually replace:
-     `image: github.com/knative/docs/serving/samples/knative-routing-go` with
+     `image: github.com/knative/docs/docs/serving/samples/knative-routing-go` with
      `image: <YOUR_CONTAINER_REGISTRY>/serving/samples/knative-routing-go`
 
    Or

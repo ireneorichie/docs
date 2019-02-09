@@ -1,4 +1,9 @@
-# Knative Steering Committee
+---
+title: "Knative steering committee"
+linkTitle: "Steering committee"
+weight: 40
+type: "docs"
+---
 
 The Knative Steering Committee (SC) defines, evolves, and defends the vision,
 values, mission, and scope of the project. _The Steering Committee is a
@@ -13,7 +18,7 @@ work-in-progress._
 - Non-technical project oversight
 
   - Define policy for the creation and administration of community groups,
-    including [Working Groups](WORKING-GROUPS.md) and Committees.
+    including [Working Groups](WORKING-GROUPS/) and Committees.
 
   - Define and evolve project governance structures and policies, including
     project role assignment and contributor promotion.

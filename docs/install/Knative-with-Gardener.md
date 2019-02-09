@@ -1,15 +1,19 @@
-# Knative Install on [Gardener](https://github.com/gardener)
+---
+title: "Install on Gardener"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 10
+---
 
 This guide walks you through the installation of the latest version of Knative
 using pre-built images on a [Gardener](https://gardener.cloud) created cluster
 environment. To set up your own Gardener, see the
-[documentation](https://github.com/gardener/gardener/blob/master/docs/README.md)
+[documentation](https://github.com/gardener/gardener/blob/master/docs/)
 or have a look at the
 [landscape-setup-template](https://github.com/gardener/landscape-setup-template)
 project. To learn more about this open source project, read the
 [blog on kubernetes.io](https://kubernetes.io/blog/2018/05/17/gardener/).
 
-You can find [guides for other platforms here](README.md).
+You can find [guides for other platforms here](../).
 
 ## Before you begin
 
@@ -98,7 +102,7 @@ rerun the command to see the current status.
 
 The following commands install all available Knative components as well as the
 standard set of observability plugins. To customize your Knative installation,
-see [Performing a Custom Knative Installation](Knative-custom-install.md).
+see [Performing a Custom Knative Installation](Knative-custom-install/).
 
 1. Run the `kubectl apply` command to install Knative and its dependencies:
     ```bash
@@ -117,49 +121,6 @@ see [Performing a Custom Knative Installation](Knative-custom-install.md).
     kubectl get pods --namespace knative-sources
     kubectl get pods --namespace knative-monitoring
     ```
-
-## Alternative way to enable Knative with Gardener
-
-Ask your Gardener administrator to configure the Gardener Bouquet addon manager
-with the following CRDs:
-
-```
-apiVersion: "garden.sapcloud.io/v1alpha1"
-kind: "AddonManifest"
-metadata:
-  name: "istio-1.0.2"
-  finalizers:
-    - "bouquet"
-spec:
-  configMap: "istio-chart-080"
-```
-
-```
-apiVersion: "garden.sapcloud.io/v1alpha1"
-kind: "AddonManifest"
-metadata:
-  name: "knative-0.0.1"
-  finalizers:
-    - "bouquet"
-spec:
-  configMap: "knative-chart-001"
-  dependencies:
-    istio: "1.0.2"
-```
-
-And of course create the respective `ConfigMaps`:
-
-```
-curl https://github.com/knative/serving/releases/download/v0.2.3/istio.yaml
-kubectl create configmap istio-chart-080 --from-file=istio.yaml
-
-curl https://github.com/knative/serving/releases/download/v0.2.3/release.yaml
-kubectl create configmap knative-chart-001 --from-file=release.yaml
-```
-
-With this preparation, your team can just activate Knative in the "Addons" tab
-when creating a new cluster:
-![alt text](images/gardener_addon_checkboxes.png "Addon Checkboxes")
 
 ## Set your custom domain
 
@@ -198,14 +159,14 @@ Now that your cluster has Knative installed, you can see what Knative has to
 offer.
 
 To deploy your first app with Knative, follow the step-by-step
-[Getting Started with Knative App Deployment](getting-started-knative-app.md)
+[Getting Started with Knative App Deployment](getting-started-knative-app/)
 guide.
 
 To get started with Knative Eventing, pick one of the
-[Eventing Samples](../eventing/samples/) to walk through.
+[Eventing Samples](../../eventing/samples/) to walk through.
 
 To get started with Knative Build, read the
-[Build README](../build/README.md), then choose a sample to walk through.
+[Build README](../../build/), then choose a sample to walk through.
 
 ## Cleaning up
 

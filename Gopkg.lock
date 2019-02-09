@@ -29,7 +29,6 @@
   version = "v1.1.1"
 
 [[projects]]
-<<<<<<< HEAD
   digest = "1:03e14cff610a8a58b774e36bd337fa979482be86aab01be81fb8bbd6d0f07fc8"
   name = "github.com/golang/protobuf"
   packages = [
@@ -39,11 +38,6 @@
     "ptypes/duration",
     "ptypes/timestamp",
   ]
-=======
-  digest = "1:15042ad3498153684d09f393bbaec6b216c8eec6d61f63dff711de7d64ed8861"
-  name = "github.com/golang/protobuf"
-  packages = ["proto"]
->>>>>>> build files
   pruneopts = "NUT"
   revision = "b4deda0973fb4c70b50d226b1af49f3da59f5265"
   version = "v1.1.0"
@@ -65,7 +59,6 @@
   revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
-<<<<<<< HEAD
   branch = "master"
   digest = "1:b6b3bd1c08338cb397623d1b9dedde711eccc2d3408fe9017a495d815065d869"
   name = "github.com/google/licenseclassifier"
@@ -81,8 +74,6 @@
   revision = "c2a262e3078ad90718f59866f1ec18601b2fee1b"
 
 [[projects]]
-=======
->>>>>>> build files
   digest = "1:c01767916c59f084bb7c41a7d5877c0f3099b1595cfa066e84ec6ad6b084dd89"
   name = "github.com/gorilla/context"
   packages = ["."]
@@ -100,7 +91,6 @@
 
 [[projects]]
   branch = "master"
-<<<<<<< HEAD
   digest = "1:d16837c32fbdabe592e539ca282bbeeb77faadffa20b4f3bed3bd0916c6c5397"
   name = "github.com/knative/test-infra"
   packages = [
@@ -109,13 +99,6 @@
   ]
   pruneopts = "UT"
   revision = "3e33c90eb30caa1cc11bf90a4cec46165c632c3e"
-=======
-  digest = "1:09521a823a008f7df66962ac2637c22e1cdc842ebfcc7a083c444d35258986f7"
-  name = "github.com/knative/test-infra"
-  packages = ["."]
-  pruneopts = "T"
-  revision = "7ed32409fa2c447a44a4281f0022ab25ce955f51"
->>>>>>> build files
 
 [[projects]]
   digest = "1:5985ef4caf91ece5d54817c11ea25f182697534f8ae6521eadcd628c142ac4b6"
@@ -193,7 +176,6 @@
   version = "v1.2.0"
 
 [[projects]]
-<<<<<<< HEAD
   digest = "1:d917313f309bda80d27274d53985bc65651f81a5b66b820749ac7f8ef061fd04"
   name = "github.com/sergi/go-diff"
   packages = ["diffmatchpatch"]
@@ -202,8 +184,6 @@
   version = "v1.0.0"
 
 [[projects]]
-=======
->>>>>>> build files
   digest = "1:bb38c0571e5ffeb394f2a7e4056fa5a7a6ea1acabb7fe71976340719fd104d02"
   name = "go.opencensus.io"
   packages = [
@@ -228,16 +208,11 @@
 
 [[projects]]
   branch = "master"
-<<<<<<< HEAD
   digest = "1:2d25f30f1d407a44cceb154f434b3ef0a474316c1f945574d75c8b6bf142e2d2"
-=======
-  digest = "1:9ab73c6afa8b3245d321adfe5232df92f404389733e69962e78204322daec8ee"
->>>>>>> build files
   name = "golang.org/x/net"
   packages = [
     "context",
     "context/ctxhttp",
-<<<<<<< HEAD
     "http/httpguts",
     "http2",
     "http2/hpack",
@@ -246,10 +221,6 @@
     "internal/timeseries",
     "proxy",
     "trace",
-=======
-    "internal/socks",
-    "proxy",
->>>>>>> build files
     "websocket",
   ]
   pruneopts = "NUT"
@@ -267,7 +238,6 @@
   revision = "ef147856a6ddbb60760db74283d2424e98c87bff"
 
 [[projects]]
-<<<<<<< HEAD
   branch = "master"
   digest = "1:8f8e2026a1f1bd38f0f2cfb93e5eac44d11a512d0f1c4d463894a72ddc8cf7a3"
   name = "golang.org/x/sys"
@@ -299,8 +269,6 @@
   version = "v0.3.0"
 
 [[projects]]
-=======
->>>>>>> build files
   digest = "1:af71cb57ffcbc389c2f8af1e6a763c0d2e6f08d2ceb64140c0fd4c57fdbc2898"
   name = "google.golang.org/appengine"
   packages = [
@@ -317,7 +285,6 @@
   version = "v1.1.0"
 
 [[projects]]
-<<<<<<< HEAD
   branch = "master"
   digest = "1:077c1c599507b3b3e9156d17d36e1e61928ee9b53a5b420f10f28ebd4a0b275c"
   name = "google.golang.org/genproto"
@@ -366,8 +333,6 @@
   version = "v1.17.0"
 
 [[projects]]
-=======
->>>>>>> build files
   digest = "1:d98a45237ffb67adfb77bf618a164407d476ecd925a9a987e2fa1cda9137db5e"
   name = "gopkg.in/go-playground/webhooks.v3"
   packages = [
@@ -378,7 +343,6 @@
   revision = "8ffb2ffc32b7af2c7e940944eccba4dcd66c692a"
   version = "v3.13.0"
 
-<<<<<<< HEAD
 [[projects]]
   digest = "1:18108594151654e9e696b27b181b953f9a90b16bf14d253dd1b397b025a1487f"
   name = "gopkg.in/yaml.v2"
@@ -387,25 +351,17 @@
   revision = "51d6538a90f86fe93ac480b35f37b2be17fef232"
   version = "v2.2.2"
 
-=======
->>>>>>> build files
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
     "github.com/dgrijalva/jwt-go",
     "github.com/eclipse/paho.mqtt.golang",
-<<<<<<< HEAD
     "github.com/golang/protobuf/proto",
     "github.com/google/go-github/github",
     "github.com/gorilla/mux",
     "github.com/knative/test-infra/scripts",
     "github.com/knative/test-infra/tools/dep-collector",
-=======
-    "github.com/google/go-github/github",
-    "github.com/gorilla/mux",
-    "github.com/knative/test-infra",
->>>>>>> build files
     "github.com/openzipkin/zipkin-go",
     "github.com/openzipkin/zipkin-go/reporter/http",
     "github.com/satori/go.uuid",
@@ -417,18 +373,12 @@
     "go.opencensus.io/stats/view",
     "go.opencensus.io/tag",
     "go.opencensus.io/trace",
-<<<<<<< HEAD
     "golang.org/x/net/context",
     "golang.org/x/oauth2",
     "google.golang.org/grpc",
     "gopkg.in/go-playground/webhooks.v3",
     "gopkg.in/go-playground/webhooks.v3/github",
     "gopkg.in/yaml.v2",
-=======
-    "golang.org/x/oauth2",
-    "gopkg.in/go-playground/webhooks.v3",
-    "gopkg.in/go-playground/webhooks.v3/github",
->>>>>>> build files
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

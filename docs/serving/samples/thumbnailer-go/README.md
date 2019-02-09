@@ -1,4 +1,3 @@
-# Thumbnailer External Dependencies Demo
 
 This is a walk-through example that demonstrates deploying a dockerized
 application that accesses external dependencies to Knative Serving. In this demo
@@ -7,7 +6,7 @@ generates its thumbnail image using the `ffmpeg` framework.
 
 ## Before you begin
 
-- [Install Knative Serving](../../../install/README.md)
+- [Install Knative Serving](../../../../install/)
 
 If you want to test and run the app locally:
 

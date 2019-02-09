@@ -1,4 +1,3 @@
-# Knative Eventing
 
 Knative Eventing is a system that is designed to address a common need for cloud
 native development and provides composable primitives to enable late-binding
@@ -53,7 +52,7 @@ object. Events are delivered to Services or forwarded to other channels
 [Subscriptions](https://github.com/knative/eventing/blob/master/pkg/apis/eventing/v1alpha1/subscription_types.go#L35).
 This allows message delivery in a cluster to vary based on requirements, so that
 some events might be handled by an in-memory implementation while others would
-be persisted using Kafka or NATS Streaming.
+be persisted using Apache Kafka or NATS Streaming.
 
 ### Future design goals
 
@@ -62,18 +61,18 @@ event sources. Sources manage registration and delivery of events from external
 systems using Kubernetes
 [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).
 Learn more about Eventing development in the
-[Eventing work group](https://github.com/knative/docs/blob/master/community/WORKING-GROUPS.md#events).
+[Eventing work group](../../contributing/WORKING-GROUPS/#events).
 
 ## Installation
 
 Knative Eventing currently requires Knative Serving and Istio version 1.0 or
 later installed.
-[Follow the instructions to install on the platform of your choice](../install/README.md).
+[Follow the instructions to install on the platform of your choice](../../install/).
 
 Many of the sources require making outbound connections to create the event subscription,
 and if you have any functions that make use of any external (to cluster) services, you
 must enable it also for them to work.
-[Follow the instructions to configure outbound network access](../serving/outbound-network-access.md).
+[Follow the instructions to configure outbound network access](../../serving/outbound-network-access/).
 
 Install the core Knative Eventing (which provides an in-memory
 ChannelProvisioner) and the core sources (which provides the Kubernetes Events,
@@ -84,7 +83,7 @@ kubectl apply --filename https://github.com/knative/eventing/releases/download/v
 kubectl apply --filename https://github.com/knative/eventing-sources/releases/download/v0.3.0/release.yaml
 ```
 
-In addition to the core sources, there are [other sources](./sources/README.md) that you can install.
+In addition to the core sources, there are [other sources](sources/) that you can install.
 
 This document will be updated as additional sources (which are custom resource
 definitions and an associated controller) and channels
@@ -130,7 +129,7 @@ format, but may be expressed as simple lists, etc in YAML. All Sources should be
 part of the `sources` category, so you can list all existing Sources with
 `kubectl get sources`. The currently-implemented Sources are described below:
 
-_Want to implement your own source? Check out [the tutorial](samples/writing-a-source/README.md)._
+_Want to implement your own source? Check out [the tutorial](samples/writing-a-source/)._
 
 ### KubernetesEventSource
 
@@ -158,7 +157,7 @@ The GitHubSource fires a new event for selected
   events from. The repository may be left off to receive events from an entire
   organization.
 - `eventTypes`: `[]string` A list of
-  [event types](https://developer.github.com/v3/activity/events/types/)in
+  [event types](https://developer.github.com/v3/activity/events/types/) in
   "Webhook event name" format (lower_case).
 - `accessToken.secretKeyRef`:
   [SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
@@ -168,8 +167,8 @@ The GitHubSource fires a new event for selected
   [SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
   containing a GitHub secret token for configuring a GitHub webhook. One of this
   or `accessToken` must be set.
-- `serviceAccountName`: `string` The name of the ServiceAccount used to access
-  the `gcpCredsSecret`.
+- `serviceAccountName`: `string` The name of the ServiceAccount to run the
+  container as.
 - `sink`:
   [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
   A reference to the object that should receive events.
@@ -217,8 +216,8 @@ FTP server for new files or generate events at a set time interval.
 **Spec fields**:
 
 - `image` (**required**): `string` A docker image of the container to be run.
-- `args`: `[]string` Command-line arguments. Any `--sink=` argument will be
-  filled in with the DNS address of the `sink` object.
+- `args`: `[]string` Command-line arguments. If no `--sink` flag is provided, 
+   one will be added and filled in with the DNS address of the `sink` object.
 - `env`: `map[string]string` Environment variables to be set in the container.
 - `serviceAccountName`: `string` The name of the ServiceAccount to run the
   container as.
@@ -226,14 +225,27 @@ FTP server for new files or generate events at a set time interval.
   [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
   A reference to the object that should receive events.
 
+### CronJobSource
+
+The CronJobSource fires events based on given [Cron](https://en.wikipedia.org/wiki/Cron) schedule.
+
+**Spec fields**:
+
+- `schedule` (**required**): `string` A [Cron](https://en.wikipedia.org/wiki/Cron) format string, such as `0 * * * *` or `@hourly`.
+- `data`: `string` Optional data sent to downstream receiver.
+- `serviceAccountName`: `string` The name of the ServiceAccount to run the container as.
+- `sink`:
+  [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
+  A reference to the object that should receive events.
+
 ## Getting Started
 
-- [Setup Knative Serving](../install/README.md)
+- [Setup Knative Serving](../../install/)
 - [Install Eventing components](#installation)
 - [Run samples](samples/)
 
 ## Configuration
-- [Default Channels](default-channels.md) provide a way to choose the
+- [Default Channels](channels/default-channels.md) provide a way to choose the
 persistence strategy for Channels across the cluster.
 
 ---

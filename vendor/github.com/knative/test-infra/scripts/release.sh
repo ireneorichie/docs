@@ -19,19 +19,15 @@
 
 source $(dirname ${BASH_SOURCE})/library.sh
 
-<<<<<<< HEAD
 # GitHub upstream.
 readonly KNATIVE_UPSTREAM="https://github.com/knative/${REPO_NAME}"
 
-=======
->>>>>>> build files
 # Simple banner for logging purposes.
 # Parameters: $1 - message to display.
 function banner() {
     make_banner "@" "$1"
 }
 
-<<<<<<< HEAD
 # Tag images in the yaml file if $TAG is not empty.
 # $KO_DOCKER_REPO is the registry containing the images to tag with $TAG.
 # Parameters: $1 - yaml file to parse for images.
@@ -63,29 +59,6 @@ function publish_yaml() {
   if [[ -n ${TAG} ]]; then
     verbose_gsutil_cp $1 previous/${TAG}
   fi
-=======
-# Tag images in the yaml file with a tag. If not tag is passed, does nothing.
-# Parameters: $1 - yaml file to parse for images.
-#             $2 - registry where the images are stored.
-#             $3 - tag to apply (optional).
-function tag_images_in_yaml() {
-  [[ -z $3 ]] && return 0
-  local src_dir="${GOPATH}/src/"
-  local BASE_PATH="${REPO_ROOT_DIR/$src_dir}"
-  echo "Tagging images under '${BASE_PATH}' with $3"
-  for image in $(grep -o "$2/${BASE_PATH}/[a-z\./-]\+@sha256:[0-9a-f]\+" $1); do
-    gcloud -q container images add-tag ${image} ${image%%@*}:$3
-  done
-}
-
-# Copy the given yaml file to a GCS bucket. Image is tagged :latest, and optionally :$2.
-# Parameters: $1 - yaml file to copy.
-#             $2 - destination bucket name.
-#             $3 - tag to apply (optional).
-function publish_yaml() {
-  gsutil cp $1 gs://$2/latest/
-  [[ -n $3 ]] && gsutil cp $1 gs://$2/previous/$3/ || true
->>>>>>> build files
 }
 
 # These are global environment variables.
@@ -97,7 +70,6 @@ TAG=""
 RELEASE_VERSION=""
 RELEASE_NOTES=""
 RELEASE_BRANCH=""
-<<<<<<< HEAD
 RELEASE_GCS_BUCKET=""
 KO_FLAGS=""
 export KO_DOCKER_REPO=""
@@ -190,13 +162,6 @@ function prepare_dot_release() {
     hub_tool release show -f "%b" ${last_version} > ${RELEASE_NOTES}
     echo "Release notes from ${last_version} copied to ${RELEASE_NOTES}"
   fi
-=======
-KO_FLAGS=""
-
-function abort() {
-  echo "error: $@"
-  exit 1
->>>>>>> build files
 }
 
 # Parses flags and sets environment variables accordingly.
@@ -206,7 +171,6 @@ function parse_flags() {
   RELEASE_NOTES=""
   RELEASE_BRANCH=""
   KO_FLAGS="-P"
-<<<<<<< HEAD
   KO_DOCKER_REPO="gcr.io/knative-nightly"
   RELEASE_GCS_BUCKET="knative-nightly/${REPO_NAME}"
   GITHUB_TOKEN=""
@@ -218,18 +182,11 @@ function parse_flags() {
   while [[ $# -ne 0 ]]; do
     local parameter=$1
     case ${parameter} in
-=======
-  cd ${REPO_ROOT_DIR}
-  while [[ $# -ne 0 ]]; do
-    local parameter=$1
-    case $parameter in
->>>>>>> build files
       --skip-tests) SKIP_TESTS=1 ;;
       --tag-release) TAG_RELEASE=1 ;;
       --notag-release) TAG_RELEASE=0 ;;
       --publish) PUBLISH_RELEASE=1 ;;
       --nopublish) PUBLISH_RELEASE=0 ;;
-<<<<<<< HEAD
       --dot-release) is_dot_release=1 ;;
       *)
         [[ $# -ge 2 ]] || abort "missing parameter after $1"
@@ -263,32 +220,10 @@ function parse_flags() {
             ;;
           *) abort "unknown option ${parameter}" ;;
         esac
-=======
-      --version)
-        shift
-        [[ $# -ge 1 ]] || abort "missing version after --version"
-        [[ $1 =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || abort "version format must be '[0-9].[0-9].[0-9]'"
-        RELEASE_VERSION=$1
-        ;;
-      --branch)
-        shift
-        [[ $# -ge 1 ]] || abort "missing branch after --commit"
-        [[ $1 =~ ^release-[0-9]+\.[0-9]+$ ]] || abort "branch name must be 'release-[0-9].[0-9]'"
-        RELEASE_BRANCH=$1
-        ;;
-      --release-notes)
-        shift
-        [[ $# -ge 1 ]] || abort "missing release notes file after --release-notes"
-        [[ ! -f "$1" ]] && abort "file $1 doesn't exist"
-        RELEASE_NOTES=$1
-        ;;
-      *) abort "unknown option ${parameter}" ;;
->>>>>>> build files
     esac
     shift
   done
 
-<<<<<<< HEAD
   # Setup dot releases
   if (( is_dot_release )); then
     setup_upstream
@@ -302,12 +237,6 @@ function parse_flags() {
     KO_DOCKER_REPO="ko.local"
     KO_FLAGS="-L ${KO_FLAGS}"
     RELEASE_GCS_BUCKET=""
-=======
-  # Update KO_DOCKER_REPO and KO_FLAGS if we're not publishing.
-  if (( ! PUBLISH_RELEASE )); then
-    KO_DOCKER_REPO="ko.local"
-    KO_FLAGS="-L ${KO_FLAGS}"
->>>>>>> build files
   fi
 
   if (( TAG_RELEASE )); then
@@ -332,11 +261,8 @@ function parse_flags() {
   readonly RELEASE_VERSION
   readonly RELEASE_NOTES
   readonly RELEASE_BRANCH
-<<<<<<< HEAD
   readonly RELEASE_GCS_BUCKET
   readonly KO_DOCKER_REPO
-=======
->>>>>>> build files
 }
 
 # Run tests (unless --skip-tests was passed). Conveniently displays a banner indicating so.
@@ -355,7 +281,6 @@ function run_validation_tests() {
 # Initialize everything (flags, workspace, etc) for a release.
 function initialize() {
   parse_flags $@
-<<<<<<< HEAD
   # Log what will be done and where.
   banner "Release configuration"
   echo "- Destination GCR: ${KO_DOCKER_REPO}"
@@ -379,10 +304,6 @@ function initialize() {
   if (( BRANCH_RELEASE )); then
     setup_upstream
     setup_branch
-=======
-  # Checkout specific branch, if necessary
-  if (( BRANCH_RELEASE )); then
->>>>>>> build files
     git checkout upstream/${RELEASE_BRANCH} || abort "cannot checkout branch ${RELEASE_BRANCH}"
   fi
 }
@@ -406,16 +327,11 @@ function branch_release() {
     cat ${RELEASE_NOTES} >> ${description}
   fi
   git tag -a ${TAG} -m "${title}"
-<<<<<<< HEAD
   local repo_url="${KNATIVE_UPSTREAM}"
   [[ -n "${GITHUB_TOKEN}}" ]] && repo_url="${repo_url/:\/\//:\/\/${GITHUB_TOKEN}@}"
   hub_tool push ${repo_url} tag ${TAG}
 
   hub_tool release create \
-=======
-  git push $(git remote get-url upstream) tag ${TAG}
-  run_go_tool github.com/github/hub hub release create \
->>>>>>> build files
       --prerelease \
       ${attachments[@]} \
       --file=${description} \

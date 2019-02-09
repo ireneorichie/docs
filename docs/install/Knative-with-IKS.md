@@ -1,4 +1,8 @@
-# Knative Install on IBM Cloud Kubernetes Service (IKS)
+---
+title: "Install on IBM Cloud Kubernetes Service (IKS)"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 10
+---
 
 This guide walks you through the installation of the latest version of Knative
 using pre-built images.
@@ -7,9 +11,9 @@ You may also have it all installed for you by clicking the button below:
 [![Deploy to IBM Cloud](https://bluemix.net/deploy/button_x2.png)](https://console.bluemix.net/devops/setup/deploy?repository=https://git.ng.bluemix.net/start-with-knative/toolchain.git)
 
 More
-[instructions on the deploy button here](https://git.ng.bluemix.net/start-with-knative/toolchain/blob/master/README.md).
+[instructions on the deploy button here](https://git.ng.bluemix.net/start-with-knative/toolchain/blob/master/).
 
-You can find [guides for other platforms here](README.md).
+You can find [guides for other platforms here](../).
 
 ## Before you begin
 
@@ -161,7 +165,7 @@ rerun the command to see the current status.
 
 The following commands install all available Knative components as well as the
 standard set of observability plugins. To customize your Knative installation,
-see [Performing a Custom Knative Installation](Knative-custom-install.md).
+see [Performing a Custom Knative Installation](Knative-custom-install/).
 
 1. Run the `kubectl apply` command to install Knative and its dependencies:
     ```bash
@@ -187,14 +191,14 @@ Now that your cluster has Knative installed, you can see what Knative has to
 offer.
 
 To deploy your first app with Knative, follow the step-by-step
-[Getting Started with Knative App Deployment](getting-started-knative-app.md)
+[Getting Started with Knative App Deployment](getting-started-knative-app/)
 guide.
 
 To get started with Knative Eventing, pick one of the
-[Eventing Samples](../eventing/samples/) to walk through.
+[Eventing Samples](../../eventing/samples/) to walk through.
 
 To get started with Knative Build, read the
-[Build README](../build/README.md), then choose a sample to walk through.
+[Build README](../../build/), then choose a sample to walk through.
 
 ## Cleaning up
 

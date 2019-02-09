@@ -1,9 +1,13 @@
-# Knative Install on Google Kubernetes Engine
+---
+title: "Install on Google Kubernetes Engine"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 15
+---
 
 This guide walks you through the installation of the latest version of all
 Knative components using pre-built images.
 
-You can find [guides for other platforms here](README.md).
+You can find [guides for other platforms here](../).
 
 ## Before you begin
 
@@ -162,7 +166,7 @@ rerun the command to see the current status.
 
 The following commands install all available Knative components as well as the
 standard set of observability plugins. To customize your Knative installation,
-see [Performing a Custom Knative Installation](Knative-custom-install.md).
+see [Performing a Custom Knative Installation](Knative-custom-install/).
 
 1. Run the `kubectl apply` command to install Knative and its dependencies:
     ```bash
@@ -188,14 +192,14 @@ Now that your cluster has Knative installed, you can see what Knative has to
 offer.
 
 To deploy your first app with Knative, follow the step-by-step
-[Getting Started with Knative App Deployment](getting-started-knative-app.md)
+[Getting Started with Knative App Deployment](getting-started-knative-app/)
 guide.
 
 To get started with Knative Eventing, pick one of the
-[Eventing Samples](../eventing/samples/) to walk through.
+[Eventing Samples](../../eventing/samples/) to walk through.
 
 To get started with Knative Build, read the
-[Build README](../build/README.md), then choose a sample to walk through.
+[Build README](../../build/), then choose a sample to walk through.
 
 ## Cleaning up
 

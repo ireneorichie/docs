@@ -1,4 +1,3 @@
-# Buildpack Sample Function
 
 A sample function that demonstrates using
 [Cloud Foundry](https://www.cloudfoundry.org/) buildpacks on Knative Serving,
@@ -9,7 +8,7 @@ sample function for riff.
 
 ## Prerequisites
 
-- [Install Knative Serving](../../../install/README.md)
+- [Install Knative Serving](../../../../install/)
 
 ## Running
 

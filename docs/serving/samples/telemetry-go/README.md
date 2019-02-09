@@ -1,16 +1,15 @@
-# Telemetry Sample
 
 This sample runs a simple web server that makes calls to other in-cluster
 services and responds to requests with "Hello World!". The purpose of this
-sample is to show generating [metrics](../../accessing-metrics.md),
-[logs](../../accessing-logs.md) and distributed
-[traces](../../accessing-traces.md). This sample also shows how to create a
+sample is to show generating [metrics](../../accessing-metrics/),
+[logs](../../accessing-logs/) and distributed
+[traces](../../accessing-traces/). This sample also shows how to create a
 dedicated Prometheus instance rather than using the default installation.
 
 ## Prerequisites
 
 1. A Kubernetes cluster with
-   [Knative Serving](https://github.com/knative/docs/blob/master/install/README.md)
+   [Knative Serving](../../../../install/)
    installed.
 2. Check if Knative monitoring components are installed:
 
@@ -19,14 +18,14 @@ kubectl get pods --namespace knative-monitoring
 ```
 
 - If pods aren't found, install
-  [Knative monitoring component](../../installing-logging-metrics-traces.md).
+  [Knative monitoring component](../../../installing-logging-metrics-traces/).
 
 3. Install
    [Docker](https://docs.docker.com/get-started/#prepare-your-docker-environment).
 4. Check out the code:
 
 ```
-go get -d github.com/knative/docs/serving/samples/telemetry-go
+go get -d github.com/knative/docs/docs/serving/samples/telemetry-go
 ```
 
 ## Setup
@@ -67,7 +66,7 @@ docker push "${REPO}/serving/samples/telemetry-go"
     configuration file (`serving/samples/telemetry-go/sample.yaml`):
 
     - Manually replace:
-      `image: github.com/knative/docs/serving/samples/telemetry-go` with
+      `image: github.com/knative/docs/docs/serving/samples/telemetry-go` with
       `image: <YOUR_CONTAINER_REGISTRY>/serving/samples/telemetry-go`
 
 
@@ -190,13 +189,13 @@ curl --header "Host:$SERVICE_HOST" http://${SERVICE_IP}/log
 
 ## Access Logs
 
-You can access to the logs from Kibana UI - see [Logs](../../accessing-logs.md)
+You can access to the logs from Kibana UI - see [Logs](../../accessing-logs/)
 for more information.
 
 ## Access per Request Traces
 
 You can access to per request traces from Zipkin UI - see
-[Traces](../../accessing-traces.md) for more information.
+[Traces](../../accessing-traces/) for more information.
 
 ## Accessing Custom Metrics
 

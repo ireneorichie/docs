@@ -1,8 +1,8 @@
 ---
-title: "Eventing Component Documentation"
+title: "Knative Eventing"
 linkTitle: "Eventing Component"
 weight: 60
 type: "docs"
 ---
 
-Knative Eventing component documentation.
+{{% readfile file="docs/eventing/README.md" markdown="true" %}}

@@ -1,4 +1,8 @@
-# Builders
+---
+title: "Builders"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 15
+---
 
 This document defines builder images and the conventions to which they are
 expected to adhere.
@@ -64,7 +68,7 @@ Builders should expect a Build to implement the following conventions:
 - `/builder/home`: This volume is exposed to steps via `$HOME`.
 
 - Credentials attached to the Build's service account may be exposed as Git or
-  Docker credentials as outlined [here](./auth.md).
+  Docker credentials as outlined [here](../auth/).
 
 ---
 
