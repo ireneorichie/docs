@@ -43,55 +43,55 @@ Knative components.
 The guides below show you how to create a Kubernetes cluster with the right
 specs for Knative on your platform of choice, then walk through installing all
 available Knative components and a set of observability plugins.
-* [Knative Install on Azure Kubernetes Service](Knative-with-AKS/)
-* [Knative Install on Gardener](Knative-with-Gardener/)
-* [Knative Install on Google Kubernetes Engine](Knative-with-GKE/)
-* [Knative Install on IBM Cloud Kubernetes Service](Knative-with-IKS/)
-* [Knative Install on IBM Cloud Private](Knative-with-ICP/)
-* [Knative Install on Pivotal Container Service](Knative-with-PKS/)
+* [Knative Install on Azure Kubernetes Service](Knative-with-AKS.md)
+* [Knative Install on Gardener](Knative-with-Gardener.md)
+* [Knative Install on Google Kubernetes Engine](Knative-with-GKE.md)
+* [Knative Install on IBM Cloud Kubernetes Service](Knative-with-IKS.md)
+* [Knative Install on IBM Cloud Private](Knative-with-ICP.md)
+* [Knative Install on Pivotal Container Service](Knative-with-PKS.md)
 
 If you already have a Kubernetes cluster you're comfortable installing *alpha*
 software on, use the following guide to install all Knative components:
 
-- [Knative Install on any Kubernetes](Knative-with-any-k8s/)
+- [Knative Install on any Kubernetes](Knative-with-any-k8s.md)
 
 **Limited install guides**
 
 The guides below install some of the available Knative components, without all available
 observability plugins, to minimize the disk space used for install.
-* [Knative Install on Docker for Mac](Knative-with-Docker-for-Mac/)
-* [Knative Install on Minikube](Knative-with-Minikube/)
-* [Knative Install on Minishift](Knative-with-Minishift/)
-* [Knative Install on OpenShift](Knative-with-OpenShift/)
+* [Knative Install on Docker for Mac](Knative-with-Docker-for-Mac.md)
+* [Knative Install on Minikube](Knative-with-Minikube.md)
+* [Knative Install on Minishift](Knative-with-Minishift.md)
+* [Knative Install on OpenShift](Knative-with-OpenShift.md)
 
 **Custom install guide**
 
 To choose which components and observability plugins to install,
 follow the custom install guide:
 
-* [Perfoming a Custom Knative Installation](Knative-custom-install/)
+* [Perfoming a Custom Knative Installation](Knative-custom-install.md)
 
 > **Note**: If need to set up a Kubernetes cluster with the correct
   specifications to run Knative, you can follow any of the install
   instructions through the creation of the cluster, then follow the
-  [Perfoming a Custom Knative Installation](knative-custom-install/) guide.
+  [Perfoming a Custom Knative Installation](knative-custom-install.md) guide.
 
 **Observability install guide**
 
 Follow this guide to install and set up the available observability
 plugins on a Knative cluster.
 
-* [Monitoring, Logging and Tracing Installation](../../serving/installing-logging-metrics-traces/)
+* [Monitoring, Logging and Tracing Installation](../serving/installing-logging-metrics-traces.md)
 
 ## Deploying an app
 
 Now you're ready to deploy an app:
 
 - Follow the step-by-step
-  [Getting Started with Knative App Deployment](getting-started-knative-app/)
+  [Getting Started with Knative App Deployment](getting-started-knative-app.md)
   guide.
 
-- View the available [sample apps](../../serving/samples) and deploy one of your
+- View the available [sample apps](../serving/samples) and deploy one of your
   choosing.
 
 - Walk through the Google codelab,
@@ -103,14 +103,14 @@ After your Knative installation is running, you can set up a custom domain with
 a static IP address to be able to use Knative for publicly available services
 and set up an Istio IP range for outbound network access:
 
-- [Assign a static IP address](../../serving/gke-assigning-static-ip-address/)
-- [Configure a custom domain](../../serving/using-a-custom-domain/)
-- [Configure outbound network access](../../serving/outbound-network-access/)
-- [Configuring HTTPS with a custom certificate](../../serving/using-an-ssl-cert/)
+- [Assign a static IP address](../serving/gke-assigning-static-ip-address.md)
+- [Configure a custom domain](../serving/using-a-custom-domain.md)
+- [Configure outbound network access](../serving/outbound-network-access.md)
+- [Configuring HTTPS with a custom certificate](../serving/using-an-ssl-cert.md)
 
 ## Checking the version of your Knative Serving installation
 
-- [Checking the version of your Knative Serving installation](check-install-version/)
+- [Checking the version of your Knative Serving installation](check-install-version.md)
 
 ---
 

@@ -128,7 +128,7 @@ the`knative-build` and `knative-monitoring` namespaces.
 
 The following commands install all available Knative components as well as the
 standard set of observability plugins. To customize your Knative installation,
-see [Performing a Custom Knative Installation](Knative-custom-install/).
+see [Performing a Custom Knative Installation](Knative-custom-install.md).
 
 1. Run the following commands to install Knative:
 
@@ -162,7 +162,7 @@ see [Performing a Custom Knative Installation](Knative-custom-install/).
      | kubectl apply --filename -
    ```
    
-   See [Installing logging, metrics, and traces](../../serving/installing-logging-metrics-traces/)
+   See [Installing logging, metrics, and traces](../serving/installing-logging-metrics-traces.md)
    for details about installing the various supported observability plug-ins.
    
 
@@ -188,7 +188,7 @@ Now that your cluster has Knative installed, you can see what Knative has to
 offer.
 
 To deploy your first app with Knative, follow the step-by-step
-[Getting Started with Knative App Deployment](getting-started-knative-app/)
+[Getting Started with Knative App Deployment](getting-started-knative-app.md)
 guide.
 
 > **Note**: When looking up the IP address to use for accessing your app, you need
@@ -201,10 +201,10 @@ guide.
   ```
 
 To get started with Knative Eventing, walk through one of the
-[Eventing Samples](../../eventing/samples/).
+[Eventing Samples](../eventing/samples/).
 
 To get started with Knative Build, read the
-[Build README](../../build/), then choose a sample to walk through.
+[Build README](../build/), then choose a sample to walk through.
 
 ## Cleaning up
 
