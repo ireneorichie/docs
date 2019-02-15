@@ -71,9 +71,9 @@ write your tutorial.
 
 Knative has public and recorded bi-weekly community meetings.
 
-Each project has one or more [working groups](WORKING-GROUPS/) driving the
+Each project has one or more [working groups](./WORKING-GROUPS) driving the
 project, and Knative as a single
-[technical oversight community](TECH-OVERSIGHT-COMMITTEE/) monitoring the
+[technical oversight community](./TECH-OVERSIGHT-COMMITTEE) monitoring the
 overall project.
 
 ## How can I help
