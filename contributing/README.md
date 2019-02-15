@@ -21,19 +21,19 @@ improving docs, giving talks, etc.
 
 Other Documents
 
-- [Code of Conduct](CODE-OF-CONDUCT/) - all contributors must abide by the
+- [Code of Conduct](./CODE-OF-CONDUCT) - all contributors must abide by the
   code of conduct
-- [Contributing to Knative](CONTRIBUTING/) - guidelines and advice on becoming
+- [Contributing to Knative](./CONTRIBUTING) - guidelines and advice on becoming
   a contributor
-- [Working Groups](WORKING-GROUPS/) - describes our various working groups
-- [Working Group Processes](WORKING-GROUP-PROCESSES/) - describes how working
+- [Working Groups](./WORKING-GROUPS) - describes our various working groups
+- [Working Group Processes](./WORKING-GROUP-PROCESSES) - describes how working
   groups operate
-- [Technical Oversight Committee](TECH-OVERSIGHT-COMMITTEE/) - describes our
+- [Technical Oversight Committee](./TECH-OVERSIGHT-COMMITTEE) - describes our
   technical oversight committee
-- [Steering Committee](STEERING-COMMITTEE/) - describes our steering committee
-- [Community Roles](ROLES/) - describes the roles individuals can assume
+- [Steering Committee](./STEERING-COMMITTEE) - describes our steering committee
+- [Community Roles](./ROLES) - describes the roles individuals can assume
   within the Knative community
-- [Reviewing and Merging Pull Requests](REVIEWING/) - how we manage pull
+- [Reviewing and Merging Pull Requests](./REVIEWING) - how we manage pull
   requests
 
 ## Introduction
