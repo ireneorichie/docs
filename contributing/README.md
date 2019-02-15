@@ -97,7 +97,7 @@ following resources are available for you:
 - [Knative Users](https://groups.google.com/forum/#!forum/knative-users)
 - [Knative Developers](https://groups.google.com/forum/#!forum/knative-dev)
 
-For contributors to Knative, we also have [Knative Slack](SLACK-GUIDELINES/).
+For contributors to Knative, we also have [Knative Slack](./SLACK-GUIDELINES).
 
 ---
 
