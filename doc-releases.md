@@ -17,4 +17,4 @@ Select the version that matches your installed version of Knative.
 
 ## Documentation website
 
-* `https://knative.dev` ([Coming soon!](https://github.com/knative/docs/projects/5))
+* [https://knative.dev]
