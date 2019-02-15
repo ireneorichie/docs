@@ -1,6 +1,6 @@
 
 _Important_. Before proceeding, please review the Knative community
-[Code of Conduct](CODE-OF-CONDUCT/).
+[Code of Conduct](./CODE-OF-CONDUCT).
 
 If you any have questions or concerns, please contact the authors at
 knative-code-of-conduct@googlegroups.com.
