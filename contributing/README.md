@@ -1,6 +1,3 @@
-
-
-
 Before proceeding, please review the Knative community
 [Code of Conduct](./CODE-OF-CONDUCT).
 
