@@ -1,7 +1,8 @@
 ---
-title: "Contributing to Knative"
-linkTitle: "Contributing"
-weight: 10
+title: "Knative contributor guidelines"
+linkTitle: "Contributing to Knative"
+weight: 15
+type: "docs"
 ---
 
 So, you want to hack on Knative? Yay!
@@ -24,7 +25,7 @@ given the same level of review.
 
 ## Working groups
 
-The Knative community is organized into a set of
+The Knative contributors community is organized into a set of
 [working groups](WORKING-GROUPS.md). Any contribution to Knative should be
 started by first engaging with the appropriate working group.
 
@@ -114,7 +115,7 @@ following steps:
 
 - Submit PRs to knative/serving with user documentation for your feature,
   including usage examples when possible. Add documentation to
-  [knative/docs/serving](https://github.com/knative/docs/tree/master/serving).
+  [knative/docs/serving](../serving).
 
 _Note that we prefer bite-sized PRs instead of giant monster PRs. It's therefore
 preferable if you can introduce large features in small, individually-reviewable

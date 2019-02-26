@@ -1,6 +1,6 @@
 ---
-title: "Understanding Knative Eventing Sources"
-linkTitle: "Eventing Source Overview"
+title: "Knative Eventing sources"
+linkTitle: "Eventing sources"
 weight: 20
 type: "docs"
 ---

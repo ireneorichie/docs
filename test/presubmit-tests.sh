@@ -18,7 +18,6 @@
 # It is started by prow for each PR.
 # For convenience, it can also be executed manually.
 
-<<<<<<< HEAD
 # markdown linting is too picky for our docs; disabling it for now.
 DISABLE_MD_LINTING=1
 DISABLE_MD_LINK_CHECK=1
@@ -29,20 +28,5 @@ source $(dirname $0)/../vendor/github.com/knative/test-infra/scripts/presubmit-t
 
 # TODO(#67): Add more build tests.
 # TODO(#66): Add more unit tests.
-=======
-source $(dirname $0)/../vendor/github.com/knative/test-infra/scripts/presubmit-tests.sh
-
-function build_tests() {
-  header "TODO(#67): Write build tests"
-}
-
-function unit_tests() {
-  header "TODO(#66): Write unit tests"
-}
-
-function integration_tests() {
-  ./test/e2e-tests.sh
-}
->>>>>>> build files
 
 main $@

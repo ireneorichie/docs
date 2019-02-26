@@ -1,4 +1,8 @@
-# Assigning a static IP address for Knative on Kubernetes Engine
+---
+title: "Assigning a static IP address for Knative on Kubernetes Engine"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 35
+---
 
 If you are running Knative on Google Kubernetes Engine and want to use a
 [custom domain](./using-a-custom-domain.md) with your apps, you need to
@@ -11,6 +15,10 @@ service mesh. The IP address to access the gateway is the external IP address of
 the "istio-ingressgateway" service under the `istio-system` namespace.
 Therefore, in order to set a static IP for the gateway you must to set the
 external IP address of the `istio-ingressgateway` service to a static IP.
+
+If you have configured a
+[custom ingress gateway](setting-up-custom-ingress-gateway.md), replace
+`istio-ingressgateway` with the name of your gateway service in the steps below.
 
 ## Step 1: Reserve a static IP address
 
@@ -52,8 +60,8 @@ In the
 
 ## Step 2: Update the external IP of `istio-ingressgateway` service
 
-Run following command to configure the external IP of the
-`istio-ingressgateway` service to the static IP that you reserved:
+Run following command to configure the external IP of the `istio-ingressgateway`
+service to the static IP that you reserved:
 
 ```shell
 # In Knative 0.2.x and prior versions, the `knative-ingressgateway` service was used instead of `istio-ingressgateway`.
@@ -71,7 +79,8 @@ kubectl patch svc $INGRESSGATEWAY --namespace istio-system --patch '{"spec": { "
 
 ## Step 3: Verify the static IP address of `istio-ingressgateway` service
 
-Run the following command to ensure that the external IP of the ingressgateway service has been updated:
+Run the following command to ensure that the external IP of the ingressgateway
+service has been updated:
 
 ```shell
 kubectl get svc $INGRESSGATEWAY --namespace istio-system

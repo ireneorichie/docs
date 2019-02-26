@@ -1,4 +1,9 @@
-# Reviewing and Merging Pull Requests for Knative
+---
+title: "Reviewing and merging Knative pull requests"
+linkTitle: "Pull request guidelines"
+weight: 60
+type: "docs"
+---
 
 As a community, we believe in the value of code reviews for all contributions.
 Code reviews increase both the quality and readability of our code base, which
@@ -25,7 +30,7 @@ Please do not ever hesitate to ask a question or submit a PR.
 
 Reviewers are often the first points of contact between new members of the
 community and are important in shaping the community. We encourage reviewers to
-read the [code of conduct](community/CODE-OF-CONDUCT.md) and to go above and
+read the [code of conduct](CODE-OF-CONDUCT.md) and to go above and
 beyond the code of conduct to promote a collaborative and respectful community.
 
 ## Code reviewers

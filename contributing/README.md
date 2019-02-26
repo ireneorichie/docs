@@ -1,4 +1,3 @@
-# Knative Community
 
 _Important_. Before proceeding, please review the Knative community
 [Code of Conduct](CODE-OF-CONDUCT.md).
@@ -15,6 +14,7 @@ improving docs, giving talks, etc.
 
 - [Introduction](#introduction)
 - [Knative authors](#knative-authors)
+  - [Authoring samples](#authoring-samples)
 - [Meetings and work groups](#meetings-and-work-groups)
 - [How can I help?](#how-can-i-help)
 - [Questions and issues](#questions-and-issues)
@@ -39,7 +39,7 @@ Other Documents
 ## Introduction
 
 Knative is a Kubernetes-based platform to build, deploy, and manage modern
-serverless workloads. See [Knative docs](https://github.com/knative/docs) for
+serverless workloads. See [Knative docs](../docs/README.md) for
 in-depth information about using Knative.
 
 ## Knative authors
@@ -48,6 +48,23 @@ Knative is an open source project with an active development community. The
 project was started by Google but has contributions from a growing number of
 industry-leading companies. For a current list of the authors, see
 [Authors](https://github.com/knative/serving/blob/master/AUTHORS).
+
+### Authoring samples
+
+Beyond the official documentation there are endless possibilities for combining
+tools, platforms, languages, and products. By submitting a tutorial you can
+share your experience and help others who are solving similar problems.
+
+Community tutorials are stored in Markdown files on
+[GitHub](./samples/README.md) where they can be reviewed and edited by the
+community.
+
+Please submit a Pull Request to the community sample directory under the Knative
+component that your tutorial highlights - [Serving](../community/samples/serving/),
+[Eventing](../community/samples/eventing/), or [Build](../community/samples/build/). A reviewer will
+be assigned to review your submission. They'll work with you to ensure your
+submission meets the [style guide](DOCS-CONTRIBUTING.md), but it helps if you
+follow it as you write your tutorial.
 
 ## Meetings and work groups
 

@@ -19,7 +19,6 @@
 
 source $(dirname ${BASH_SOURCE})/library.sh
 
-<<<<<<< HEAD
 # Custom configuration of presubmit tests
 readonly DISABLE_MD_LINTING=${DISABLE_MD_LINTING:-0}
 readonly DISABLE_MD_LINK_CHECK=${DISABLE_MD_LINK_CHECK:-0}
@@ -242,45 +241,6 @@ function main() {
     header "Commit only contains changes that don't require tests, skipping"
     exit 0
   fi
-=======
-# Extensions or file patterns that don't require presubmit tests.
-readonly NO_PRESUBMIT_FILES=(\.md \.png ^OWNERS ^OWNERS_ALIASES)
-
-# Options set by command-line flags.
-RUN_BUILD_TESTS=0
-RUN_UNIT_TESTS=0
-RUN_INTEGRATION_TESTS=0
-EMIT_METRICS=0
-
-# Exit presubmit tests if only documentation files were changed.
-function exit_if_presubmit_not_required() {
-  if [[ -n "${PULL_PULL_SHA}" ]]; then
-    # On a presubmit job
-    local changes="$(/workspace/githubhelper -list-changed-files)"
-    if [[ -z "${changes}" ]]; then
-      header "NO CHANGED FILES REPORTED, ASSUMING IT'S AN ERROR AND RUNNING TESTS ANYWAY"
-      return
-    fi
-    local no_presubmit_pattern="${NO_PRESUBMIT_FILES[*]}"
-    local no_presubmit_pattern="\(${no_presubmit_pattern// /\\|}\)$"
-    echo -e "Changed files in commit ${PULL_PULL_SHA}:\n${changes}"
-    if [[ -z "$(echo "${changes}" | grep -v ${no_presubmit_pattern})" ]]; then
-      # Nothing changed other than files that don't require presubmit tests
-      header "Commit only contains changes that don't affect tests, skipping"
-      exit 0
-    fi
-  fi
-}
-
-function abort() {
-  echo "error: $@"
-  exit 1
-}
-
-# Process flags and run tests accordingly.
-function main() {
-  exit_if_presubmit_not_required
->>>>>>> build files
 
   # Show the version of the tools we're using
   if (( IS_PROW )); then
@@ -295,15 +255,12 @@ function main() {
     go version
     echo ">> git version"
     git version
-<<<<<<< HEAD
     echo ">> bazel version"
     bazel version 2> /dev/null
     if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
       echo ">> docker version"
       docker version
     fi
-=======
->>>>>>> build files
   fi
 
   [[ -z $1 ]] && set -- "--all-tests"
@@ -351,51 +308,9 @@ function main() {
     ${TEST_TO_RUN} || failed=1
   fi
 
-<<<<<<< HEAD
   run_build_tests || failed=1
   run_unit_tests || failed=1
   run_integration_tests || failed=1
-=======
-  if (( RUN_BUILD_TESTS )); then
-    build_tests || failed=1
-  fi
-  if (( RUN_UNIT_TESTS )); then
-    unit_tests || failed=1
-  fi
-  if (( RUN_INTEGRATION_TESTS )); then
-    local e2e_failed=0
-    # Run pre-integration tests, if any
-    if function_exists pre_integration_tests; then
-      if ! pre_integration_tests; then
-        failed=1
-        e2e_failed=1
-      fi
-    fi
-    # Don't run integration tests if pre-integration tests failed
-    if (( ! e2e_failed )); then
-      if function_exists integration_tests; then
-        if ! integration_tests; then
-          failed=1
-          e2e_failed=1
-        fi
-      else
-       local options=""
-       (( EMIT_METRICS )) && options="--emit-metrics"
-       for e2e_test in ./test/e2e-*tests.sh; do
-         echo "Running integration test ${e2e_test}"
-         if ! ${e2e_test} ${options}; then
-           failed=1
-           e2e_failed=1
-         fi
-       done
-      fi
-    fi
-    # Don't run post-integration
-    if (( ! e2e_failed )) && function_exists post_integration_tests; then
-      post_integration_tests || failed=1
-    fi
-  fi
->>>>>>> build files
 
   exit ${failed}
 }

@@ -1,4 +1,9 @@
-# Knative Team Values
+---
+title: "Knative team values"
+linkTitle: "Team values"
+weight: 50
+type: "docs"
+---
 
 We want to make sure every member has a shared understanding of the goals and
 values we hold as a team:

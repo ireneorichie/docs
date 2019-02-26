@@ -1,4 +1,8 @@
-# Setting up a custom domain
+---
+title: "Setting up a custom domain"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 55
+---
 
 By default, Knative Serving routes use `example.com` as the default domain. The
 fully qualified domain name for a route by default is
@@ -77,7 +81,7 @@ You can also apply an updated domain configuration:
 > deployed services and routes.
 
 Deploy an app (for example,
-[`helloworld-go`](./samples/helloworld-go/README.md)), to your cluster as
+[`helloworld-go`](./samples/hello-world/helloworld-go/README.md)), to your cluster as
 normal. You can check the customized domain in Knative Route "helloworld-go"
 with the following command:
 

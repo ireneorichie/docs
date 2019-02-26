@@ -1,4 +1,9 @@
-# Slack Usage Guidelines
+---
+title: "Slack usage guidelines"
+linkTitle: "Slack guidelines"
+weight: 45
+type: "docs"
+---
 
 Slack is the main communication platform for Knative outside of our mailing
 lists. It’s important that conversation stays on topic in each channel, and that

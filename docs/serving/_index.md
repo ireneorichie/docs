@@ -1,8 +1,7 @@
 ---
-title: "Serving Component Documentation"
+title: "Knative Serving"
 linkTitle: "Serving Component"
-weight: 80
-type: "docs"
+weight: 20
 ---
 
-Knative Serving component documentation.
+{{% readfile file="docs/serving/README.md" markdown="true" %}}

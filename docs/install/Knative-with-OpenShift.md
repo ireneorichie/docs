@@ -1,4 +1,8 @@
-# Knative Install on OpenShift
+---
+title: "Install on OpenShift"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 15
+---
 
 This guide walks you through the installation of the latest version of
 [Knative Serving](https://github.com/knative/serving) on an
@@ -94,6 +98,10 @@ oc label namespace default istio-injection=enabled
 ```
 
 ## Installing Istio
+
+> Note: [Gloo](https://gloo.solo.io/) is available as an alternative to Istio.
+> Gloo is not currently compatible with the Knative Eventing component.
+> [Click here](Knative-with-Gloo.md) to install Knative with Gloo.
 
 Knative depends on Istio. First, run the following to grant the necessary
 privileges to the service accounts istio will use:
@@ -212,9 +220,9 @@ If you'd like to view the available sample apps and deploy one of your choosing,
 head to the [sample apps](../serving/samples/README.md) repo.
 
 > Note: When looking up the IP address to use for accessing your app, you need
-> to look up the NodePort for the `istio-ingressgateway` well as the IP
-> address used for OpenShift. You can use the following command to look up the
-> value to use for the {IP_ADDRESS} placeholder used in the samples:
+> to look up the NodePort for the `istio-ingressgateway` well as the IP address
+> used for OpenShift. You can use the following command to look up the value to
+> use for the {IP_ADDRESS} placeholder used in the samples:
 
 ```shell
 # In Knative 0.2.x and prior versions, the `knative-ingressgateway` service was used instead of `istio-ingressgateway`.

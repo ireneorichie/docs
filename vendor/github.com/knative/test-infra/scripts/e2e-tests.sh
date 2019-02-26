@@ -36,7 +36,6 @@ function build_resource_name() {
 }
 
 # Test cluster parameters
-<<<<<<< HEAD
 
 # Configurable parameters
 readonly E2E_CLUSTER_REGION=${E2E_CLUSTER_REGION:-us-central1}
@@ -53,15 +52,6 @@ readonly E2E_MAX_CLUSTER_NODES=${E2E_MAX_CLUSTER_NODES:-3}
 readonly E2E_BASE_NAME="k${REPO_NAME}"
 readonly E2E_CLUSTER_NAME=$(build_resource_name e2e-cls)
 readonly E2E_NETWORK_NAME=$(build_resource_name e2e-net)
-=======
-readonly E2E_BASE_NAME=k$(basename ${REPO_ROOT_DIR})
-readonly E2E_CLUSTER_NAME=$(build_resource_name e2e-cls)
-readonly E2E_NETWORK_NAME=$(build_resource_name e2e-net)
-readonly E2E_CLUSTER_REGION=us-central1
-readonly E2E_CLUSTER_ZONE=${E2E_CLUSTER_REGION}-a
-readonly E2E_CLUSTER_NODES=3
-readonly E2E_CLUSTER_MACHINE=n1-standard-4
->>>>>>> build files
 readonly TEST_RESULT_FILE=/tmp/${E2E_BASE_NAME}-e2e-result
 
 # Flag whether test is using a boskos GCP project
@@ -79,17 +69,6 @@ function teardown_test_resources() {
   rm -fr kubernetes kubernetes.tar.gz
 }
 
-<<<<<<< HEAD
-=======
-# Exit test, dumping current state info.
-# Parameters: $1 - error message (optional).
-function fail_test() {
-  [[ -n $1 ]] && echo "ERROR: $1"
-  dump_cluster_state
-  exit 1
-}
-
->>>>>>> build files
 # Run the given E2E tests. Assume tests are tagged e2e, unless `-tags=XXX` is passed.
 # Parameters: $1..$n - any go test flags, then directories containing the tests to run.
 function go_test_e2e() {
@@ -171,7 +150,6 @@ function create_test_cluster() {
   set -o pipefail
 
   header "Creating test cluster"
-<<<<<<< HEAD
 
   echo "Cluster will have a minimum of ${E2E_MIN_CLUSTER_NODES} and a maximum of ${E2E_MAX_CLUSTER_NODES} nodes."
 
@@ -189,22 +167,6 @@ function create_test_cluster() {
     --gke-environment=prod
   )
   if (( ! IS_BOSKOS )); then
-=======
-  # Smallest cluster required to run the end-to-end-tests
-  local CLUSTER_CREATION_ARGS=(
-    --gke-create-args="--enable-autoscaling --min-nodes=1 --max-nodes=${E2E_CLUSTER_NODES} --scopes=cloud-platform --enable-basic-auth --no-issue-client-certificate"
-    --gke-shape={\"default\":{\"Nodes\":${E2E_CLUSTER_NODES}\,\"MachineType\":\"${E2E_CLUSTER_MACHINE}\"}}
-    --provider=gke
-    --deployment=gke
-    --cluster="${E2E_CLUSTER_NAME}"
-    --gcp-zone="${E2E_CLUSTER_ZONE}"
-    --gcp-network="${E2E_NETWORK_NAME}"
-    --gke-environment=prod
-  )
-  if (( IS_BOSKOS )); then
-    CLUSTER_CREATION_ARGS+=(--gcp-service-account=/etc/service-account/service-account.json)
-  else
->>>>>>> build files
     CLUSTER_CREATION_ARGS+=(--gcp-project=${GCP_PROJECT})
   fi
   # SSH keys are not used, but kubetest checks for their existence.
@@ -217,13 +179,8 @@ function create_test_cluster() {
   # be a writeable docker repo.
   export K8S_USER_OVERRIDE=
   export K8S_CLUSTER_OVERRIDE=
-<<<<<<< HEAD
   # Assume test failed (see details in set_test_return_code()).
   set_test_return_code 1
-=======
-  # Assume test failed (see more details at the end of this script).
-  echo -n "1"> ${TEST_RESULT_FILE}
->>>>>>> build files
   local test_cmd_args="--run-tests"
   (( EMIT_METRICS )) && test_cmd_args+=" --emit-metrics"
   [[ -n "${GCP_PROJECT}" ]] && test_cmd_args+=" --gcp-project ${GCP_PROJECT}"
@@ -288,17 +245,10 @@ function setup_test_cluster() {
   if [[ -z ${K8S_CLUSTER_OVERRIDE} ]]; then
     USING_EXISTING_CLUSTER=0
     export K8S_CLUSTER_OVERRIDE=$(kubectl config current-context)
-<<<<<<< HEAD
     acquire_cluster_admin_role ${K8S_USER_OVERRIDE} ${E2E_CLUSTER_NAME} ${E2E_CLUSTER_REGION} ${E2E_CLUSTER_ZONE}
     # Make sure we're in the default namespace. Currently kubetest switches to
     # test-pods namespace when creating the cluster.
     kubectl config set-context ${K8S_CLUSTER_OVERRIDE} --namespace=default
-=======
-    acquire_cluster_admin_role ${K8S_USER_OVERRIDE} ${E2E_CLUSTER_NAME} ${E2E_CLUSTER_ZONE}
-    # Make sure we're in the default namespace. Currently kubetest switches to
-    # test-pods namespace when creating the cluster.
-    kubectl config set-context $K8S_CLUSTER_OVERRIDE --namespace=default
->>>>>>> build files
   fi
   readonly USING_EXISTING_CLUSTER
 
@@ -311,10 +261,7 @@ function setup_test_cluster() {
   echo "- Docker is ${DOCKER_REPO_OVERRIDE}"
 
   export KO_DOCKER_REPO="${DOCKER_REPO_OVERRIDE}"
-<<<<<<< HEAD
   export KO_DATA_PATH="${REPO_ROOT_DIR}/.git"
-=======
->>>>>>> build files
 
   trap teardown_test_resources EXIT
 
@@ -332,34 +279,25 @@ function setup_test_cluster() {
   set +o pipefail
 }
 
-<<<<<<< HEAD
 # Set the return code that the test script will return.
 # Parameters: $1 - return code (0-255)
 function set_test_return_code() {
-=======
-function success() {
->>>>>>> build files
   # kubetest teardown might fail and thus incorrectly report failure of the
   # script, even if the tests pass.
   # We store the real test result to return it later, ignoring any teardown
   # failure in kubetest.
   # TODO(adrcunha): Get rid of this workaround.
-<<<<<<< HEAD
   echo -n "$1"> ${TEST_RESULT_FILE}
 }
 
 function success() {
   set_test_return_code 0
-=======
-  echo -n "0"> ${TEST_RESULT_FILE}
->>>>>>> build files
   echo "**************************************"
   echo "***        E2E TESTS PASSED        ***"
   echo "**************************************"
   exit 0
 }
 
-<<<<<<< HEAD
 # Exit test, dumping current state info.
 # Parameters: $1 - error message (optional).
 function fail_test() {
@@ -369,8 +307,6 @@ function fail_test() {
   exit 1
 }
 
-=======
->>>>>>> build files
 RUN_TESTS=0
 EMIT_METRICS=0
 USING_EXISTING_CLUSTER=1
@@ -378,25 +314,9 @@ GCP_PROJECT=""
 E2E_SCRIPT=""
 E2E_CLUSTER_VERSION=""
 
-<<<<<<< HEAD
 # Parse flags and initialize the test cluster.
 function initialize() {
   E2E_SCRIPT="$(get_canonical_path $0)"
-=======
-function abort() {
-  echo "error: $@"
-  exit 1
-}
-
-# Parse flags and initialize the test cluster.
-function initialize() {
-  # Normalize calling script path; we can't use readlink because it's not available everywhere
-  E2E_SCRIPT=$0
-  [[ ${E2E_SCRIPT} =~ ^[\./].* ]] || E2E_SCRIPT="./$0"
-  E2E_SCRIPT="$(cd ${E2E_SCRIPT%/*} && echo $PWD/${E2E_SCRIPT##*/})"
-  readonly E2E_SCRIPT
-
->>>>>>> build files
   E2E_CLUSTER_VERSION="${SERVING_GKE_VERSION}"
 
   cd ${REPO_ROOT_DIR}
@@ -447,15 +367,8 @@ function initialize() {
   (( IS_PROW )) && [[ -z "${GCP_PROJECT}" ]] && IS_BOSKOS=1
 
   # Safety checks
-<<<<<<< HEAD
   is_protected_gcr ${DOCKER_REPO_OVERRIDE} && \
     abort "\$DOCKER_REPO_OVERRIDE set to ${DOCKER_REPO_OVERRIDE}, which is forbidden"
-=======
-
-  if [[ "${DOCKER_REPO_OVERRIDE}" =~ ^gcr.io/knative-(releases|nightly)/?$ ]]; then
-    abort "\$DOCKER_REPO_OVERRIDE is set to ${DOCKER_REPO_OVERRIDE}, which is forbidden"
-  fi
->>>>>>> build files
 
   readonly RUN_TESTS
   readonly EMIT_METRICS

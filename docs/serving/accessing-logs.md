@@ -1,4 +1,8 @@
-# Accessing logs
+---
+title: "Accessing logs"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 5
+---
 
 If you have not yet installed the logging and monitoring components, go through
 the [installation instructions](./installing-logging-metrics-traces.md) to set
@@ -34,6 +38,23 @@ up the necessary components first.
   right) > "Refresh fields".
 
 <!-- TODO: create a video walkthrough of the Kibana UI -->
+
+### Accessing stdout/stderr logs
+
+To find the logs sent to `stdout/stderr` from your application in the Kibana UI:
+
+1. Click `Discover` on the left side bar.
+1. Choose `logstash-*` index pattern on the left top.
+1. Input `tag: kubernetes*` in the top search bar then search.
+
+### Accessing request logs
+
+To find the request logs of your application in the Kibana UI :
+
+1. Click `Discover` on the left side bar.
+1. Choose `logstash-*` index pattern on the left top.
+1. Input `tag: "requestlog.logentry.istio-system"` in the top search bar then
+   search.
 
 ### Accessing configuration and revision logs
 

@@ -1,4 +1,3 @@
-# Routing across Knative Services
 
 This example shows how to map multiple Knative services to different paths under
 a single domain name using the Istio VirtualService concept. Istio is a
@@ -16,7 +15,7 @@ the Login service.
 ## Prerequisites
 
 1. A Kubernetes cluster with
-   [Knative Serving](https://github.com/knative/docs/blob/master/install/README.md)
+   [Knative Serving](../../../install/README.md)
    installed.
 2. Install
    [Docker](https://docs.docker.com/get-started/#prepare-your-docker-environment).
@@ -27,7 +26,7 @@ the Login service.
 4. Check out the code:
 
 ```
-go get -d github.com/knative/docs/serving/samples/knative-routing-go
+go get -d github.com/knative/docs/docs/serving/samples/knative-routing-go
 ```
 
 ## Setup
@@ -68,7 +67,7 @@ docker push "${REPO}/serving/samples/knative-routing-go"
    configuration file `serving/samples/knative-routing-go/sample.yaml`:
 
    - Manually replace:
-     `image: github.com/knative/docs/serving/samples/knative-routing-go` with
+     `image: github.com/knative/docs/docs/serving/samples/knative-routing-go` with
      `image: <YOUR_CONTAINER_REGISTRY>/serving/samples/knative-routing-go`
 
    Or
@@ -185,8 +184,7 @@ kubectl get VirtualService entry-route --output yaml
 
 3.  Send a request to the `Search` service and the `Login` service by using
     corresponding URIs. You should get the same results as directly accessing
-    these services.
-     \_ Get the ingress IP:
+    these services. \_ Get the ingress IP:
 
     ```shell
     # In Knative 0.2.x and prior versions, the `knative-ingressgateway` service was used instead of `istio-ingressgateway`.
@@ -216,9 +214,9 @@ kubectl get VirtualService entry-route --output yaml
 ## How It Works
 
 When an external request with host `example.com` reaches
-`knative-ingress-gateway` Gateway, the `entry-route` VirtualService will check if
-it has `/search` or `/login` URI. If the URI matches, then the host of request
-will be rewritten into the host of `Search` service or `Login` service
+`knative-ingress-gateway` Gateway, the `entry-route` VirtualService will check
+if it has `/search` or `/login` URI. If the URI matches, then the host of
+request will be rewritten into the host of `Search` service or `Login` service
 correspondingly. This resets the final destination of the request. The request
 with updated host will be forwarded to `knative-ingress-gateway` Gateway again.
 The Gateway proxy checks the updated host, and forwards it to `Search` or

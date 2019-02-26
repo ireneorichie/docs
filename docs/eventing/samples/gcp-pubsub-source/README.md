@@ -1,4 +1,3 @@
-# GCP Cloud Pub/Sub - Source
 
 This sample shows how to configure the GCP PubSub event source. This event
 source is most useful as a bridge from other GCP services, such as
@@ -16,14 +15,17 @@ source is most useful as a bridge from other GCP services, such as
    project id, and also set your project ID as default using
    `gcloud config set project $PROJECT_ID`.
 
-1. Setup [Knative Serving](https://github.com/knative/docs/blob/master/install)
+1. Setup [Knative Serving](../../../install)
 
 1. Setup
-   [Knative Eventing](https://github.com/knative/docs/tree/master/eventing)
-   using the `release-with-gcppubsub.yaml` file. Start by creating a dummy
-   `gcppubsub-source-key` (as directed), and we will replace it later.
+   [Knative Eventing](../../../eventing). In
+   addition, install the GCP PubSub event source from `release-gcppubsub.yaml`:
 
-1. Enable the 'Cloud Pub/Sub API' on your project:
+   ```shell
+   kubectl apply --filename kubectl apply --filename https://github.com/knative/eventing-sources/releases/download/v0.3.0/release-gcppubsub.yaml
+   ```
+
+1. Enable the `Cloud Pub/Sub API` on your project:
 
    ```shell
    gcloud services enable pubsub.googleapis.com
@@ -40,7 +42,7 @@ source is most useful as a bridge from other GCP services, such as
       ```shell
       gcloud iam service-accounts create knative-source
       ```
-   1. Give that Service Account the 'Pub/Sub Editor' role on your GCP project:
+   1. Give that Service Account the `Pub/Sub Editor` role on your GCP project:
       ```shell
       gcloud projects add-iam-policy-binding $PROJECT_ID \
         --member=serviceAccount:knative-source@$PROJECT_ID.iam.gserviceaccount.com \
@@ -131,7 +133,7 @@ source is most useful as a bridge from other GCP services, such as
 Publish messages to your GCP PubSub Topic:
 
 ```shell
-gcloud pubsub topics publish testing --message="Hello World!"
+gcloud pubsub topics publish testing --message="Hello world"
 ```
 
 ## Verify
@@ -163,7 +165,7 @@ You should see log lines similar to:
 ```json
 {
   "ID": "284375451531353",
-  "Data": "SGVsbG8gV29ybGQh",
+  "Data": "SGVsbG8sIHdvcmxk",
   "Attributes": null,
   "PublishTime": "2018-10-31T00:00:00.00Z"
 }
@@ -174,10 +176,10 @@ you [base-64 decode](https://www.base64decode.org/) the `Data` field, you should
 see the sent message:
 
 ```shell
-echo "SGVsbG8gV29ybGQh" | base64 --decode
+echo "SGVsbG8sIHdvcmxk" | base64 --decode
 ```
 
-Results in: `Hello World!".
+Results in: "Hello world"
 
 For more information about the format of the message, see the
 [PubsubMessage documentation](https://cloud.google.com/pubsub/docs/reference/rest/v1/PubsubMessage).

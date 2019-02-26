@@ -1,4 +1,8 @@
-# Knative Install on OpenShift
+---
+title: "Install on OpenShift"
+#linkTitle: "OPTIONAL_ALTERNATE_NAV_TITLE"
+weight: 10
+---
 
 This guide walks you through the installation of the latest version of
 [Knative Serving](https://github.com/knative/serving) on an
@@ -161,16 +165,16 @@ curl -s https://raw.githubusercontent.com/knative/docs/master/install/scripts/is
 1. Run the following to install Istio:
 
    ```shell
-   kubectl apply --filename https://github.com/knative/serving/releases/download/v0.2.2/istio-crds.yaml && \
-   oc apply -f https://storage.googleapis.com/knative-releases/serving/latest/istio.yaml
+   kubectl apply --filename https://github.com/knative/serving/releases/download/v0.3.0/istio-crds.yaml && \
+   oc apply -f https://github.com/knative/serving/releases/download/v0.3.0/istio.yaml
    ```
-   Note: the resources (CRDs) defined in the `istio-crds.yaml`file are
-   also included in the `istio.yaml` file, but they are pulled out so that
-   the CRD definitions are created first. If you see an error when creating
-   resources about an unknown type, run the second `kubectl apply` command
-   again.
 
-2. Ensure the istio-sidecar-injector pods runs as provileged:
+   Note: the resources (CRDs) defined in the `istio-crds.yaml`file are also
+   included in the `istio.yaml` file, but they are pulled out so that the CRD
+   definitions are created first. If you see an error when creating resources
+   about an unknown type, run the second `kubectl apply` command again.
+
+2. Ensure the istio-sidecar-injector pods runs as privileged:
    ```shell
    oc get cm istio-sidecar-injector -n istio-system -oyaml | sed -e 's/securityContext:/securityContext:\\n      privileged: true/' | oc replace -f -
    ```
@@ -203,7 +207,8 @@ curl -s https://raw.githubusercontent.com/knative/docs/master/install/scripts/kn
 1. Install Knative serving:
 
    ```shell
-   oc apply -f https://storage.googleapis.com/knative-releases/serving/latest/release-no-mon.yaml
+   oc apply -f https://github.com/knative/serving/releases/download/v0.3.0/serving.yaml \
+   oc apply -f https://github.com/knative/build/releases/download/v0.3.0/release.yaml
    ```
 
 2. Monitor the Knative components until all of the components show a `STATUS` of

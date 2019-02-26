@@ -1,10 +1,7 @@
 ---
-title: "Serving Sample Apps"
+title: "Knative Serving Sample Applications"
 linkTitle: "Sample Apps"
-weight: 100
-type: "docs"
+weight: 1
 ---
-
-Sample applications for Knative Serving.
 
 {{% readfile file="docs/serving/samples/README.md" markdown="true" %}}
