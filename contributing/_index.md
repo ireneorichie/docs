@@ -4,7 +4,7 @@ linkTitle: "Contributing"
 weight: 20
 type: "docs"
 menu:
-  main:
+  main1:
     weight: 60
 aliases:
   - /docs/contribution-guidelines/
