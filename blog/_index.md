@@ -1,7 +1,7 @@
 ---
 title: "Knative blog"
 linkTitle: "Blog"
-menu:
+menu1:
   main:
     weight: 30
 ---
