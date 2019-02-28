@@ -3,7 +3,7 @@ title: "Welcome to Knative"
 linkTitle: "Documentation"
 weight: 10
 menu:
-  main1:
+  main:
     weight: 20
 ---
 
