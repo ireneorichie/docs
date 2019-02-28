@@ -1,7 +1,7 @@
 ---
 title: Community
 menu:
-  main1:
+  main:
     weight: 40
 ---
 
