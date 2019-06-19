@@ -111,10 +111,10 @@ image: gcr.io/my-docker-repo/foo-zyxwvut@sha256:abcdef # image by digest
 
 `ko` also supports:
 
-- `ko publish` to simply push images and not produce configs.
-- `ko resolve` to push images and output the generated configs, but not
-  `kubectl apply` them.
-- `ko delete` to simply passthrough to `kubectl delete` for convenience.
+-   `ko publish` to simply push images and not produce configs.
+-   `ko resolve` to push images and output the generated configs, but not
+    `kubectl apply` them.
+-   `ko delete` to simply passthrough to `kubectl delete` for convenience.
 
 `ko` is used during development and release of Knative components, but is not
 intended to be required for _users_ of Knative -- they should only need to

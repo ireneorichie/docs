@@ -15,9 +15,9 @@ closer with your goals.
 
 View the set of Knative code samples that are actively tested and maintained:
 
-- [Build code samples](./build/samples.md)
-- [Eventing and Eventing Sources code samples](./eventing/samples/)
-- [Serving code samples](./serving/samples/README.md)
+-   [Build code samples](./build/samples.md)
+-   [Eventing and Eventing Sources code samples](./eventing/samples/)
+-   [Serving code samples](./serving/samples/README.md)
 
 ### Community owned and maintained
 
@@ -28,4 +28,4 @@ View the set of Knative code samples that are actively tested and maintained:
 A list of links to Knative code samples that live outside of
 [https://knative.dev](https://knative.dev):
 
-- _Be the first to link your externally hosted Knative code sample._
+-   _Be the first to link your externally hosted Knative code sample._

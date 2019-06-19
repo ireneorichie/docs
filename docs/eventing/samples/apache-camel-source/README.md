@@ -10,30 +10,31 @@ for generating events.
 1. Install the [Apache Camel K](https://github.com/apache/camel-k) Operator in
    any namespace where you want to run Camel sources.
 
-   The preferred version that is compatible with Camel sources is
-   [Camel K v0.2.0](https://github.com/apache/camel-k/releases/tag/0.2.0).
+    The preferred version that is compatible with Camel sources is
+    [Camel K v0.2.0](https://github.com/apache/camel-k/releases/tag/0.2.0).
 
-   Installation instruction are provided on the
-   [Apache Camel K Github repository](https://github.com/apache/camel-k#installation).
-   Documentation includes specific instructions for common Kubernetes
-   environments, including development clusters.
+    Installation instruction are provided on the
+    [Apache Camel K Github repository](https://github.com/apache/camel-k#installation).
+    Documentation includes specific instructions for common Kubernetes
+    environments, including development clusters.
 
 1. Install the Camel Source from the `camel.yaml` in the
    [Eventing Sources release page](https://github.com/knative/eventing-contrib/releases):
 
-   ```shell
-   kubectl apply --filename camel.yaml
-   ```
+    ```shell
+    kubectl apply --filename camel.yaml
+    ```
 
 ## Create a Channel and a Subscriber
 
 In order to check if a `CamelSource` is fully working, we will create:
 
-- a simple Knative event display service that prints incoming events to its log
-- a in-memory channel named `camel-test` that will buffer events created by the
-  event source
-- a subscription to direct events from the test channel to the event display
-  service
+-   a simple Knative event display service that prints incoming events to its
+    log
+-   a in-memory channel named `camel-test` that will buffer events created by
+    the event source
+-   a subscription to direct events from the test channel to the event display
+    service
 
 Deploy the [`display_resources.yaml`](./display_resources.yaml):
 

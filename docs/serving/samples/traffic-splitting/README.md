@@ -111,9 +111,9 @@ export LATEST_HOSTNAME=`kubectl get ksvc stock-service-example --output jsonpath
 curl --header "Host: ${LATEST_HOSTNAME}" http://${INGRESS_IP}
 ```
 
-- Visiting the Service's domain will still hit the original Revision, since we
-  configured it to receive 100% of our main traffic (you can also use the
-  `current` sub-route).
+-   Visiting the Service's domain will still hit the original Revision, since we
+    configured it to receive 100% of our main traffic (you can also use the
+    `current` sub-route).
 
 ```shell
 curl --header "Host:${SERVICE_HOSTNAME}" http://${INGRESS_IP}

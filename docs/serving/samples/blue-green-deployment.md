@@ -14,9 +14,9 @@ configuration.
 
 You need:
 
-- A Kubernetes cluster with [Knative installed](../../install/README.md).
-- (Optional) [A custom domain configured](../using-a-custom-domain.md) for use
-  with Knative.
+-   A Kubernetes cluster with [Knative installed](../../install/README.md).
+-   (Optional) [A custom domain configured](../using-a-custom-domain.md) for use
+    with Knative.
 
 Note: The source code for the gcr.io/knative-samples/knative-route-demo image
 that is used in this sample, is located at
@@ -34,19 +34,19 @@ it:
 apiVersion: serving.knative.dev/v1beta1
 kind: Configuration
 metadata:
-  name: blue-green-demo
-  namespace: default
+    name: blue-green-demo
+    namespace: default
 spec:
-  template:
-    metadata:
-      labels:
-        knative.dev/type: container
-    spec:
-      containers:
-        - image: gcr.io/knative-samples/knative-route-demo:blue # The URL to the sample app docker image
-          env:
-            - name: T_VERSION
-              value: "blue"
+    template:
+        metadata:
+            labels:
+                knative.dev/type: container
+        spec:
+            containers:
+                - image: gcr.io/knative-samples/knative-route-demo:blue # The URL to the sample app docker image
+                  env:
+                      - name: T_VERSION
+                        value: "blue"
 ```
 
 Save the file, then deploy the configuration to your cluster:
@@ -78,12 +78,12 @@ called `blue-green-demo-route.yaml` and copy the following YAML manifest into it
 apiVersion: serving.knative.dev/v1beta1
 kind: Route
 metadata:
-  name: blue-green-demo # The name of our route; appears in the URL to access the app
-  namespace: default # The namespace we're working in; also appears in the URL to access the app
+    name: blue-green-demo # The name of our route; appears in the URL to access the app
+    namespace: default # The namespace we're working in; also appears in the URL to access the app
 spec:
-  traffic:
-    - revisionName: blue-green-demo-lcfrd
-      percent: 100 # All traffic goes to this revision
+    traffic:
+        - revisionName: blue-green-demo-lcfrd
+          percent: 100 # All traffic goes to this revision
 ```
 
 Save the file, then apply the route to your cluster:
@@ -123,19 +123,19 @@ background. To create the new revision, we'll edit our existing configuration in
 apiVersion: serving.knative.dev/v1beta1
 kind: Configuration
 metadata:
-  name: blue-green-demo # Configuration name is unchanged, since we're updating an existing Configuration
-  namespace: default
+    name: blue-green-demo # Configuration name is unchanged, since we're updating an existing Configuration
+    namespace: default
 spec:
-  template:
-    metadata:
-      labels:
-        knative.dev/type: container
-    spec:
-      containers:
-        - image: gcr.io/knative-samples/knative-route-demo:green # URL to the new version of the sample app docker image
-          env:
-            - name: T_VERSION
-              value: "green" # Updated value for the T_VERSION environment variable
+    template:
+        metadata:
+            labels:
+                knative.dev/type: container
+        spec:
+            containers:
+                - image: gcr.io/knative-samples/knative-route-demo:green # URL to the new version of the sample app docker image
+                  env:
+                      - name: T_VERSION
+                        value: "green" # Updated value for the T_VERSION environment variable
 ```
 
 Save the file, then apply the updated configuration to your cluster:
@@ -166,15 +166,15 @@ revision while still sending all other traffic to the first revision. Edit
 apiVersion: serving.knative.dev/v1beta1
 kind: Route
 metadata:
-  name: blue-green-demo # Route name is unchanged, since we're updating an existing Route
-  namespace: default
+    name: blue-green-demo # Route name is unchanged, since we're updating an existing Route
+    namespace: default
 spec:
-  traffic:
-    - revisionName: blue-green-demo-lcfrd
-      percent: 100 # All traffic still going to the first revision
-    - revisionName: blue-green-demo-m9548
-      percent: 0 # 0% of traffic routed to the second revision
-      name: v2 # A named route
+    traffic:
+        - revisionName: blue-green-demo-lcfrd
+          percent: 100 # All traffic still going to the first revision
+        - revisionName: blue-green-demo-m9548
+          percent: 0 # 0% of traffic routed to the second revision
+          name: v2 # A named route
 ```
 
 Save the file, then apply the updated route to your cluster:
@@ -187,10 +187,10 @@ route "blue-green-demo" configured
 
 Revision 2 of the app is staged at this point. That means:
 
-- No traffic will be routed to revision 2 at the main URL,
-  http://blue-green-demo.default.YOUR_CUSTOM_DOMAIN.com
-- Knative creates a new route named v2 for testing the newly deployed version.
-  The URL of this can be seen in the status section of your Route.
+-   No traffic will be routed to revision 2 at the main URL,
+    http://blue-green-demo.default.YOUR_CUSTOM_DOMAIN.com
+-   Knative creates a new route named v2 for testing the newly deployed version.
+    The URL of this can be seen in the status section of your Route.
 
 ```bash
 kubectl get route blue-green-demo --output jsonpath="{.status.traffic[*].url}"
@@ -208,15 +208,15 @@ the first revision and toward the second. Edit `blue-green-demo-route.yaml`:
 apiVersion: serving.knative.dev/v1beta1
 kind: Route
 metadata:
-  name: blue-green-demo # Updating our existing route
-  namespace: default
+    name: blue-green-demo # Updating our existing route
+    namespace: default
 spec:
-  traffic:
-    - revisionName: blue-green-demo-lcfrd
-      percent: 50 # Updating the percentage from 100 to 50
-    - revisionName: blue-green-demo-m9548
-      percent: 50 # Updating the percentage from 0 to 50
-      name: v2
+    traffic:
+        - revisionName: blue-green-demo-lcfrd
+          percent: 50 # Updating the percentage from 100 to 50
+        - revisionName: blue-green-demo-m9548
+          percent: 50 # Updating the percentage from 0 to 50
+          name: v2
 ```
 
 Save the file, then apply the updated route to your cluster:
@@ -244,16 +244,16 @@ second revision. Edit `blue-green-demo-route.yaml`:
 apiVersion: serving.knative.dev/v1beta1
 kind: Route
 metadata:
-  name: blue-green-demo # Updating our existing route
-  namespace: default
+    name: blue-green-demo # Updating our existing route
+    namespace: default
 spec:
-  traffic:
-    - revisionName: blue-green-demo-lcfrd
-      percent: 0
-      name: v1 # Adding a new named route for v1
-    - revisionName: blue-green-demo-m9548
-      percent: 100
-      # Named route for v2 has been removed, since we don't need it anymore
+    traffic:
+        - revisionName: blue-green-demo-lcfrd
+          percent: 0
+          name: v1 # Adding a new named route for v1
+        - revisionName: blue-green-demo-m9548
+          percent: 100
+          # Named route for v2 has been removed, since we don't need it anymore
 ```
 
 Save the file, then apply the updated route to your cluster:

@@ -15,15 +15,15 @@ cd knative-docs/serving/samples/hello-world/helloworld-scala
 
 ## Before you begin
 
-- A Kubernetes cluster [installation](../../../../install/README.md) with
-  Knative Serving up and running.
-- [Docker](https://www.docker.com) installed locally, and running, optionally a
-  Docker Hub account configured or some other Docker Repository installed
-  locally.
-- [Java JDK8 or later](https://adoptopenjdk.net/installation.html) installed
-  locally.
-- [Scala's](https://scala-lang.org/) standard build tool
-  [sbt](https://www.scala-sbt.org/) installed locally.
+-   A Kubernetes cluster [installation](../../../../install/README.md) with
+    Knative Serving up and running.
+-   [Docker](https://www.docker.com) installed locally, and running, optionally
+    a Docker Hub account configured or some other Docker Repository installed
+    locally.
+-   [Java JDK8 or later](https://adoptopenjdk.net/installation.html) installed
+    locally.
+-   [Scala's](https://scala-lang.org/) standard build tool
+    [sbt](https://www.scala-sbt.org/) installed locally.
 
 ## Configuring the sbt build
 
@@ -66,18 +66,18 @@ in the [build.sbt](./build.sbt) in the previous section.
 apiVersion: serving.knative.dev/v1beta1
 kind: Service
 metadata:
-  name: helloworld-scala
-  namespace: default
+    name: helloworld-scala
+    namespace: default
 spec:
-  template:
-    spec:
-      containers:
-        - image: "your_repository_name/helloworld-scala:0.0.1"
-          env:
-            - name: MESSAGE
-              value: "Scala & Akka on Knative says hello!"
-            - name: HOST
-              value: "localhost"
+    template:
+        spec:
+            containers:
+                - image: "your_repository_name/helloworld-scala:0.0.1"
+                  env:
+                      - name: MESSAGE
+                        value: "Scala & Akka on Knative says hello!"
+                      - name: HOST
+                        value: "localhost"
 ```
 
 ## Publishing to Docker

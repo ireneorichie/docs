@@ -17,25 +17,26 @@ the scope of the proxy IP range by editing the `config-network` map.
 To set the correct scope, you need to determine the IP ranges of your cluster.
 The scope varies depending on your platform:
 
-- For Google Kubernetes Engine (GKE) run the following command to determine the
-  scope. Make sure to replace the variables or export these values first.
+-   For Google Kubernetes Engine (GKE) run the following command to determine
+    the scope. Make sure to replace the variables or export these values first.
 
-  ```shell
-  gcloud container clusters describe ${CLUSTER_NAME} \
-    --zone=${CLUSTER_ZONE} | grep -e clusterIpv4Cidr -e servicesIpv4Cidr
-  ```
+    ```shell
+    gcloud container clusters describe ${CLUSTER_NAME} \
+      --zone=${CLUSTER_ZONE} | grep -e clusterIpv4Cidr -e servicesIpv4Cidr
+    ```
 
-- For IBM Cloud Private run the following command:
+-   For IBM Cloud Private run the following command:
 
-  ```shell
-  cat cluster/config.yaml | grep service_cluster_ip_range
-  ```
+    ```shell
+    cat cluster/config.yaml | grep service_cluster_ip_range
+    ```
 
-- For IBM Cloud Kubernetes Service use
-  `172.30.0.0/16,172.20.0.0/16,10.10.10.0/24`
-- For Azure Container Service (ACS) use `10.244.0.0/16,10.240.0.0/16`
-- For Pivotal Container Service (PKS) on GCP use `10.200.0.0/16,10.100.200.0/24`
-- For Minikube use `10.0.0.1/24`
+-   For IBM Cloud Kubernetes Service use
+    `172.30.0.0/16,172.20.0.0/16,10.10.10.0/24`
+-   For Azure Container Service (ACS) use `10.244.0.0/16,10.240.0.0/16`
+-   For Pivotal Container Service (PKS) on GCP use
+    `10.200.0.0/16,10.100.200.0/24`
+-   For Minikube use `10.0.0.1/24`
 
 ## Setting the IP scope
 

@@ -4,10 +4,10 @@ linkTitle: "Contributing"
 weight: 20
 type: "docs"
 menu:
-  main:
-    weight: 60
+    main:
+        weight: 60
 aliases:
-  - /docs/contribution-guidelines/
+    - /docs/contribution-guidelines/
 ---
 
 Learn how to join the community of Knative contributors.

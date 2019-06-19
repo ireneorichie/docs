@@ -9,10 +9,10 @@ at [**www.knative.dev**](https://www.knative.dev/docs/reference/).
 
 The API source files are located at:
 
-- [Serving API](./serving.md)
-- [Build API](./build.md)
-- [Eventing API](./eventing/eventing.md)
-- [Event Sources API](./eventing/eventing-sources.md)
+-   [Serving API](./serving.md)
+-   [Build API](./build.md)
+-   [Eventing API](./eventing/eventing.md)
+-   [Event Sources API](./eventing/eventing-sources.md)
 
 ## Updating API Reference docs (for Knative maintainers)
 
@@ -30,11 +30,11 @@ reference page.
 You must meet the following requirements to run the `gen-api-reference-docs.sh`
 tool:
 
-- You need the following software installed:
-  - [`git`](https://git-scm.com/download/)
-  - [`go` version 1.11+](https://golang.org/dl/)
-- Clone [knative/docs](https://github.com/knative/docs) locally. For example:
-  `git clone git@github.com:knative/docs.git`
+-   You need the following software installed:
+    -   [`git`](https://git-scm.com/download/)
+    -   [`go` version 1.11+](https://golang.org/dl/)
+-   Clone [knative/docs](https://github.com/knative/docs) locally. For example:
+    `git clone git@github.com:knative/docs.git`
 
 ### Generating the API
 
@@ -44,46 +44,46 @@ To generate a version of the API:
    will result in the `GOPATH should not be set` error if your `GOPATH` is
    configured. You view the value by running the following command:
 
-   ```
-   echo $GOPATH
-   ```
+    ```
+    echo $GOPATH
+    ```
 
-   If your `GOPATH` is already configured, temporarily clear the `GOPATH` value
-   by running the following command:
+    If your `GOPATH` is already configured, temporarily clear the `GOPATH` value
+    by running the following command:
 
-   ```
-   export GOPATH=""
-   ```
+    ```
+    export GOPATH=""
+    ```
 
 1. Locate the commits or tags that correspond to the version of the API that you
    want to generate:
 
-   - [Build](https://github.com/knative/build/releases/)
-   - [Eventing](https://github.com/knative/eventing/releases/)
-   - [Eventing Sources](https://github.com/knative/eventing-contrib/releases/)
-   - [Serving](https://github.com/knative/serving/releases/)
+    - [Build](https://github.com/knative/build/releases/)
+    - [Eventing](https://github.com/knative/eventing/releases/)
+    - [Eventing Sources](https://github.com/knative/eventing-contrib/releases/)
+    - [Serving](https://github.com/knative/serving/releases/)
 
 1. To run the `gen-api-reference-docs.sh` command from the `hack` directory, you
    specify the commits or tags for each of the corresponding Knative component
    variables (`KNATIVE_[component_name]_COMMIT`):
 
-   ```
-   KNATIVE_BUILD_COMMIT=[commit_or_tag] \
-   KNATIVE_EVENTING_COMMIT=[commit_or_tag] \
-   KNATIVE_EVENTING_SOURCES_COMMIT=[commit_or_tag] \
-   KNATIVE_SERVING_COMMIT=[commit_or_tag] \
-   ./gen-api-reference-docs.sh
-   ```
+    ```
+    KNATIVE_BUILD_COMMIT=[commit_or_tag] \
+    KNATIVE_EVENTING_COMMIT=[commit_or_tag] \
+    KNATIVE_EVENTING_SOURCES_COMMIT=[commit_or_tag] \
+    KNATIVE_SERVING_COMMIT=[commit_or_tag] \
+    ./gen-api-reference-docs.sh
+    ```
 
-   where `[commit_or_tag]` is the commit or tag in the specific repo that
-   represents the version of the API that you want to generate. Also see the
-   [example](#example) below.
+    where `[commit_or_tag]` is the commit or tag in the specific repo that
+    represents the version of the API that you want to generate. Also see the
+    [example](#example) below.
 
-   **Result**
+    **Result**
 
-   The `gen-api-reference-docs.sh` tool generates the API in a `tmp` folder.
-   After a successful build, the tool automatically opens that folder in the
-   `tmp` directory.
+    The `gen-api-reference-docs.sh` tool generates the API in a `tmp` folder.
+    After a successful build, the tool automatically opens that folder in the
+    `tmp` directory.
 
 1. Copy the generated API files into the `docs/reference` directory of your
    knative/docs clone.

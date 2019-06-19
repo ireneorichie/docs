@@ -18,9 +18,10 @@ Knative Serving sample apps.
 
 #### Build samples
 
-- _Be the first to contribute a Build code sample to the community collection._
+-   _Be the first to contribute a Build code sample to the community
+    collection._
 
 #### Eventing and Eventing Sources samples
 
-- _Be the first to contribute an Eventing or Eventing Sources code sample to the
-  community collection._
+-   _Be the first to contribute an Eventing or Eventing Sources code sample to
+    the community collection._

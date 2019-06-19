@@ -81,8 +81,8 @@ address. Many Knative resources have the following fields in their Status:
 
 ```yaml
 status:
-  address:
-    hostname: example.default.svc.cluster.local
+    address:
+        hostname: example.default.svc.cluster.local
 ```
 
 Resources with these fields are called _Addressable_. The source controller will

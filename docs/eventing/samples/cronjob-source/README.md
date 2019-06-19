@@ -17,12 +17,12 @@ Service that dumps incoming messages to its log.
 apiVersion: serving.knative.dev/v1beta1
 kind: Service
 metadata:
-  name: event-display
+    name: event-display
 spec:
-  template:
-    spec:
-      containers:
-        - image: gcr.io/knative-releases/github.com/knative/eventing-sources/cmd/event_display
+    template:
+        spec:
+            containers:
+                - image: gcr.io/knative-releases/github.com/knative/eventing-sources/cmd/event_display
 ```
 
 Use following command to create the service from `service.yaml`:
@@ -42,14 +42,14 @@ yaml.
 apiVersion: sources.eventing.knative.dev/v1alpha1
 kind: CronJobSource
 metadata:
-  name: test-cronjob-source
+    name: test-cronjob-source
 spec:
-  schedule: "*/2 * * * *"
-  data: '{"message": "Hello world!"}'
-  sink:
-    apiVersion: serving.knative.dev/v1beta1
-    kind: Service
-    name: event-display
+    schedule: "*/2 * * * *"
+    data: '{"message": "Hello world!"}'
+    sink:
+        apiVersion: serving.knative.dev/v1beta1
+        kind: Service
+        name: event-display
 ```
 
 Use following command to create the event source from `cronjob-source.yaml`:

@@ -19,33 +19,33 @@ sections to do so now.
 
 1. Run the following command to install Prometheus and Grafana:
 
-   ```shell
-   kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-metrics-prometheus.yaml
-   ```
+    ```shell
+    kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-metrics-prometheus.yaml
+    ```
 
 1. Ensure that the `grafana-*`, `kibana-logging-*`, `kube-state-metrics-*`,
    `node-exporter-*` and `prometheus-system-*` pods all report a `Running`
    status:
 
-   ```shell
-   kubectl get pods --namespace knative-monitoring --watch
-   ```
+    ```shell
+    kubectl get pods --namespace knative-monitoring --watch
+    ```
 
-   For example:
+    For example:
 
-   ```text
-   NAME                                  READY     STATUS    RESTARTS   AGE
-   grafana-798cf569ff-v4q74              1/1       Running   0          2d
-   kibana-logging-7d474fbb45-6qb8x       1/1       Running   0          2d
-   kube-state-metrics-75bd4f5b8b-8t2h2   4/4       Running   0          2d
-   node-exporter-cr6bh                   2/2       Running   0          2d
-   node-exporter-mf6k7                   2/2       Running   0          2d
-   node-exporter-rhzr7                   2/2       Running   0          2d
-   prometheus-system-0                   1/1       Running   0          2d
-   prometheus-system-1                   1/1       Running   0          2d
-   ```
+    ```text
+    NAME                                  READY     STATUS    RESTARTS   AGE
+    grafana-798cf569ff-v4q74              1/1       Running   0          2d
+    kibana-logging-7d474fbb45-6qb8x       1/1       Running   0          2d
+    kube-state-metrics-75bd4f5b8b-8t2h2   4/4       Running   0          2d
+    node-exporter-cr6bh                   2/2       Running   0          2d
+    node-exporter-mf6k7                   2/2       Running   0          2d
+    node-exporter-rhzr7                   2/2       Running   0          2d
+    prometheus-system-0                   1/1       Running   0          2d
+    prometheus-system-1                   1/1       Running   0          2d
+    ```
 
-   Tip: Hit CTRL+C to exit watch mode.
+    Tip: Hit CTRL+C to exit watch mode.
 
 [Accessing Metrics](./accessing-metrics.md) for more information about metrics
 in Knative.
@@ -63,55 +63,55 @@ install:
 
 1. Run the following command to install an ELK stack:
 
-   ```shell
-   kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-logs-elasticsearch.yaml
-   ```
+    ```shell
+    kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-logs-elasticsearch.yaml
+    ```
 
 1. Ensure that the `elasticsearch-logging-*`, `fluentd-ds-*`, and
    `kibana-logging-*` pods all report a `Running` status:
 
-   ```shell
-   kubectl get pods --namespace knative-monitoring --watch
-   ```
+    ```shell
+    kubectl get pods --namespace knative-monitoring --watch
+    ```
 
-   For example:
+    For example:
 
-   ```text
-   NAME                                  READY     STATUS    RESTARTS   AGE
-   elasticsearch-logging-0               1/1       Running   0          2d
-   elasticsearch-logging-1               1/1       Running   0          2d
-   fluentd-ds-5kc85                      1/1       Running   0          2d
-   fluentd-ds-vhrcq                      1/1       Running   0          2d
-   fluentd-ds-xghk9                      1/1       Running   0          2d
-   kibana-logging-7d474fbb45-6qb8x       1/1       Running   0          2d
-   ```
+    ```text
+    NAME                                  READY     STATUS    RESTARTS   AGE
+    elasticsearch-logging-0               1/1       Running   0          2d
+    elasticsearch-logging-1               1/1       Running   0          2d
+    fluentd-ds-5kc85                      1/1       Running   0          2d
+    fluentd-ds-vhrcq                      1/1       Running   0          2d
+    fluentd-ds-xghk9                      1/1       Running   0          2d
+    kibana-logging-7d474fbb45-6qb8x       1/1       Running   0          2d
+    ```
 
-   Tip: Hit CTRL+C to exit watch mode.
+    Tip: Hit CTRL+C to exit watch mode.
 
 1. Verify that each of your nodes have the
    `beta.kubernetes.io/fluentd-ds-ready=true` label:
 
-   ```shell
-   kubectl get nodes --selector beta.kubernetes.io/fluentd-ds-ready=true
-   ```
+    ```shell
+    kubectl get nodes --selector beta.kubernetes.io/fluentd-ds-ready=true
+    ```
 
 1. If you receive the `No Resources Found` response:
 
-   1. Run the following command to ensure that the Fluentd DaemonSet runs on all
-      your nodes:
+    1. Run the following command to ensure that the Fluentd DaemonSet runs on
+       all your nodes:
 
-      ```shell
-      kubectl label nodes --all beta.kubernetes.io/fluentd-ds-ready="true"
-      ```
+        ```shell
+        kubectl label nodes --all beta.kubernetes.io/fluentd-ds-ready="true"
+        ```
 
-   1. Run the following command to ensure that the `fluentd-ds` daemonset is
-      ready on at least one node:
+    1. Run the following command to ensure that the `fluentd-ds` daemonset is
+       ready on at least one node:
 
-      ```shell
-      kubectl get daemonset fluentd-ds --namespace knative-monitoring --watch
-      ```
+        ```shell
+        kubectl get daemonset fluentd-ds --namespace knative-monitoring --watch
+        ```
 
-      Tip: Hit CTRL+C to exit watch mode.
+        Tip: Hit CTRL+C to exit watch mode.
 
 1. When the installation is complete and all the resources are running, you can
    continue to the next section and begin creating your Elasticsearch indices.
@@ -121,24 +121,24 @@ install:
 To visualize logs with Kibana, you need to set which Elasticsearch indices to
 explore.
 
-- To open the Kibana UI (the visualization tool for
-  [Elasticsearch](https://info.elastic.co)), you must start a local proxy by
-  running the following command:
+-   To open the Kibana UI (the visualization tool for
+    [Elasticsearch](https://info.elastic.co)), you must start a local proxy by
+    running the following command:
 
-  ```shell
-  kubectl proxy
-  ```
+    ```shell
+    kubectl proxy
+    ```
 
-  This command starts a local proxy of Kibana on port 8001. For security
-  reasons, the Kibana UI is exposed only within the cluster.
+    This command starts a local proxy of Kibana on port 8001. For security
+    reasons, the Kibana UI is exposed only within the cluster.
 
-- Navigate to the
-  [Kibana UI](http://localhost:8001/api/v1/namespaces/knative-monitoring/services/kibana-logging/proxy/app/kibana).
-  _It might take a couple of minutes for the proxy to work_.
+-   Navigate to the
+    [Kibana UI](http://localhost:8001/api/v1/namespaces/knative-monitoring/services/kibana-logging/proxy/app/kibana).
+    _It might take a couple of minutes for the proxy to work_.
 
-- Within the "Configure an index pattern" page, enter `logstash-*` to
-  `Index pattern` and select `@timestamp` from `Time Filter field name` and
-  click on `Create` button.
+-   Within the "Configure an index pattern" page, enter `logstash-*` to
+    `Index pattern` and select `@timestamp` from `Time Filter field name` and
+    click on `Create` button.
 
 ![Create logstash-* index](../images/kibana-landing-page-configure-index.png)
 
@@ -166,9 +166,9 @@ To configure and setup monitoring:
     You must configure and build your own Fluentd image if either of the
     following are true:
 
-    - Your Knative Serving component is not hosted on a Google Cloud Platform
-      (GCP) based cluster.
-    - You want to send logs to another GCP project.
+    -   Your Knative Serving component is not hosted on a Google Cloud Platform
+        (GCP) based cluster.
+    -   You want to send logs to another GCP project.
 
 1.  Follow the instructions in
     ["Setting up a logging plugin"](./setting-up-a-logging-plugin.md#Configuring)
@@ -239,28 +239,28 @@ uninstall that tool before installing the new tool.
 
 1. Install support for Zipkin:
 
-   - If Elasticsearch is not installed or if you don't want to persist end to
-     end traces, run:
+    - If Elasticsearch is not installed or if you don't want to persist end to
+      end traces, run:
 
-     ```shell
-     kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-tracing-zipkin-in-mem.yaml
-     ```
+        ```shell
+        kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-tracing-zipkin-in-mem.yaml
+        ```
 
-   - If Elasticsearch is installed and you want to persist end to end traces,
-     first run:
+    - If Elasticsearch is installed and you want to persist end to end traces,
+      first run:
 
-     ```shell
-     kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-tracing-zipkin.yaml
-     ```
+        ```shell
+        kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-tracing-zipkin.yaml
+        ```
 
 1. Create an Elasticsearch index for end to end traces:
 
-   1. Open Kibana UI as described in
-      [Create Elasticsearch Indices](#create-elasticsearch-indices) section.
+    1. Open Kibana UI as described in
+       [Create Elasticsearch Indices](#create-elasticsearch-indices) section.
 
-   1. Select `Create Index Pattern` button on top left of the page. Enter
-      `zipkin*` to `Index pattern` and select `timestamp_millis` from
-      `Time Filter field name` and click on `Create` button.
+    1. Select `Create Index Pattern` button on top left of the page. Enter
+       `zipkin*` to `Index pattern` and select `timestamp_millis` from
+       `Time Filter field name` and click on `Create` button.
 
 Visit [Accessing Traces](./accessing-traces.md) for more information on end to
 end traces.
@@ -274,38 +274,38 @@ end traces.
 
 1. Install support for Jaeger:
 
-   - If Elasticsearch is not installed or if you don't want to persist end to
-     end traces, run:
+    - If Elasticsearch is not installed or if you don't want to persist end to
+      end traces, run:
 
-     ```shell
-     kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-tracing-jaeger-in-mem.yaml
-     ```
+        ```shell
+        kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-tracing-jaeger-in-mem.yaml
+        ```
 
-   - If Elasticsearch is installed and you want to persist end to end traces,
-     first run:
+    - If Elasticsearch is installed and you want to persist end to end traces,
+      first run:
 
-     ```shell
-     kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-tracing-jaeger.yaml
-     ```
+        ```shell
+        kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring-tracing-jaeger.yaml
+        ```
 
 1. Create an Elasticsearch index for end to end traces:
 
-   1. Open Kibana UI as described in
-      [Create Elasticsearch Indices](#create-elasticsearch-indices) section.
+    1. Open Kibana UI as described in
+       [Create Elasticsearch Indices](#create-elasticsearch-indices) section.
 
-   1. Select `Create Index Pattern` button on top left of the page. Enter
-      `jaeger*` to `Index pattern` and select `timestamp_millis` from
-      `Time Filter field name` and click on `Create` button.
+    1. Select `Create Index Pattern` button on top left of the page. Enter
+       `jaeger*` to `Index pattern` and select `timestamp_millis` from
+       `Time Filter field name` and click on `Create` button.
 
 Visit [Accessing Traces](./accessing-traces.md) for more information on end to
 end traces.
 
 ## Learn More
 
-- Learn more about accessing logs, metrics, and traces:
-  - [Accessing Logs](./accessing-logs.md)
-  - [Accessing Metrics](./accessing-metrics.md)
-  - [Accessing Traces](./accessing-traces.md)
+-   Learn more about accessing logs, metrics, and traces:
+    -   [Accessing Logs](./accessing-logs.md)
+    -   [Accessing Metrics](./accessing-metrics.md)
+    -   [Accessing Traces](./accessing-traces.md)
 
 ---
 

@@ -21,13 +21,13 @@ Example:
 apiVersion: eventing.knative.dev/v1alpha1
 kind: Broker
 metadata:
-  name: default
+    name: default
 spec:
-  channelTemplate:
-    provisioner:
-      apiVersion: eventing.knative.dev/v1alpha1
-      kind: ClusterChannelProvisioner
-      name: gcp-pubsub
+    channelTemplate:
+        provisioner:
+            apiVersion: eventing.knative.dev/v1alpha1
+            kind: ClusterChannelProvisioner
+            name: gcp-pubsub
 ```
 
 ## Trigger
@@ -41,16 +41,16 @@ Example:
 apiVersion: eventing.knative.dev/v1alpha1
 kind: Trigger
 metadata:
-  name: my-service-trigger
+    name: my-service-trigger
 spec:
-  filter:
-    sourceAndType:
-      type: dev.knative.foo.bar
-  subscriber:
-    ref:
-      apiVersion: serving.knative.dev/v1alpha1
-      kind: Service
-      name: my-service
+    filter:
+        sourceAndType:
+            type: dev.knative.foo.bar
+    subscriber:
+        ref:
+            apiVersion: serving.knative.dev/v1alpha1
+            kind: Service
+            name: my-service
 ```
 
 ## Usage
@@ -95,8 +95,8 @@ If `spec.channelTemplate` is not specified:
 
 There are two ways to create a Broker:
 
-- [namespace annotation](#annotation)
-- [manual setup](#manual-setup)
+-   [namespace annotation](#annotation)
+-   [manual setup](#manual-setup)
 
 Normally the [namespace annotation](#annotation) is used to do this setup.
 
@@ -171,17 +171,17 @@ anything that is `Addressable`.
 apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
-  name: my-service
-  namespace: default
+    name: my-service
+    namespace: default
 spec:
-  runLatest:
-    configuration:
-      revisionTemplate:
-        spec:
-          container:
-            # This corresponds to
-            # https://github.com/knative/eventing-contrib/blob/v0.2.1/cmd/message_dumper/dumper.go.
-            image: gcr.io/knative-releases/github.com/knative/eventing-sources/cmd/message_dumper@sha256:ab5391755f11a5821e7263686564b3c3cd5348522f5b31509963afb269ddcd63
+    runLatest:
+        configuration:
+            revisionTemplate:
+                spec:
+                    container:
+                        # This corresponds to
+                        # https://github.com/knative/eventing-contrib/blob/v0.2.1/cmd/message_dumper/dumper.go.
+                        image: gcr.io/knative-releases/github.com/knative/eventing-sources/cmd/message_dumper@sha256:ab5391755f11a5821e7263686564b3c3cd5348522f5b31509963afb269ddcd63
 ```
 
 ### Trigger
@@ -193,17 +193,17 @@ particular type to `my-service`:
 apiVersion: eventing.knative.dev/v1alpha1
 kind: Trigger
 metadata:
-  name: my-service-trigger
-  namespace: default
+    name: my-service-trigger
+    namespace: default
 spec:
-  filter:
-    sourceAndType:
-      type: dev.knative.foo.bar
-  subscriber:
-    ref:
-      apiVersion: serving.knative.dev/v1alpha1
-      kind: Service
-      name: my-service
+    filter:
+        sourceAndType:
+            type: dev.knative.foo.bar
+    subscriber:
+        ref:
+            apiVersion: serving.knative.dev/v1alpha1
+            kind: Service
+            name: my-service
 ```
 
 #### Defaulting
@@ -220,19 +220,19 @@ The Webhook will default the YAML above to:
 apiVersion: eventing.knative.dev/v1alpha1
 kind: Trigger
 metadata:
-  name: my-service-trigger
-  namespace: default
+    name: my-service-trigger
+    namespace: default
 spec:
-  broker: default # Defaulted by the Webhook.
-  filter:
-    sourceAndType:
-      type: dev.knative.foo.bar
-      source: "" # Defaulted by the Webhook.
-  subscriber:
-    ref:
-      apiVersion: serving.knative.dev/v1alpha1
-      kind: Service
-      name: my-service
+    broker: default # Defaulted by the Webhook.
+    filter:
+        sourceAndType:
+            type: dev.knative.foo.bar
+            source: "" # Defaulted by the Webhook.
+    subscriber:
+        ref:
+            apiVersion: serving.knative.dev/v1alpha1
+            kind: Service
+            name: my-service
 ```
 
 You can make multiple `Trigger`s on the same `Broker` corresponding to different
@@ -273,11 +273,11 @@ Provide the Knative Source the `default` `Broker` as its sink:
 apiVersion: sources.eventing.knative.dev/v1alpha1
 kind: ContainerSource
 metadata:
-  name: heartbeats-sender
+    name: heartbeats-sender
 spec:
-  image: github.com/knative/eventing-contrib/cmd/heartbeats/
-  sink:
-    apiVersion: eventing.knative.dev/v1alpha1
-    kind: Broker
-    name: default
+    image: github.com/knative/eventing-contrib/cmd/heartbeats/
+    sink:
+        apiVersion: eventing.knative.dev/v1alpha1
+        kind: Broker
+        name: default
 ```

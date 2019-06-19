@@ -19,15 +19,15 @@ source is most useful as a bridge from other GCP services, such as
 1. Setup [Knative Eventing](../../../eventing). In addition, install the GCP
    PubSub event source from `release-gcppubsub.yaml`:
 
-   ```shell
-   kubectl apply --filename https://github.com/knative/eventing-contrib/releases/download/v0.6.0/gcppubsub.yaml
-   ```
+    ```shell
+    kubectl apply --filename https://github.com/knative/eventing-contrib/releases/download/v0.6.0/gcppubsub.yaml
+    ```
 
 1. Enable the `Cloud Pub/Sub API` on your project:
 
-   ```shell
-   gcloud services enable pubsub.googleapis.com
-   ```
+    ```shell
+    gcloud services enable pubsub.googleapis.com
+    ```
 
 1. Create a
    [GCP Service Account](https://console.cloud.google.com/iam-admin/serviceaccounts/project).
@@ -35,40 +35,40 @@ source is most useful as a bridge from other GCP services, such as
    messages, but you can also create a separate service account for receiving
    messages if you want additional privilege separation.
 
-   1. Create a new service account named `knative-source` with the following
-      command:
-      ```shell
-      gcloud iam service-accounts create knative-source
-      ```
-   1. Give that Service Account the `Pub/Sub Editor` role on your GCP project:
-      ```shell
-      gcloud projects add-iam-policy-binding $PROJECT_ID \
-        --member=serviceAccount:knative-source@$PROJECT_ID.iam.gserviceaccount.com \
-        --role roles/pubsub.editor
-      ```
-   1. Download a new JSON private key for that Service Account. **Be sure not to
-      check this key into source control!**
-      ```shell
-      gcloud iam service-accounts keys create knative-source.json \
-        --iam-account=knative-source@$PROJECT_ID.iam.gserviceaccount.com
-      ```
-   1. Create two secrets on the kubernetes cluster with the downloaded key:
+    1. Create a new service account named `knative-source` with the following
+       command:
+        ```shell
+        gcloud iam service-accounts create knative-source
+        ```
+    1. Give that Service Account the `Pub/Sub Editor` role on your GCP project:
+        ```shell
+        gcloud projects add-iam-policy-binding $PROJECT_ID \
+          --member=serviceAccount:knative-source@$PROJECT_ID.iam.gserviceaccount.com \
+          --role roles/pubsub.editor
+        ```
+    1. Download a new JSON private key for that Service Account. **Be sure not
+       to check this key into source control!**
+        ```shell
+        gcloud iam service-accounts keys create knative-source.json \
+          --iam-account=knative-source@$PROJECT_ID.iam.gserviceaccount.com
+        ```
+    1. Create two secrets on the kubernetes cluster with the downloaded key:
 
-      ```shell
-      # Note that the first secret may already have been created when installing
-      # Knative Eventing. The following command will overwrite it. If you don't
-      # want to overwrite it, then skip this command.
-      kubectl --namespace knative-sources create secret generic gcppubsub-source-key --from-file=key.json=knative-source.json --dry-run --output yaml | kubectl apply --filename -
+        ```shell
+        # Note that the first secret may already have been created when installing
+        # Knative Eventing. The following command will overwrite it. If you don't
+        # want to overwrite it, then skip this command.
+        kubectl --namespace knative-sources create secret generic gcppubsub-source-key --from-file=key.json=knative-source.json --dry-run --output yaml | kubectl apply --filename -
 
-      # The second secret should not already exist, so just try to create it.
-      kubectl --namespace default create secret generic google-cloud-key --from-file=key.json=knative-source.json
-      ```
+        # The second secret should not already exist, so just try to create it.
+        kubectl --namespace default create secret generic google-cloud-key --from-file=key.json=knative-source.json
+        ```
 
-      `gcppubsub-source-key` and `key.json` are pre-configured values in the
-      `controller-manager` StatefulSet which manages your Eventing sources.
+        `gcppubsub-source-key` and `key.json` are pre-configured values in the
+        `controller-manager` StatefulSet which manages your Eventing sources.
 
-      `google-cloud-key` and `key.json` are pre-configured values in
-      [`gcp-pubsub-source.yaml`](./gcp-pubsub-source.yaml).
+        `google-cloud-key` and `key.json` are pre-configured values in
+        [`gcp-pubsub-source.yaml`](./gcp-pubsub-source.yaml).
 
 ## Deployment
 
@@ -76,43 +76,43 @@ source is most useful as a bridge from other GCP services, such as
    namespace `default`, feel free to change to any other namespace you would
    like to use instead:
 
-   ```shell
-   kubectl label namespace default knative-eventing-injection=enabled
-   ```
+    ```shell
+    kubectl label namespace default knative-eventing-injection=enabled
+    ```
 
 1. Create a GCP PubSub Topic. If you change its name (`testing`), you also need
    to update the `topic` in the
    [`gcp-pubsub-source.yaml`](./gcp-pubsub-source.yaml) file:
 
-   ```shell
-   gcloud pubsub topics create testing
-   ```
+    ```shell
+    gcloud pubsub topics create testing
+    ```
 
 1. Replace the
    [`MY_GCP_PROJECT` placeholder](https://cloud.google.com/resource-manager/docs/creating-managing-projects)
    in [`gcp-pubsub-source.yaml`](./gcp-pubsub-source.yaml) and apply it.
 
-   If you're in the samples directory, you can replace `MY_GCP_PROJECT` and
-   apply in one command:
+    If you're in the samples directory, you can replace `MY_GCP_PROJECT` and
+    apply in one command:
 
-   ```shell
-   sed "s/MY_GCP_PROJECT/$PROJECT_ID/g" gcp-pubsub-source.yaml | \
-       kubectl apply --filename -
-   ```
+    ```shell
+    sed "s/MY_GCP_PROJECT/$PROJECT_ID/g" gcp-pubsub-source.yaml | \
+        kubectl apply --filename -
+    ```
 
-   If you are replacing `MY_GCP_PROJECT` manually, then make sure you apply the
-   resulting YAML:
+    If you are replacing `MY_GCP_PROJECT` manually, then make sure you apply the
+    resulting YAML:
 
-   ```shell
-   kubectl apply --filename gcp-pubsub-source.yaml
-   ```
+    ```shell
+    kubectl apply --filename gcp-pubsub-source.yaml
+    ```
 
 1. Create a function and create a Trigger that will send all events from the
    Broker to the function:
 
-   ```shell
-   kubectl apply --filename trigger.yaml
-   ```
+    ```shell
+    kubectl apply --filename trigger.yaml
+    ```
 
 ## Publish
 
@@ -135,28 +135,28 @@ section above.
 1. We need to wait for the downstream pods to get started and receive our event,
    wait 60 seconds.
 
-   - You can check the status of the downstream pods with:
+    - You can check the status of the downstream pods with:
 
-     ```shell
-     kubectl get pods --selector serving.knative.dev/service=event-display
-     ```
+        ```shell
+        kubectl get pods --selector serving.knative.dev/service=event-display
+        ```
 
-     You should see at least one.
+        You should see at least one.
 
 1. Inspect the logs of the subscriber:
 
-   ```shell
-   kubectl logs --selector serving.knative.dev/service=event-display -c user-container
-   ```
+    ```shell
+    kubectl logs --selector serving.knative.dev/service=event-display -c user-container
+    ```
 
 You should see log lines similar to:
 
 ```json
 {
-  "ID": "284375451531353",
-  "Data": "SGVsbG8sIHdvcmxk",
-  "Attributes": null,
-  "PublishTime": "2018-10-31T00:00:00.00Z"
+    "ID": "284375451531353",
+    "Data": "SGVsbG8sIHdvcmxk",
+    "Attributes": null,
+    "PublishTime": "2018-10-31T00:00:00.00Z"
 }
 ```
 

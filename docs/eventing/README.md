@@ -15,9 +15,9 @@ Knative Eventing is designed around the following goals:
    events, before there are producers that are creating those events.
 1. Other services can be connected to the Eventing system. These services can
    perform the following functions:
-   - Create new applications without modifying the event producer or event
-     consumer.
-   - Select and target specific subsets of the events from their producers.
+    - Create new applications without modifying the event producer or event
+      consumer.
+    - Select and target specific subsets of the events from their producers.
 1. Ensure cross-service interoperability. Knative Eventing is consistent with
    the
    [CloudEvents](https://github.com/cloudevents/spec/blob/master/spec.md#design-goals)
@@ -137,13 +137,16 @@ format, but may be expressed as simple lists, etc in YAML. All Sources should be
 part of the `sources` category, so you can list all existing Sources with
 `kubectl get sources`. The currently-implemented Sources are described below.
 
-In addition to the core sources (explained below), there are [other sources](./sources/README.md)
-that you can install.
+In addition to the core sources (explained below), there are
+[other sources](./sources/README.md) that you can install.
 
-If you need a Source not covered by the [available Source implementations](./sources/README.md), there is a [tutorial on writing your own Source](./samples/writing-a-source/README.md).
+If you need a Source not covered by the
+[available Source implementations](./sources/README.md), there is a
+[tutorial on writing your own Source](./samples/writing-a-source/README.md).
 
-If your code needs to send events as part of its business logic and doesn't fit the model of a Source, consider [feeding events directly to a Broker](https://knative.dev/docs/eventing/broker-trigger/#manual).
-
+If your code needs to send events as part of its business logic and doesn't fit
+the model of a Source, consider
+[feeding events directly to a Broker](https://knative.dev/docs/eventing/broker-trigger/#manual).
 
 ### KubernetesEventSource
 
@@ -153,12 +156,12 @@ is created or updated.
 
 **Spec fields**:
 
-- `namespace`: `string` The namespace to watch for events.
-- `serviceAccountname`: `string` The name of the ServiceAccount used to connect
-  to the Kubernetes apiserver.
-- `sink`:
-  [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
-  A reference to the object that should receive events.
+-   `namespace`: `string` The namespace to watch for events.
+-   `serviceAccountname`: `string` The name of the ServiceAccount used to
+    connect to the Kubernetes apiserver.
+-   `sink`:
+    [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
+    A reference to the object that should receive events.
 
 See the [Kubernetes Event Source](samples/kubernetes-event-source) example.
 
@@ -169,30 +172,30 @@ The GitHubSource fires a new event for selected
 
 **Spec fields**:
 
-- `ownerAndRepository`: `string` The GitHub owner/org and repository to receive
-  events from. The repository may be left off to receive events from an entire
-  organization.
-- `eventTypes`: `[]string` A list of
-  [event types](https://developer.github.com/v3/activity/events/types/) in
-  "Webhook event name" format (lower_case).
-- `accessToken.secretKeyRef`:
-  [SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
-  containing a GitHub access token for configuring a GitHub webhook. One of this
-  or `secretToken` must be set.
-- `secretToken.secretKeyRef`:
-  [SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
-  containing a GitHub secret token for configuring a GitHub webhook. One of this
-  or `accessToken` must be set.
-- `serviceAccountName`: `string` The name of the ServiceAccount to run the
-  container as.
-- `sink`:
-  [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
-  A reference to the object that should receive events.
-- `githubAPIURL`: `string` Optional field to specify the base URL for API
-  requests. Defaults to the public GitHub API if not specified, but can be set
-  to a domain endpoint to use with GitHub Enterprise, for example,
-  `https://github.mycompany.com/api/v3/`. This base URL should always be
-  specified with a trailing slash.
+-   `ownerAndRepository`: `string` The GitHub owner/org and repository to
+    receive events from. The repository may be left off to receive events from
+    an entire organization.
+-   `eventTypes`: `[]string` A list of
+    [event types](https://developer.github.com/v3/activity/events/types/) in
+    "Webhook event name" format (lower_case).
+-   `accessToken.secretKeyRef`:
+    [SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
+    containing a GitHub access token for configuring a GitHub webhook. One of
+    this or `secretToken` must be set.
+-   `secretToken.secretKeyRef`:
+    [SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
+    containing a GitHub secret token for configuring a GitHub webhook. One of
+    this or `accessToken` must be set.
+-   `serviceAccountName`: `string` The name of the ServiceAccount to run the
+    container as.
+-   `sink`:
+    [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
+    A reference to the object that should receive events.
+-   `githubAPIURL`: `string` Optional field to specify the base URL for API
+    requests. Defaults to the public GitHub API if not specified, but can be set
+    to a domain endpoint to use with GitHub Enterprise, for example,
+    `https://github.mycompany.com/api/v3/`. This base URL should always be
+    specified with a trailing slash.
 
 See the [GitHub Source](samples/github-source) example.
 
@@ -203,17 +206,17 @@ The GcpPubSubSource fires a new event each time a message is published on a
 
 **Spec fields**:
 
-- `googleCloudProject`: `string` The GCP project ID that owns the topic.
-- `topic`: `string` The name of the PubSub topic.
-- `serviceAccountName`: `string` The name of the ServiceAccount used to access
-  the `gcpCredsSecret`.
-- `gcpCredsSecret`:
-  [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
-  A reference to a Secret which contains a GCP refresh token for talking to
-  PubSub.
-- `sink`:
-  [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
-  A reference to the object that should receive events.
+-   `googleCloudProject`: `string` The GCP project ID that owns the topic.
+-   `topic`: `string` The name of the PubSub topic.
+-   `serviceAccountName`: `string` The name of the ServiceAccount used to access
+    the `gcpCredsSecret`.
+-   `gcpCredsSecret`:
+    [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
+    A reference to a Secret which contains a GCP refresh token for talking to
+    PubSub.
+-   `sink`:
+    [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
+    A reference to the object that should receive events.
 
 See the [GCP PubSub Source](samples/gcp-pubsub-source) example.
 
@@ -224,13 +227,13 @@ The AwsSqsSource fires a new event each time an event is published on an
 
 **Spec fields**:
 
-- `queueURL`: URL of the SQS queue to pull events from.
-- `awsCredsSecret`: credential to use to poll the AWS SQS queue.
-- `sink`:
-  [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
-  A reference to the object that should receive events.
-- `serviceAccountName`: `string` The name of the ServiceAccount used to access
-  the `awsCredsSecret`.
+-   `queueURL`: URL of the SQS queue to pull events from.
+-   `awsCredsSecret`: credential to use to poll the AWS SQS queue.
+-   `sink`:
+    [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
+    A reference to the object that should receive events.
+-   `serviceAccountName`: `string` The name of the ServiceAccount used to access
+    the `awsCredsSecret`.
 
 ### ContainerSource
 
@@ -240,15 +243,15 @@ FTP server for new files or generate events at a set time interval.
 
 **Spec fields**:
 
-- `image` (**required**): `string` A docker image of the container to be run.
-- `args`: `[]string` Command-line arguments. If no `--sink` flag is provided,
-  one will be added and filled in with the DNS address of the `sink` object.
-- `env`: `map[string]string` Environment variables to be set in the container.
-- `serviceAccountName`: `string` The name of the ServiceAccount to run the
-  container as.
-- `sink`:
-  [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
-  A reference to the object that should receive events.
+-   `image` (**required**): `string` A docker image of the container to be run.
+-   `args`: `[]string` Command-line arguments. If no `--sink` flag is provided,
+    one will be added and filled in with the DNS address of the `sink` object.
+-   `env`: `map[string]string` Environment variables to be set in the container.
+-   `serviceAccountName`: `string` The name of the ServiceAccount to run the
+    container as.
+-   `sink`:
+    [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
+    A reference to the object that should receive events.
 
 ### CronJobSource
 
@@ -257,15 +260,15 @@ The CronJobSource fires events based on given
 
 **Spec fields**:
 
-- `schedule` (**required**): `string` A
-  [Cron](https://en.wikipedia.org/wiki/Cron) format string, such as `0 * * * *`
-  or `@hourly`.
-- `data`: `string` Optional data sent to downstream receiver.
-- `serviceAccountName`: `string` The name of the ServiceAccount to run the
-  container as.
-- `sink`:
-  [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
-  A reference to the object that should receive events.
+-   `schedule` (**required**): `string` A
+    [Cron](https://en.wikipedia.org/wiki/Cron) format string, such as
+    `0 * * * *` or `@hourly`.
+-   `data`: `string` Optional data sent to downstream receiver.
+-   `serviceAccountName`: `string` The name of the ServiceAccount to run the
+    container as.
+-   `sink`:
+    [ObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#objectreference-v1-core)
+    A reference to the object that should receive events.
 
 See the [Cronjob Source](samples/cronjob-source) example.
 
@@ -276,31 +279,31 @@ Knative Serving application so that they can be consumed.
 
 **Spec fields**:
 
-- `consumerGroup`: `string` Name of a Kafka consumer group.
-- `bootstrapServers`: `string` Comma separated list of `hostname:port` pairs for
-  the Kafka Broker.
-- `topics`: `string` Name of the Kafka topic to consume messages from.
-- `net`: Optional network configuration.
-  - `sasl`: Optional SASL authentication configuration.
-    - `enable`: `boolean` If true, use SASL for authentication.
-    - `user.secretKeyRef`:
-      [`SecretKeySelector`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
-      containing the SASL username to use.
-    - `password.secretKeyRef`:
-      [`SecretKeySelector`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
-      containing the SASL password to use.
-  - `tls`: Optional TLS configuration.
-    - `enable`: `boolean` If true, use TLS when connecting.
-    - `cert.secretKeyRef`:
-      [`SecretKeySelector`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
-      containing the client certificate to use.
-    - `key.secretKeyRef`:
-      [`SecretKeySelector`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
-      containing the client key to use.
-    - `caCert.secretKeyRef`:
-      [`SecretKeySelector`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
-      containing a server CA certificate to use when verifying the server
-      certificate.
+-   `consumerGroup`: `string` Name of a Kafka consumer group.
+-   `bootstrapServers`: `string` Comma separated list of `hostname:port` pairs
+    for the Kafka Broker.
+-   `topics`: `string` Name of the Kafka topic to consume messages from.
+-   `net`: Optional network configuration.
+    -   `sasl`: Optional SASL authentication configuration.
+        -   `enable`: `boolean` If true, use SASL for authentication.
+        -   `user.secretKeyRef`:
+            [`SecretKeySelector`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
+            containing the SASL username to use.
+        -   `password.secretKeyRef`:
+            [`SecretKeySelector`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
+            containing the SASL password to use.
+    -   `tls`: Optional TLS configuration.
+        -   `enable`: `boolean` If true, use TLS when connecting.
+        -   `cert.secretKeyRef`:
+            [`SecretKeySelector`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
+            containing the client certificate to use.
+        -   `key.secretKeyRef`:
+            [`SecretKeySelector`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
+            containing the client key to use.
+        -   `caCert.secretKeyRef`:
+            [`SecretKeySelector`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.12/#secretkeyselector-v1-core)
+            containing a server CA certificate to use when verifying the server
+            certificate.
 
 See the
 [Kafka Source](https://github.com/knative/eventing-contrib/tree/master/contrib/kafka/samples)
@@ -319,18 +322,18 @@ to be installed into the current namespace.
 
 **Spec fields**:
 
-- source: information on the kind of Camel source that should be created.
-  - component: the default kind of source, enables creating an EventSource by
-    configuring a single Camel component.
-    - uri: `string` contains the Camel URI that should be used to push events
-      into the target sink.
-    - properties: `key/value map` contains Camel global options or component
-      specific configuration. Options are available in the documentation of each
-      existing Apache Camel component.
-- serviceAccountName: `string` an optional service account that can be used to
-  run the source pod.
-- image: `string` an optional base image to use for the source pod, mainly for
-  development purposes.
+-   source: information on the kind of Camel source that should be created.
+    -   component: the default kind of source, enables creating an EventSource
+        by configuring a single Camel component.
+        -   uri: `string` contains the Camel URI that should be used to push
+            events into the target sink.
+        -   properties: `key/value map` contains Camel global options or
+            component specific configuration. Options are available in the
+            documentation of each existing Apache Camel component.
+-   serviceAccountName: `string` an optional service account that can be used to
+    run the source pod.
+-   image: `string` an optional base image to use for the source pod, mainly for
+    development purposes.
 
 See the
 [CamelSource](https://github.com/knative/eventing-contrib/blob/master/contrib/camel/samples/README.md)
@@ -338,14 +341,14 @@ example.
 
 ## Getting Started
 
-- [Setup Knative Serving](../install/README.md)
-- [Install the Eventing component](#installation)
-- [Run samples](./samples/)
+-   [Setup Knative Serving](../install/README.md)
+-   [Install the Eventing component](#installation)
+-   [Run samples](./samples/)
 
 ## Configuration
 
-- [Default Channels](./channels/default-channels.md) provide a way to choose the
-  persistence strategy for Channels across the cluster.
+-   [Default Channels](./channels/default-channels.md) provide a way to choose
+    the persistence strategy for Channels across the cluster.
 
 ---
 

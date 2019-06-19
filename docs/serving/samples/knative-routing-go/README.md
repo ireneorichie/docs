@@ -18,11 +18,11 @@ the Login service.
 2. Install
    [Docker](https://docs.docker.com/get-started/#prepare-your-docker-environment).
 3. Acquire a domain name.
-   - In this example, we use `example.com`. If you don't have a domain name, you
-     can modify your hosts file (on Mac or Linux) to map `example.com` to your
-     cluster's ingress IP.
-   - If you have configured a custom domain for your Knative installation, we
-     will refer to it as <YOUR_DOMAIN_NAME> in the rest of this document
+    - In this example, we use `example.com`. If you don't have a domain name,
+      you can modify your hosts file (on Mac or Linux) to map `example.com` to
+      your cluster's ingress IP.
+    - If you have configured a custom domain for your Knative installation, we
+      will refer to it as <YOUR_DOMAIN_NAME> in the rest of this document
 4. Check out the code:
 
 ```
@@ -82,19 +82,19 @@ docker push "${REPO}/knative-routing-go"
 5. Replace the image reference path with our published image path in the
    configuration file `docs/serving/samples/knative-routing-go/sample.yaml`:
 
-   - Manually replace:
-     `image: github.com/knative/docs/docs/serving/samples/knative-routing-go`
-     with `image: ${REPO}/knative-routing-go` If you manually changed the .yaml
-     file, you must replace \${REPO} with the correct path on your local
-     machine.
+    - Manually replace:
+      `image: github.com/knative/docs/docs/serving/samples/knative-routing-go`
+      with `image: ${REPO}/knative-routing-go` If you manually changed the .yaml
+      file, you must replace \${REPO} with the correct path on your local
+      machine.
 
-   Or
+    Or
 
-   - Run this command:
+    - Run this command:
 
-   ```
-   perl -pi -e "s@github.com/knative/docs/docs/serving/samples@${REPO}@g" docs/serving/samples/knative-routing-go/sample.yaml
-   ```
+    ```
+    perl -pi -e "s@github.com/knative/docs/docs/serving/samples@${REPO}@g" docs/serving/samples/knative-routing-go/sample.yaml
+    ```
 
 ## Deploy the Service
 
@@ -110,13 +110,13 @@ A shared Gateway `knative-ingress-gateway` is used within Knative service mesh
 for serving all incoming traffic. You can inspect it and its corresponding
 Kubernetes service with:
 
-- Check the shared Gateway:
+-   Check the shared Gateway:
 
 ```
 kubectl get Gateway --namespace knative-serving --output yaml
 ```
 
-- Check the corresponding Kubernetes service for the shared Gateway:
+-   Check the corresponding Kubernetes service for the shared Gateway:
 
 ```
 # In Knative 0.2.x and prior versions, the `knative-ingressgateway` service was used instead of `istio-ingressgateway`.
@@ -132,7 +132,7 @@ fi
 kubectl get svc $INGRESSGATEWAY --namespace istio-system --output yaml
 ```
 
-- Inspect the deployed Knative services with:
+-   Inspect the deployed Knative services with:
 
 ```
 kubectl get ksvc

@@ -8,25 +8,26 @@ files in one of the branches.
 
 Use the Knative Documentation website to learn about the product:
 
-- [`https://www.knative.dev`](https://www.knative.dev)
+-   [`https://www.knative.dev`](https://www.knative.dev)
 
 ## `knative/docs` branches
 
 If you want to fix or add content to a past release, you can find the source
 files in the following branches:
 
-- **Released versions**
+-   **Released versions**
 
-  The following branches include content for released versions of Knative:
+    The following branches include content for released versions of Knative:
 
-  - [**`release-0.5`**](https://github.com/knative/docs/tree/release-0.5)
-  - [**`release-0.4`**](https://github.com/knative/docs/tree/release-0.4)
-  - [**`release-0.3`**](https://github.com/knative/docs/tree/release-0.3)
-  - [**`release-0.2`**](https://github.com/knative/docs/tree/release-0.2)
-  - [**`release-0.1`**](https://github.com/knative/docs/tree/release-0.1)
+    -   [**`release-0.5`**](https://github.com/knative/docs/tree/release-0.5)
+    -   [**`release-0.4`**](https://github.com/knative/docs/tree/release-0.4)
+    -   [**`release-0.3`**](https://github.com/knative/docs/tree/release-0.3)
+    -   [**`release-0.2`**](https://github.com/knative/docs/tree/release-0.2)
+    -   [**`release-0.1`**](https://github.com/knative/docs/tree/release-0.1)
 
-- **Development (pre-release) version**
+-   **Development (pre-release) version**
 
-  The `master` branch includes pre-release content for the next Knative version:
+    The `master` branch includes pre-release content for the next Knative
+    version:
 
-  - [**`master`**](https://github.com/knative/docs/tree/master)
+    -   [**`master`**](https://github.com/knative/docs/tree/master)

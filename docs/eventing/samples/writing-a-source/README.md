@@ -18,14 +18,15 @@ wants to develop a new event source for use with Knative Eventing.
 
 You'll need these tools installed:
 
-- git
-- golang
-- make
-- [dep](https://github.com/golang/dep)
-- [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder)
-- [kustomize](https://github.com/kubernetes-sigs/kustomize)
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (optional)
-- [minikube](https://github.com/kubernetes/minikube) (optional)
+-   git
+-   golang
+-   make
+-   [dep](https://github.com/golang/dep)
+-   [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder)
+-   [kustomize](https://github.com/kubernetes-sigs/kustomize)
+-   [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+    (optional)
+-   [minikube](https://github.com/kubernetes/minikube) (optional)
 
 ## Steps
 
@@ -39,12 +40,12 @@ You'll need these tools installed:
 
 Kubebuilder not your thing? Prefer the easy way? Check out these alternatives.
 
-- [ContainerSource](../../../eventing/sources/README.md#meta-sources) is an easy
-  way to turn any dispatcher container into an Event Source.
-- [Auto ContainerSource](../../../eventing/sources/README.md#meta-sources) is an
-  even easier way to turn any dispatcher container into an Event Source without
-  writing any controller code. It requires Metacontroller.
-- [Metacontroller](https://metacontroller.app) can be used to write controllers
-  as webhooks in any language.
-- The [Cloud Scheduler source](https://github.com/vaikas-google/csr) uses the
-  standard Kubernetes Golang client library instead of Kubebuilder.
+-   [ContainerSource](../../../eventing/sources/README.md#meta-sources) is an
+    easy way to turn any dispatcher container into an Event Source.
+-   [Auto ContainerSource](../../../eventing/sources/README.md#meta-sources) is
+    an even easier way to turn any dispatcher container into an Event Source
+    without writing any controller code. It requires Metacontroller.
+-   [Metacontroller](https://metacontroller.app) can be used to write
+    controllers as webhooks in any language.
+-   The [Cloud Scheduler source](https://github.com/vaikas-google/csr) uses the
+    standard Kubernetes Golang client library instead of Kubebuilder.

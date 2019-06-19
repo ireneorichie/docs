@@ -115,10 +115,10 @@ template.
 containerConcurrency: 0 | 1 | 2-N
 ```
 
-- A `containerConcurrency` value of `1` will guarantee that only one request is
-  handled at a time by a given instance of the Revision container.
-- A value of `2` or more will limit request concurrency to that value.
-- A value of `0` means the system should decide.
+-   A `containerConcurrency` value of `1` will guarantee that only one request
+    is handled at a time by a given instance of the Revision container.
+-   A value of `2` or more will limit request concurrency to that value.
+-   A value of `0` means the system should decide.
 
 If there is no `/target` annotation, the autoscaler is configured as if
 `/target` == `containerConcurrency`.
@@ -141,5 +141,5 @@ autoscaling.knative.dev/class: hpa.autoscaling.knative.dev
 
 ## Additional resources
 
-- [Go autoscaling sample](https://knative.dev/docs/serving/samples/autoscale-go/index.html)
-- [Knative v0.3 Autoscaling  - A Love Story blog post](https://medium.com/knative/knative-v0-3-autoscaling-a-love-story-d6954279a67a)
+-   [Go autoscaling sample](https://knative.dev/docs/serving/samples/autoscale-go/index.html)
+-   [Knative v0.3 Autoscaling  - A Love Story blog post](https://medium.com/knative/knative-v0-3-autoscaling-a-love-story-d6954279a67a)

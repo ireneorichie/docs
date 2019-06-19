@@ -25,11 +25,11 @@ Start your investigation with the "Revision - HTTP Requests" dashboard.
 
     This dashboard gives visibility into the following for each revision:
 
-    - Request volume
-    - Request volume per HTTP response code
-    - Response time
-    - Response time per HTTP response code
-    - Request and response sizes
+    -   Request volume
+    -   Request volume per HTTP response code
+    -   Response time
+    -   Response time per HTTP response code
+    -   Request and response sizes
 
 This dashboard can show traffic volume or latency discrepancies between
 different revisions. If, for example, a revision's latency is higher than others
@@ -75,13 +75,14 @@ next.
 
 This view shows 4 key metrics from the Knative Serving autoscaler:
 
-- Actual pod count: # of pods that are running a given revision
-- Desired pod count: # of pods that autoscaler thinks should serve the revision
-- Requested pod count: # of pods that the autoscaler requested from Kubernetes
-- Panic mode: If 0, the autoscaler is operating in
-  [stable mode](https://github.com/knative/serving/blob/master/docs/scaling/DEVELOPMENT.md#stable-mode).
-  If 1, the autoscaler is operating in
-  [panic mode](https://github.com/knative/serving/blob/master/docs/scaling/DEVELOPMENT.md#panic-mode).
+-   Actual pod count: # of pods that are running a given revision
+-   Desired pod count: # of pods that autoscaler thinks should serve the
+    revision
+-   Requested pod count: # of pods that the autoscaler requested from Kubernetes
+-   Panic mode: If 0, the autoscaler is operating in
+    [stable mode](https://github.com/knative/serving/blob/master/docs/scaling/DEVELOPMENT.md#stable-mode).
+    If 1, the autoscaler is operating in
+    [panic mode](https://github.com/knative/serving/blob/master/docs/scaling/DEVELOPMENT.md#panic-mode).
 
 A large gap between the actual pod count and the requested pod count indicates
 that the Kubernetes cluster is unable to keep up allocating new resources fast
@@ -106,15 +107,15 @@ revision. The second chart shows total memory consumed across all pods serving
 the revision. Both of these metrics are further divided into per container
 usage.
 
-- user-container: This container runs the user code (application, function, or
-  container).
-- [istio-proxy](https://github.com/istio/proxy): Sidecar container to form an
-  [Istio](https://istio.io/docs/concepts/what-is-istio/overview.html) mesh.
-- queue-proxy: Knative Serving owned sidecar container to enforce request
-  concurrency limits.
-- autoscaler: Knative Serving owned sidecar container to provide autoscaling for
-  the revision.
-- fluentd-proxy: Sidecar container to collect logs from /var/log.
+-   user-container: This container runs the user code (application, function, or
+    container).
+-   [istio-proxy](https://github.com/istio/proxy): Sidecar container to form an
+    [Istio](https://istio.io/docs/concepts/what-is-istio/overview.html) mesh.
+-   queue-proxy: Knative Serving owned sidecar container to enforce request
+    concurrency limits.
+-   autoscaler: Knative Serving owned sidecar container to provide autoscaling
+    for the revision.
+-   fluentd-proxy: Sidecar container to collect logs from /var/log.
 
 ## Profiling
 

@@ -9,10 +9,10 @@ patterns and codify the best practices that are shared by successful,
 real-world, Kubernetes-based frameworks and applications. Knative components
 focus on solving mundane but difficult tasks such as:
 
-- [Deploying a container](./install/getting-started-knative-app.md)
-- [Routing and managing traffic with blue/green deployment](./serving/samples/blue-green-deployment.md)
-- [Scaling automatically and sizing workloads based on demand](./serving/configuring-the-autoscaler.md)
-- [Binding running services to eventing ecosystems](./eventing/samples/kubernetes-event-source/)
+-   [Deploying a container](./install/getting-started-knative-app.md)
+-   [Routing and managing traffic with blue/green deployment](./serving/samples/blue-green-deployment.md)
+-   [Scaling automatically and sizing workloads based on demand](./serving/configuring-the-autoscaler.md)
+-   [Binding running services to eventing ecosystems](./eventing/samples/kubernetes-event-source/)
 
 Developers on Knative can use familiar idioms, languages, and frameworks to
 deploy functions, applications, or containers workloads.
@@ -21,9 +21,9 @@ deploy functions, applications, or containers workloads.
 
 The following Knative components are available:
 
-- [Build](./build) - Source-to-container build orchestration
-- [Eventing](./eventing) - Management and delivery of events
-- [Serving](./serving) - Request-driven compute that can scale to zero
+-   [Build](./build) - Source-to-container build orchestration
+-   [Eventing](./eventing) - Management and delivery of events
+-   [Serving](./serving) - Request-driven compute that can scale to zero
 
 ## Audience
 
@@ -62,10 +62,10 @@ Knative is a diverse, open, and inclusive community. To get involved, see
 Your own path to becoming a Knative contributor can begin in any of the
 following components:
 
-- [serving](https://github.com/knative/serving/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Akind%2Fgood-first-issue)
-- [eventing](https://github.com/knative/eventing/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Akind%2Fgood-first-issue)
-- [build](https://github.com/knative/build/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Akind%2Fgood-first-issue)
-- [documentation](https://github.com/knative/docs/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Akind%2Fgood-first-issue)
+-   [serving](https://github.com/knative/serving/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Akind%2Fgood-first-issue)
+-   [eventing](https://github.com/knative/eventing/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Akind%2Fgood-first-issue)
+-   [build](https://github.com/knative/build/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Akind%2Fgood-first-issue)
+-   [documentation](https://github.com/knative/docs/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Akind%2Fgood-first-issue)
 
 [Bug reports](https://github.com/knative/serving/issues/new) and friction logs
 from new developers are especially welcome.
@@ -76,40 +76,40 @@ Follow the links below to learn more about Knative.
 
 ### Getting started
 
-- [Installing Knative](./install/README.md)
-- [Getting started with app deployment](./install/getting-started-knative-app.md)
-- [Getting started with serving](./serving)
-- [Getting started with builds](./build)
-- [Getting started with eventing](./eventing)
+-   [Installing Knative](./install/README.md)
+-   [Getting started with app deployment](./install/getting-started-knative-app.md)
+-   [Getting started with serving](./serving)
+-   [Getting started with builds](./build)
+-   [Getting started with eventing](./eventing)
 
 ### Configuration and networking
 
-- [Configuring outbound network access](./serving/outbound-network-access.md)
-- [Using a custom domain](./serving/using-a-custom-domain.md)
-- [Assigning a static IP address for Knative on Google Kubernetes Engine](./serving/gke-assigning-static-ip-address.md)
-- [Configuring HTTPS with a custom certificate](./serving/using-a-tls-cert.md)
+-   [Configuring outbound network access](./serving/outbound-network-access.md)
+-   [Using a custom domain](./serving/using-a-custom-domain.md)
+-   [Assigning a static IP address for Knative on Google Kubernetes Engine](./serving/gke-assigning-static-ip-address.md)
+-   [Configuring HTTPS with a custom certificate](./serving/using-a-tls-cert.md)
 
 ### Samples and demos
 
-- [Autoscaling](./serving/samples/autoscale-go/README.md)
-- [Binding running services to eventing ecosystems](./eventing/samples/kubernetes-event-source/)
-- [Telemetry](./serving/samples/telemetry-go/README.md)
-- [REST API sample](./serving/samples/rest-api-go/README.md)
-- [All samples for serving](./serving/samples/)
-- [All samples for eventing](./eventing/samples/)
+-   [Autoscaling](./serving/samples/autoscale-go/README.md)
+-   [Binding running services to eventing ecosystems](./eventing/samples/kubernetes-event-source/)
+-   [Telemetry](./serving/samples/telemetry-go/README.md)
+-   [REST API sample](./serving/samples/rest-api-go/README.md)
+-   [All samples for serving](./serving/samples/)
+-   [All samples for eventing](./eventing/samples/)
 
 ### Logging and metrics
 
-- [Installing logging, metrics and traces](./serving/installing-logging-metrics-traces.md)
-- [Accessing logs](./serving/accessing-logs.md)
-- [Accessing metrics](./serving/accessing-metrics.md)
-- [Accessing traces](./serving/accessing-traces.md)
-- [Setting up a logging plugin](./serving/setting-up-a-logging-plugin.md)
+-   [Installing logging, metrics and traces](./serving/installing-logging-metrics-traces.md)
+-   [Accessing logs](./serving/accessing-logs.md)
+-   [Accessing metrics](./serving/accessing-metrics.md)
+-   [Accessing traces](./serving/accessing-traces.md)
+-   [Setting up a logging plugin](./serving/setting-up-a-logging-plugin.md)
 
 ### Debugging
 
-- [Debugging application issues](./serving/debugging-application-issues.md)
-- [Debugging performance issues](./serving/debugging-performance-issues.md)
+-   [Debugging application issues](./serving/debugging-application-issues.md)
+-   [Debugging performance issues](./serving/debugging-performance-issues.md)
 
 ---
 

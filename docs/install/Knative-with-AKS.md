@@ -37,16 +37,16 @@ brew install azure-cli
 #### Ubuntu 64-bit
 
 1. Add the azure-cli repo to your sources:
-   ```console
-   echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | \
-        sudo tee /etc/apt/sources.list.d/azure-cli.list
-   ```
+    ```console
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | \
+         sudo tee /etc/apt/sources.list.d/azure-cli.list
+    ```
 1. Run the following commands to install the Azure CLI and its dependencies:
-   ```console
-   sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
-   sudo apt-get install apt-transport-https
-   sudo apt-get update && sudo apt-get install azure-cli
-   ```
+    ```console
+    sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
+    sudo apt-get install apt-transport-https
+    sudo apt-get update && sudo apt-get install azure-cli
+    ```
 
 ### Installing kubectl
 
@@ -69,9 +69,9 @@ First let's identify your Azure subscription and save it for use later.
 1. Run `az login` and follow the instructions in the command output to authorize
    `az` to use your account
 1. List your Azure subscriptions:
-   ```bash
-   az account list -o table
-   ```
+    ```bash
+    az account list -o table
+    ```
 
 ### Create a Resource Group for AKS
 
@@ -81,17 +81,17 @@ along with the resource group you'd like to use.
 
 1. Set `RESOURCE_GROUP` and `LOCATION` variables:
 
-   ```bash
-   export LOCATION=eastus
-   export RESOURCE_GROUP=knative-group
-   export CLUSTER_NAME=knative-cluster
-   ```
+    ```bash
+    export LOCATION=eastus
+    export RESOURCE_GROUP=knative-group
+    export CLUSTER_NAME=knative-cluster
+    ```
 
 2. Create a resource group with the az cli using the following command if you
    are using a new resource group.
-   ```bash
-   az group create --name $RESOURCE_GROUP --location $LOCATION
-   ```
+    ```bash
+    az group create --name $RESOURCE_GROUP --location $LOCATION
+    ```
 
 ### Create a Kubernetes cluster using AKS
 
@@ -99,10 +99,10 @@ Next we will create a managed Kubernetes cluster using AKS. To make sure the
 cluster is large enough to host all the Knative and Istio components, the
 recommended configuration for a cluster is:
 
-- Kubernetes version 1.11 or later
-- Three or more nodes
-- Standard_DS3_v2 nodes
-- RBAC enabled
+-   Kubernetes version 1.11 or later
+-   Three or more nodes
+-   Standard_DS3_v2 nodes
+-   RBAC enabled
 
 1. Enable AKS in your subscription, use the following command with the az cli:
    `bash az provider register -n Microsoft.ContainerService` You should also
@@ -111,25 +111,25 @@ recommended configuration for a cluster is:
    `bash az provider register -n Microsoft.Compute az provider register -n Microsoft.Network`
 1. Create the AKS cluster!
 
-   ```bash
-   az aks create --resource-group $RESOURCE_GROUP \
-   --name $CLUSTER_NAME \
-   --generate-ssh-keys \
-   --kubernetes-version 1.11.5 \
-   --enable-rbac \
-   --node-vm-size Standard_DS3_v2
-   ```
+    ```bash
+    az aks create --resource-group $RESOURCE_GROUP \
+    --name $CLUSTER_NAME \
+    --generate-ssh-keys \
+    --kubernetes-version 1.11.5 \
+    --enable-rbac \
+    --node-vm-size Standard_DS3_v2
+    ```
 
 1. Configure kubectl to use the new cluster.
 
-   ```bash
-   az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME --admin
-   ```
+    ```bash
+    az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME --admin
+    ```
 
 1. Verify your cluster is up and running
-   ```bash
-   kubectl get nodes
-   ```
+    ```bash
+    kubectl get nodes
+    ```
 
 ## Installing Istio
 
@@ -159,73 +159,74 @@ your Knative installation, see
    of `knative-ingressgateway`. Then run the following to clean up leftover
    resources:
 
-   ```
-   kubectl delete svc knative-ingressgateway -n istio-system
-   kubectl delete deploy knative-ingressgateway -n istio-system
-   ```
+    ```
+    kubectl delete svc knative-ingressgateway -n istio-system
+    kubectl delete deploy knative-ingressgateway -n istio-system
+    ```
 
-   If you have the Knative Eventing Sources component installed, you will also
-   need to delete the following resource before upgrading:
+    If you have the Knative Eventing Sources component installed, you will also
+    need to delete the following resource before upgrading:
 
-   ```
-   kubectl delete statefulset/controller-manager -n knative-sources
-   ```
+    ```
+    kubectl delete statefulset/controller-manager -n knative-sources
+    ```
 
-   While the deletion of this resource during the upgrade process will not
-   prevent modifications to Eventing Source resources, those changes will not be
-   completed until the upgrade process finishes.
+    While the deletion of this resource during the upgrade process will not
+    prevent modifications to Eventing Source resources, those changes will not
+    be completed until the upgrade process finishes.
 
 1. To install Knative, first install the CRDs by running the `kubectl apply`
    command once with the `--selector knative.dev/crd-install=true` flag. This
    prevents race conditions during the install, which cause intermittent errors:
 
-   ```bash
-   kubectl apply --selector knative.dev/crd-install=true \
-   --filename https://github.com/knative/serving/releases/download/v0.6.0/serving.yaml \
-   --filename https://github.com/knative/build/releases/download/v0.6.0/build.yaml \
-   --filename https://github.com/knative/eventing/releases/download/v0.6.0/release.yaml \
-   --filename https://github.com/knative/eventing-contrib/releases/download/v0.6.0/eventing-sources.yaml \
-   --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring.yaml \
-   --filename https://raw.githubusercontent.com/knative/serving/v0.6.0/third_party/config/build/clusterrole.yaml
-   ```
+    ```bash
+    kubectl apply --selector knative.dev/crd-install=true \
+    --filename https://github.com/knative/serving/releases/download/v0.6.0/serving.yaml \
+    --filename https://github.com/knative/build/releases/download/v0.6.0/build.yaml \
+    --filename https://github.com/knative/eventing/releases/download/v0.6.0/release.yaml \
+    --filename https://github.com/knative/eventing-contrib/releases/download/v0.6.0/eventing-sources.yaml \
+    --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring.yaml \
+    --filename https://raw.githubusercontent.com/knative/serving/v0.6.0/third_party/config/build/clusterrole.yaml
+    ```
 
 1. To complete the install of Knative and its dependencies, run the
    `kubectl apply` command again, this time without the
    `--selector knative.dev/crd-install=true` flag, to complete the install of
    Knative and its dependencies:
 
-   ```bash
-   kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/serving.yaml --selector networking.knative.dev/certificate-provider!=cert-manager \
-   --filename https://github.com/knative/build/releases/download/v0.6.0/build.yaml \
-   --filename https://github.com/knative/eventing/releases/download/v0.6.0/release.yaml \
-   --filename https://github.com/knative/eventing-contrib/releases/download/v0.6.0/eventing-sources.yaml \
-   --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring.yaml \
-   --filename https://raw.githubusercontent.com/knative/serving/v0.6.0/third_party/config/build/clusterrole.yaml
-   ```
+    ```bash
+    kubectl apply --filename https://github.com/knative/serving/releases/download/v0.6.0/serving.yaml --selector networking.knative.dev/certificate-provider!=cert-manager \
+    --filename https://github.com/knative/build/releases/download/v0.6.0/build.yaml \
+    --filename https://github.com/knative/eventing/releases/download/v0.6.0/release.yaml \
+    --filename https://github.com/knative/eventing-contrib/releases/download/v0.6.0/eventing-sources.yaml \
+    --filename https://github.com/knative/serving/releases/download/v0.6.0/monitoring.yaml \
+    --filename https://raw.githubusercontent.com/knative/serving/v0.6.0/third_party/config/build/clusterrole.yaml
+    ```
 
-   > **Notes**:
-   >
-   > - By default, the Knative Serving component installation (`serving.yaml`)
-   >   includes a controller for
-   >   [enabling automatic TLS certificate provisioning](../serving/using-auto-tls.md).
-   >   If you do intend on immediately enabling auto certificates in Knative,
-   >   you can remove the
-   >   `--selector networking.knative.dev/certificate-provider!=cert-manager`
-   >   statement to install the controller. Otherwise, you can choose to install
-   >   the auto certificates feature and controller at a later time.
-   >
-   > - For the v0.4.0 release and newer, the `clusterrole.yaml` file is required
-   >   to enable the Build and Serving components to interact with each other.
+    > **Notes**:
+    >
+    > - By default, the Knative Serving component installation (`serving.yaml`)
+    >   includes a controller for
+    >   [enabling automatic TLS certificate provisioning](../serving/using-auto-tls.md).
+    >   If you do intend on immediately enabling auto certificates in Knative,
+    >   you can remove the
+    >   `--selector networking.knative.dev/certificate-provider!=cert-manager`
+    >   statement to install the controller. Otherwise, you can choose to
+    >   install the auto certificates feature and controller at a later time.
+    >
+    > - For the v0.4.0 release and newer, the `clusterrole.yaml` file is
+    >   required to enable the Build and Serving components to interact with
+    >   each other.
 
 1. Monitor the Knative components until all of the components show a `STATUS` of
    `Running`:
-   ```bash
-   kubectl get pods --namespace knative-serving
-   kubectl get pods --namespace knative-build
-   kubectl get pods --namespace knative-eventing
-   kubectl get pods --namespace knative-sources
-   kubectl get pods --namespace knative-monitoring
-   ```
+    ```bash
+    kubectl get pods --namespace knative-serving
+    kubectl get pods --namespace knative-build
+    kubectl get pods --namespace knative-eventing
+    kubectl get pods --namespace knative-sources
+    kubectl get pods --namespace knative-monitoring
+    ```
 
 ## What's next
 

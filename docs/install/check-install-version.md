@@ -42,13 +42,13 @@ information contains the link to the container that was used to install Knative:
 ```yaml
 ---
 Pod Template:
-  Labels: app=controller
-  Annotations: sidecar.istio.io/inject=false
-  Service Account: controller
-  Containers:
-    controller:
-      # Link to container used to run the Knative Serving controller
-      Image: gcr.io/knative-releases/github.com/knative/serving/cmd/controller@sha256:59abc8765d4396a3fc7cac27a932a9cc151ee66343fa5338fb7146b607c6e306
+    Labels: app=controller
+    Annotations: sidecar.istio.io/inject=false
+    Service Account: controller
+    Containers:
+        controller:
+            # Link to container used to run the Knative Serving controller
+            Image: gcr.io/knative-releases/github.com/knative/serving/cmd/controller@sha256:59abc8765d4396a3fc7cac27a932a9cc151ee66343fa5338fb7146b607c6e306
 ```
 
 Copy the full `gcr.io` link to the container and paste it into your browser. If
@@ -79,12 +79,12 @@ information contains the link to the container that was used to install Knative:
 ```yaml
 ---
 Pod Template:
-  Labels: app=eventing-controller eventing.knative.dev/release=devel
-  Service Account: eventing-controller
-  Containers:
-    eventing-controller:
-      # Link to container used to run the Knative Eventing controller
-      Image: gcr.io/knative-releases/github.com/knative/eventing/cmd/controller@sha256:85c010633944c06f4c16253108c2338dba271971b2b5f2d877b8247fa19ff5cb
+    Labels: app=eventing-controller eventing.knative.dev/release=devel
+    Service Account: eventing-controller
+    Containers:
+        eventing-controller:
+            # Link to container used to run the Knative Eventing controller
+            Image: gcr.io/knative-releases/github.com/knative/eventing/cmd/controller@sha256:85c010633944c06f4c16253108c2338dba271971b2b5f2d877b8247fa19ff5cb
 ```
 
 Copy the full `gcr.io` link to the container and paste it into your browser. If

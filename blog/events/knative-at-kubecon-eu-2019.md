@@ -31,29 +31,29 @@ In the afternoon, we have a 3-hour Knative track (**2-5pm**) full of demos
 illustrating how Knative helps developers and operators in building, deploying,
 and managing modern applications on Kubernetes.
 
-- **Introduction to Knative Serving:** What the serving stack of Knative offers
-  on top of Kubernetes and how it provides the building blocks for modern
-  development platform
-- **Knative the Easy Way:** How Google uses Knative and Knative API to build and
-  offer Cloud Run and Cloud Run on GKE products.
-- **Knative Eventing:** How the eventing API helps routing events from various
-  configurable sources to the serving stack, and an overview of what's involved
-  in creating new Event Sources.
-- **Knative Pluggability:** How can the operators customize and extend Knative
-  to provide their developers and infrastructure tailored to their needs.
+-   **Introduction to Knative Serving:** What the serving stack of Knative
+    offers on top of Kubernetes and how it provides the building blocks for
+    modern development platform
+-   **Knative the Easy Way:** How Google uses Knative and Knative API to build
+    and offer Cloud Run and Cloud Run on GKE products.
+-   **Knative Eventing:** How the eventing API helps routing events from various
+    configurable sources to the serving stack, and an overview of what's
+    involved in creating new Event Sources.
+-   **Knative Pluggability:** How can the operators customize and extend Knative
+    to provide their developers and infrastructure tailored to their needs.
 
 ## Wednesday, May 22
 
-- 4:45-5:20pm:
-  [Extending Knative for Fun and Profit](https://kccnceu19.sched.com/event/MPaK/extending-knative-for-fun-and-profit-matt-moore-ville-aikas-google)
-  – Matt Moore ([@mattomata](https://twitter.com/mattomata)) & Ville Aikas
-  ([@AikasVille](https://twitter.com/aikasville?lang=en)), Google
+-   4:45-5:20pm:
+    [Extending Knative for Fun and Profit](https://kccnceu19.sched.com/event/MPaK/extending-knative-for-fun-and-profit-matt-moore-ville-aikas-google)
+    – Matt Moore ([@mattomata](https://twitter.com/mattomata)) & Ville Aikas
+    ([@AikasVille](https://twitter.com/aikasville?lang=en)), Google
 
 ## Thursday, May 23
 
-- 3:55-4:30pm:
-  [Istio on Knative Lessons Learned: How Istio is Fit for Serverless Platform](https://kccnceu19.sched.com/event/MPeL/istio-on-knative-lessons-learned-how-istio-is-fit-for-serverless-platform-ying-chun-guo-iris-ding-ibm)
-  – Ying Chun Guo & Iris Ding, IBM
+-   3:55-4:30pm:
+    [Istio on Knative Lessons Learned: How Istio is Fit for Serverless Platform](https://kccnceu19.sched.com/event/MPeL/istio-on-knative-lessons-learned-how-istio-is-fit-for-serverless-platform-ying-chun-guo-iris-ding-ibm)
+    – Ying Chun Guo & Iris Ding, IBM
 
 We are looking forward to seeing you in Barcelona next week, hope you enjoy
 delicious tapas and some educational and entertaining Knative talks. Please join

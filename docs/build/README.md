@@ -16,27 +16,29 @@ is demonstrated in [this sample](../serving/samples/source-to-url-go).
 
 ## Key features of Knative Builds
 
-- A `Build` can include multiple `steps` where each step specifies a `Builder`.
-- A _builder_ is a type of container image that you create to accomplish any
-  task, whether that's a single step in a process, or the whole process itself.
-- The `steps` in a `Build` can push to a registry.
-- A `BuildTemplate` can be used to define reusable templates.
-- The `source` in a `Build` can be defined to mount data to a Kubernetes Volume,
-  and supports:
-  - `git` repositories
-  - Google Cloud Storage
-  - An arbitrary container image
-- Authenticate with `ServiceAccount` using Kubernetes Secrets.
+-   A `Build` can include multiple `steps` where each step specifies a
+    `Builder`.
+-   A _builder_ is a type of container image that you create to accomplish any
+    task, whether that's a single step in a process, or the whole process
+    itself.
+-   The `steps` in a `Build` can push to a registry.
+-   A `BuildTemplate` can be used to define reusable templates.
+-   The `source` in a `Build` can be defined to mount data to a Kubernetes
+    Volume, and supports:
+    -   `git` repositories
+    -   Google Cloud Storage
+    -   An arbitrary container image
+-   Authenticate with `ServiceAccount` using Kubernetes Secrets.
 
 ### Learn more
 
 See the following reference topics for information about each of the build
 components:
 
-- [`Build`](./builds.md)
-- [`BuildTemplate`](./build-templates.md)
-- [`Builder`](./builder-contract.md)
-- [`ServiceAccount`](./auth.md)
+-   [`Build`](./builds.md)
+-   [`BuildTemplate`](./build-templates.md)
+-   [`Builder`](./builder-contract.md)
+-   [`ServiceAccount`](./auth.md)
 
 ## Install the Knative Build component
 
@@ -46,11 +48,11 @@ install. Knative Serving is not required to create and run builds.
 Before you can run a Knative Build, you must install the Knative Build component
 in your Kubernetes cluster:
 
-- For details about installing a new instance of Knative in your Kubernetes
-  cluster, see [Installing Knative](../install/README.md).
+-   For details about installing a new instance of Knative in your Kubernetes
+    cluster, see [Installing Knative](../install/README.md).
 
-- If you have a component of Knative installed and running, you can
-  [add and install the Knative Build component](./installing-build-component.md).
+-   If you have a component of Knative installed and running, you can
+    [add and install the Knative Build component](./installing-build-component.md).
 
 ## Configuration syntax example
 
@@ -67,19 +69,19 @@ multiple `steps` and multiple repositories:
 apiVersion: build.knative.dev/v1alpha1
 kind: Build
 metadata:
-  name: example-build
+    name: example-build
 spec:
-  serviceAccountName: build-auth-example
-  source:
-    git:
-      url: https://github.com/example/build-example.git
-      revision: master
-  steps:
-    - name: ubuntu-example
-      image: ubuntu
-      args: ["ubuntu-build-example", "SECRETS-example.md"]
-    - image: gcr.io/example-builders/build-example
-      args: ["echo", "hello-example", "build"]
+    serviceAccountName: build-auth-example
+    source:
+        git:
+            url: https://github.com/example/build-example.git
+            revision: master
+    steps:
+        - name: ubuntu-example
+          image: ubuntu
+          args: ["ubuntu-build-example", "SECRETS-example.md"]
+        - image: gcr.io/example-builders/build-example
+          args: ["echo", "hello-example", "build"]
 ```
 
 ## Get started with Knative Build samples

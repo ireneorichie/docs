@@ -23,8 +23,8 @@ even detecting language and runtime dependencies.
 
 User stories:
 
-- Start a build
-- Read build logs
+-   Start a build
+-   Read build logs
 
 ### Language operator / contributor
 
@@ -34,8 +34,8 @@ organization, or on behalf of a particular language runtime.
 
 User stories:
 
-- Create a build image / build pack
-- Enable build signing / provenance
+-   Create a build image / build pack
+-   Enable build signing / provenance
 
 ## Contributors
 
@@ -45,18 +45,18 @@ well as the impact on users.
 
 Types of users:
 
-- Hobbyist or newcomer
-- Motivated user
-- Corporate (employed) maintainer
-- Consultant
+-   Hobbyist or newcomer
+-   Motivated user
+-   Corporate (employed) maintainer
+-   Consultant
 
 User stories:
 
-- Check out the code
-- Build and run the code
-- Run tests
-- View test status
-- Run performance tests
+-   Check out the code
+-   Build and run the code
+-   Run tests
+-   View test status
+-   Run performance tests
 
 ---
 

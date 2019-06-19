@@ -11,32 +11,32 @@ up the necessary components first.
 
 ## Kibana and Elasticsearch
 
-- To open the Kibana UI (the visualization tool for
-  [Elasticsearch](https://info.elastic.co)), start a local proxy with the
-  following command:
+-   To open the Kibana UI (the visualization tool for
+    [Elasticsearch](https://info.elastic.co)), start a local proxy with the
+    following command:
 
-  ```shell
-  kubectl proxy
-  ```
+    ```shell
+    kubectl proxy
+    ```
 
-  This command starts a local proxy of Kibana on port 8001. For security
-  reasons, the Kibana UI is exposed only within the cluster.
+    This command starts a local proxy of Kibana on port 8001. For security
+    reasons, the Kibana UI is exposed only within the cluster.
 
-- Navigate to the
-  [Kibana UI](http://localhost:8001/api/v1/namespaces/knative-monitoring/services/kibana-logging/proxy/app/kibana).
-  _It might take a couple of minutes for the proxy to work_.
+-   Navigate to the
+    [Kibana UI](http://localhost:8001/api/v1/namespaces/knative-monitoring/services/kibana-logging/proxy/app/kibana).
+    _It might take a couple of minutes for the proxy to work_.
 
-  The Discover tab of the Kibana UI looks like this:
+    The Discover tab of the Kibana UI looks like this:
 
-  ![Kibana UI Discover tab](../images/kibana-discover-tab-annotated.png)
+    ![Kibana UI Discover tab](../images/kibana-discover-tab-annotated.png)
 
-  You can change the time frame of logs Kibana displays in the upper right
-  corner of the screen. The main search bar is across the top of the Discover
-  page.
+    You can change the time frame of logs Kibana displays in the upper right
+    corner of the screen. The main search bar is across the top of the Discover
+    page.
 
-- As more logs are ingested, new fields will be discovered. To have them
-  indexed, go to "Management" > "Index Patterns" > Refresh button (on top
-  right) > "Refresh fields".
+-   As more logs are ingested, new fields will be discovered. To have them
+    indexed, go to "Management" > "Index Patterns" > Refresh button (on top
+    right) > "Refresh fields".
 
 <!-- TODO: create a video walkthrough of the Kibana UI -->
 
@@ -61,13 +61,14 @@ To find the request logs of your application in the Kibana UI :
 
 To access the logs for a configuration:
 
-- Find the configuration's name with the following command:
+-   Find the configuration's name with the following command:
 
 ```
 kubectl get configurations
 ```
 
-- Replace `<CONFIGURATION_NAME>` and enter the following search query in Kibana:
+-   Replace `<CONFIGURATION_NAME>` and enter the following search query in
+    Kibana:
 
 ```
 kubernetes.labels.serving_knative_dev\/configuration: <CONFIGURATION_NAME>
@@ -75,13 +76,13 @@ kubernetes.labels.serving_knative_dev\/configuration: <CONFIGURATION_NAME>
 
 To access logs for a revision:
 
-- Find the revision's name with the following command:
+-   Find the revision's name with the following command:
 
 ```
 kubectl get revisions
 ```
 
-- Replace `<REVISION_NAME>` and enter the following search query in Kibana:
+-   Replace `<REVISION_NAME>` and enter the following search query in Kibana:
 
 ```
 kubernetes.labels.serving_knative_dev\/revision: <REVISION_NAME>
@@ -91,22 +92,22 @@ kubernetes.labels.serving_knative_dev\/revision: <REVISION_NAME>
 
 To access logs for a [Knative Build](../build/README.md):
 
-- Find the build's name in the specified in the `.yaml` file:
+-   Find the build's name in the specified in the `.yaml` file:
 
-  ```yaml
-  apiVersion: build.knative.dev/v1alpha1
-  kind: Build
-  metadata:
-    name: <BUILD_NAME>
-  ```
+    ```yaml
+    apiVersion: build.knative.dev/v1alpha1
+    kind: Build
+    metadata:
+        name: <BUILD_NAME>
+    ```
 
-  Or find build names with the following command:
+    Or find build names with the following command:
 
-  ```
-  kubectl get builds
-  ```
+    ```
+    kubectl get builds
+    ```
 
-- Replace `<BUILD_NAME>` and enter the following search query in Kibana:
+-   Replace `<BUILD_NAME>` and enter the following search query in Kibana:
 
 ```
 kubernetes.labels.build\-name: <BUILD_NAME>

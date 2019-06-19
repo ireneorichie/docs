@@ -28,10 +28,10 @@ ko publish github.com/knative/eventing-contrib/cmd/heartbeats
 
 **Note**: `ko publish` requires:
 
-- [`KO_DOCKER_REPO`](https://github.com/knative/serving/blob/master/DEVELOPMENT.md#environment-setup)
-  to be set. (e.g. `gcr.io/[gcloud-project]` or `docker.io/<username>`)
-- you to be authenticated with your `KO_DOCKER_REPO`
-- [`docker`](https://docs.docker.com/install/) to be installed
+-   [`KO_DOCKER_REPO`](https://github.com/knative/serving/blob/master/DEVELOPMENT.md#environment-setup)
+    to be set. (e.g. `gcr.io/[gcloud-project]` or `docker.io/<username>`)
+-   you to be authenticated with your `KO_DOCKER_REPO`
+-   [`docker`](https://docs.docker.com/install/) to be installed
 
 ### Create a Knative Service
 
@@ -42,12 +42,12 @@ Service that dumps incoming messages to its log.
 apiVersion: serving.knative.dev/v1beta1
 kind: Service
 metadata:
-  name: event-display
+    name: event-display
 spec:
-  template:
-    spec:
-      containers:
-        - image: gcr.io/knative-releases/github.com/knative/eventing-sources/cmd/event_display
+    template:
+        spec:
+            containers:
+                - image: gcr.io/knative-releases/github.com/knative/eventing-sources/cmd/event_display
 ```
 
 Use following command to create the service from `service.yaml`:
@@ -69,20 +69,20 @@ to the container.
 apiVersion: sources.eventing.knative.dev/v1alpha1
 kind: ContainerSource
 metadata:
-  name: test-heartbeats
+    name: test-heartbeats
 spec:
-  image: <heartbeats_image_uri>
-  sink:
-    apiVersion: serving.knative.dev/v1beta1
-    kind: Service
-    name: event-display
-  args:
-    - --period=1
-  env:
-    - name: POD_NAME
-      value: "mypod"
-    - name: POD_NAMESPACE
-      value: "event-test"
+    image: <heartbeats_image_uri>
+    sink:
+        apiVersion: serving.knative.dev/v1beta1
+        kind: Service
+        name: event-display
+    args:
+        - --period=1
+    env:
+        - name: POD_NAME
+          value: "mypod"
+        - name: POD_NAMESPACE
+          value: "event-test"
 ```
 
 Use the following command to create the event source from
@@ -139,17 +139,17 @@ and specify the values of parameters.
 The container image can be developed with any language, build and publish with
 any tools you like. Here are some basic guidelines:
 
-- The container image must have a `main` method to start with.
-- The `main` method will accept parameters from arguments and environment
-  variables.
-- The arguments may include a `sink` if a flag `--sink` is set or a Sink object
-  is provided in the ContainerSource YAML file.
-- The environment variables may include a `SINK` if a `SINK` variable is set in
-  the `env` or a Sink object is provided in the ContainerSource YAML file.
-- The event messages shall be sent to the sink uri. The message can be any
-  format.
-  [CloudEvents](https://github.com/cloudevents/spec/blob/master/spec.md#design-goals)
-  format is recommended.
+-   The container image must have a `main` method to start with.
+-   The `main` method will accept parameters from arguments and environment
+    variables.
+-   The arguments may include a `sink` if a flag `--sink` is set or a Sink
+    object is provided in the ContainerSource YAML file.
+-   The environment variables may include a `SINK` if a `SINK` variable is set
+    in the `env` or a Sink object is provided in the ContainerSource YAML file.
+-   The event messages shall be sent to the sink uri. The message can be any
+    format.
+    [CloudEvents](https://github.com/cloudevents/spec/blob/master/spec.md#design-goals)
+    format is recommended.
 
 [heartbeats](https://github.com/knative/eventing-contrib/blob/master/cmd/heartbeats/main.go)
 event source is a sample for your reference.

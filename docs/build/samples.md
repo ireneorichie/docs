@@ -18,14 +18,14 @@ builds.
 
 #### Simple build samples
 
-- View the collection of code samples in the `knative/build` repo:
-  [Simple test builds](https://github.com/knative/build/tree/master/test).
+-   View the collection of code samples in the `knative/build` repo:
+    [Simple test builds](https://github.com/knative/build/tree/master/test).
 
 #### Build template samples
 
-- View the collection of build templates in the `knative/build-template` repo:
-  [Sample build templates](https://github.com/knative/build-templates).
+-   View the collection of build templates in the `knative/build-template` repo:
+    [Sample build templates](https://github.com/knative/build-templates).
 
 #### Complex code samples
 
-- [Learn how to use Knative to build apps from source code and then run those containers](../serving/samples/source-to-url-go).
+-   [Learn how to use Knative to build apps from source code and then run those containers](../serving/samples/source-to-url-go).

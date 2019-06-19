@@ -23,8 +23,8 @@ This is a valid default channel:
 apiVersion: eventing.knative.dev/v1alpha1
 kind: Channel
 metadata:
-  name: default-channel
-  namespace: default
+    name: default-channel
+    namespace: default
 spec: {}
 ```
 
@@ -37,11 +37,11 @@ For example, if the default provisioner is named `default-provisioner`:
 apiVersion: eventing.knative.dev/v1alpha1
 kind: Channel
 metadata:
-  name: default-channel
-  namespace: default
+    name: default-channel
+    namespace: default
 spec:
-  provisioner:
-    apiversion: eventing.knative.dev/v1alpha1
+    provisioner:
+        apiversion: eventing.knative.dev/v1alpha1
 ￼    kind: ClusterChannelProvisioner
 ￼    name: default-provisioner
 ```
@@ -60,11 +60,11 @@ For example:
 apiVersion: eventing.knative.dev/v1alpha1
 kind: Channel
 metadata:
-  name: default-channel
-  namespace: default
+    name: default-channel
+    namespace: default
 spec:
-  arguments:
-    foo: bar
+    arguments:
+        foo: bar
 ```
 
 Creating the above channel will produce this result:
@@ -73,11 +73,11 @@ Creating the above channel will produce this result:
 apiVersion: eventing.knative.dev/v1alpha1
 kind: Channel
 metadata:
-  name: default-channel
-  namespace: default
+    name: default-channel
+    namespace: default
 spec:
-  provisioner:
-    apiversion: eventing.knative.dev/v1alpha1
+    provisioner:
+        apiversion: eventing.knative.dev/v1alpha1
 ￼    kind: ClusterChannelProvisioner
 ￼    name: default-provisioner
 ```
@@ -102,19 +102,19 @@ The default options are specified like this:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: default-channel-webhook
-  namespace: knative-eventing
+    name: default-channel-webhook
+    namespace: knative-eventing
 data:
-  default-channel-config: |
-    clusterdefault:
-      apiversion: eventing.knative.dev/v1alpha1
-      kind: ClusterChannelProvisioner
-      name: in-memory-channel
-    namespacedefaults:
-      some-namespace:
-        apiversion: eventing.knative.dev/v1alpha1
-        kind: ClusterChannelProvisioner
-        name: some-other-provisioner
+    default-channel-config: |
+        clusterdefault:
+          apiversion: eventing.knative.dev/v1alpha1
+          kind: ClusterChannelProvisioner
+          name: in-memory-channel
+        namespacedefaults:
+          some-namespace:
+            apiversion: eventing.knative.dev/v1alpha1
+            kind: ClusterChannelProvisioner
+            name: some-other-provisioner
 ```
 
 Namespace-specific default take precedence when matched. In the above example, a

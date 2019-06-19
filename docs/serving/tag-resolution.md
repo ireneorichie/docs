@@ -30,22 +30,22 @@ assuming you have a `custom-certs` secret containing your CA certs:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: controller
-  namespace: knative-serving
+    name: controller
+    namespace: knative-serving
 spec:
-  template:
-    spec:
-      containers:
-        - name: controller
-          volumeMounts:
-            - name: custom-certs
-              mountPath: /path/to/custom/certs
-          env:
-            - name: SSL_CERT_DIR
-              value: /path/to/custom/certs
-      volumes:
-        - name: custom-certs
-          secret: custom-certs
+    template:
+        spec:
+            containers:
+                - name: controller
+                  volumeMounts:
+                      - name: custom-certs
+                        mountPath: /path/to/custom/certs
+                  env:
+                      - name: SSL_CERT_DIR
+                        value: /path/to/custom/certs
+            volumes:
+                - name: custom-certs
+                  secret: custom-certs
 ```
 
 ## Corporate Proxy
@@ -59,18 +59,18 @@ environment variables, so you can configure the controller's deployment via:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: controller
-  namespace: knative-serving
+    name: controller
+    namespace: knative-serving
 spec:
-  template:
-    spec:
-      containers:
-        - name: controller
-          env:
-            - name: HTTP_PROXY
-              value: http://proxy.example.com
-            - name: HTTPS_PROXY
-              value: https://proxy.example.com
+    template:
+        spec:
+            containers:
+                - name: controller
+                  env:
+                      - name: HTTP_PROXY
+                        value: http://proxy.example.com
+                      - name: HTTPS_PROXY
+                        value: https://proxy.example.com
 ```
 
 ## Skipping tag resolution
@@ -88,10 +88,10 @@ E.g., to disable tag resolution for `registry.example.com`:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: config-deployment
-  namespace: knative-serving
+    name: config-deployment
+    namespace: knative-serving
 
 data:
-  # List of repositories for which tag to digest resolving should be skipped
-  registriesSkippingTagResolving: registry.example.com
+    # List of repositories for which tag to digest resolving should be skipped
+    registriesSkippingTagResolving: registry.example.com
 ```

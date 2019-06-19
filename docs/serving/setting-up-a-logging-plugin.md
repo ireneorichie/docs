@@ -44,8 +44,8 @@ collecting `stdout/stderr` logs from the containers:
 The Fluentd DaemonSet can also capture `/var/log` logs from the containers. To
 enable:
 
-- Set `logging.enable-var-log-collection` to `true` in
-  [config-observability](https://github.com/knative/serving/blob/master/config/config-observability.yaml)
+-   Set `logging.enable-var-log-collection` to `true` in
+    [config-observability](https://github.com/knative/serving/blob/master/config/config-observability.yaml)
 
 ## Deploying
 

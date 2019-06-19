@@ -45,10 +45,10 @@ page.
 Once you have `oc` present on your machine and in your `PATH`, you can simply
 run [this script](./scripts/knative-with-openshift.sh); it will:
 
-- Create a new OpenShift cluster on your local machine with `oc cluster up`
-- Install Istio and Knative serving
-- Log you in as the cluster administrator
-- Set up the default namespace for istio autoinjection
+-   Create a new OpenShift cluster on your local machine with `oc cluster up`
+-   Install Istio and Knative serving
+-   Log you in as the cluster administrator
+-   Set up the default namespace for istio autoinjection
 
 Once the script completes, you'll be ready to test out Knative!
 

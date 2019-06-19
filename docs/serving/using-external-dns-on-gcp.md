@@ -215,63 +215,63 @@ Use below manifest if you set up your cluster with
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: external-dns
+    name: external-dns
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: external-dns
+    name: external-dns
 rules:
-  - apiGroups: [""]
-    resources: ["services"]
-    verbs: ["get", "watch", "list"]
-  - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["get", "watch", "list"]
-  - apiGroups: ["extensions"]
-    resources: ["ingresses"]
-    verbs: ["get", "watch", "list"]
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["list"]
+    - apiGroups: [""]
+      resources: ["services"]
+      verbs: ["get", "watch", "list"]
+    - apiGroups: [""]
+      resources: ["pods"]
+      verbs: ["get", "watch", "list"]
+    - apiGroups: ["extensions"]
+      resources: ["ingresses"]
+      verbs: ["get", "watch", "list"]
+    - apiGroups: [""]
+      resources: ["nodes"]
+      verbs: ["list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: external-dns-viewer
+    name: external-dns-viewer
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: external-dns
-subjects:
-  - kind: ServiceAccount
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
     name: external-dns
-    namespace: default
+subjects:
+    - kind: ServiceAccount
+      name: external-dns
+      namespace: default
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: external-dns
+    name: external-dns
 spec:
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: external-dns
-    spec:
-      serviceAccountName: external-dns
-      containers:
-        - name: external-dns
-          image: registry.opensource.zalan.do/teapot/external-dns:latest
-          args:
-            - --source=service
-            - --domain-filter=$CUSTOM_DOMAIN # will make ExternalDNS see only the hosted zones matching provided domain, omit to process all available hosted zones
-            - --provider=google
-            - --google-project=$PROJECT_NAME # Use this to specify a project different from the one external-dns is running inside
-            - --policy=sync # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
-            - --registry=txt
-            - --txt-owner-id=my-identifier
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                app: external-dns
+        spec:
+            serviceAccountName: external-dns
+            containers:
+                - name: external-dns
+                  image: registry.opensource.zalan.do/teapot/external-dns:latest
+                  args:
+                      - --source=service
+                      - --domain-filter=$CUSTOM_DOMAIN # will make ExternalDNS see only the hosted zones matching provided domain, omit to process all available hosted zones
+                      - --provider=google
+                      - --google-project=$PROJECT_NAME # Use this to specify a project different from the one external-dns is running inside
+                      - --policy=sync # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
+                      - --registry=txt
+                      - --txt-owner-id=my-identifier
 ```
 
 Or use below manifest if you set up your cluster with
@@ -281,73 +281,73 @@ Or use below manifest if you set up your cluster with
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: external-dns
+    name: external-dns
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: external-dns
+    name: external-dns
 rules:
-  - apiGroups: [""]
-    resources: ["services"]
-    verbs: ["get", "watch", "list"]
-  - apiGroups: [""]
-    resources: ["pods,secrets"]
-    verbs: ["get", "watch", "list"]
-  - apiGroups: ["extensions"]
-    resources: ["ingresses"]
-    verbs: ["get", "watch", "list"]
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["list"]
+    - apiGroups: [""]
+      resources: ["services"]
+      verbs: ["get", "watch", "list"]
+    - apiGroups: [""]
+      resources: ["pods,secrets"]
+      verbs: ["get", "watch", "list"]
+    - apiGroups: ["extensions"]
+      resources: ["ingresses"]
+      verbs: ["get", "watch", "list"]
+    - apiGroups: [""]
+      resources: ["nodes"]
+      verbs: ["list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: external-dns-viewer
+    name: external-dns-viewer
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: external-dns
-subjects:
-  - kind: ServiceAccount
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
     name: external-dns
-    namespace: default
+subjects:
+    - kind: ServiceAccount
+      name: external-dns
+      namespace: default
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: external-dns
+    name: external-dns
 spec:
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: external-dns
-    spec:
-      volumes:
-        - name: google-cloud-key
-          secret:
-            secretName: cloud-dns-key
-      serviceAccountName: external-dns
-      containers:
-        - name: external-dns
-          image: registry.opensource.zalan.do/teapot/external-dns:latest
-          volumeMounts:
-            - name: google-cloud-key
-              mountPath: /var/secrets/google
-          env:
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /var/secrets/google/key.json
-          args:
-            - --source=service
-            - --domain-filter=$CUSTOM_DOMAIN # will make ExternalDNS see only the hosted zones matching provided domain, omit to process all available hosted zones
-            - --provider=google
-            - --google-project=$PROJECT_NAME # Use this to specify a project different from the one external-dns is running inside
-            - --policy=sync # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
-            - --registry=txt
-            - --txt-owner-id=my-identifier
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                app: external-dns
+        spec:
+            volumes:
+                - name: google-cloud-key
+                  secret:
+                      secretName: cloud-dns-key
+            serviceAccountName: external-dns
+            containers:
+                - name: external-dns
+                  image: registry.opensource.zalan.do/teapot/external-dns:latest
+                  volumeMounts:
+                      - name: google-cloud-key
+                        mountPath: /var/secrets/google
+                  env:
+                      - name: GOOGLE_APPLICATION_CREDENTIALS
+                        value: /var/secrets/google/key.json
+                  args:
+                      - --source=service
+                      - --domain-filter=$CUSTOM_DOMAIN # will make ExternalDNS see only the hosted zones matching provided domain, omit to process all available hosted zones
+                      - --provider=google
+                      - --google-project=$PROJECT_NAME # Use this to specify a project different from the one external-dns is running inside
+                      - --policy=sync # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
+                      - --registry=txt
+                      - --txt-owner-id=my-identifier
 ```
 
 Then use the following command to apply the manifest you chose to install

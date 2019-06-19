@@ -135,25 +135,25 @@ A ready `Revision` should have the following condition in `status`:
 
 ```yaml
 conditions:
-  - reason: ServiceReady
-    status: "True"
-    type: Ready
+    - reason: ServiceReady
+      status: "True"
+      type: Ready
 ```
 
 If you see this condition, check the following to continue debugging:
 
-- [Check Pod status](#check-pod-status)
-- [Check application logs](#check-application-logs)
-- [Check Istio routing](#check-clusteringressistio-routing)
+-   [Check Pod status](#check-pod-status)
+-   [Check application logs](#check-application-logs)
+-   [Check Istio routing](#check-clusteringressistio-routing)
 
 If you see other conditions, to debug further:
 
-- Look up the meaning of the conditions in Knative
-  [Error Conditions and Reporting](https://github.com/knative/serving/blob/master/docs/spec/errors.md).
-  Note: some of them are not implemented yet. An alternative is to
-  [check Pod status](#check-pod-status).
-- If you are using `BUILD` to deploy and the `BuildComplete` condition is not
-  `True`, [check BUILD status](#check-build-status).
+-   Look up the meaning of the conditions in Knative
+    [Error Conditions and Reporting](https://github.com/knative/serving/blob/master/docs/spec/errors.md).
+    Note: some of them are not implemented yet. An alternative is to
+    [check Pod status](#check-pod-status).
+-   If you are using `BUILD` to deploy and the `BuildComplete` condition is not
+    `True`, [check BUILD status](#check-build-status).
 
 ## Check Pod status
 
@@ -198,10 +198,11 @@ Use any of the following filters within Kibana UI to see build logs. For more
 information about the Knative observability features, see
 [Installing logging, metrics, and traces](./Installing-logging-metrics-traces.md).
 
-- All build logs: `_exists_:"kubernetes.labels.build-name"`
-- Build logs for a specific build: `kubernetes.labels.build-name:"<BUILD NAME>"`
-- Build logs for a specific build and step:
-  `kubernetes.labels.build-name:"<BUILD NAME>" AND kubernetes.container_name:"build-step-<BUILD STEP NAME>"`
+-   All build logs: `_exists_:"kubernetes.labels.build-name"`
+-   Build logs for a specific build:
+    `kubernetes.labels.build-name:"<BUILD NAME>"`
+-   Build logs for a specific build and step:
+    `kubernetes.labels.build-name:"<BUILD NAME>" AND kubernetes.container_name:"build-step-<BUILD STEP NAME>"`
 
 ---
 

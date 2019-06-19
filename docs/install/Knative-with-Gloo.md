@@ -178,16 +178,16 @@ the file. Make sure to replace `{username}` with your Docker Hub username.
 apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
-  name: helloworld-go
-  namespace: default
+    name: helloworld-go
+    namespace: default
 spec:
-  template:
-    spec:
-      containers:
-        - image: docker.io/{username}/helloworld-go
-          env:
-            - name: TARGET
-              value: "Go Sample v1"
+    template:
+        spec:
+            containers:
+                - image: docker.io/{username}/helloworld-go
+                  env:
+                      - name: TARGET
+                        value: "Go Sample v1"
 ```
 
 Once the sample code has been created, we'll build and deploy it
@@ -215,13 +215,13 @@ kubectl apply --filename service.yaml
 
 Now that your service is created, Knative will perform the following steps:
 
-- Create a new immutable revision for this version of the app.
-- Network programming to create a route, ingress, service, and load balance for
-  your app.
-- Automatically scale your pods up and down (including to zero active pods).
+-   Create a new immutable revision for this version of the app.
+-   Network programming to create a route, ingress, service, and load balance
+    for your app.
+-   Automatically scale your pods up and down (including to zero active pods).
 
-- Run the following command to find the external IP address for the Gloo cluster
-  ingress.
+-   Run the following command to find the external IP address for the Gloo
+    cluster ingress.
 
 ```bash
 CLUSTERINGRESS_URL=$(glooctl proxy url --name clusteringress-proxy)

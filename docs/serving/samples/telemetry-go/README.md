@@ -15,8 +15,8 @@ dedicated Prometheus instance rather than using the default installation.
 kubectl get pods --namespace knative-monitoring
 ```
 
-- If pods aren't found, install
-  [Knative monitoring component](../../installing-logging-metrics-traces.md).
+-   If pods aren't found, install
+    [Knative monitoring component](../../installing-logging-metrics-traces.md).
 
 3. Install
    [Docker](https://docs.docker.com/get-started/#prepare-your-docker-environment).
@@ -63,9 +63,9 @@ docker push "${REPO}/docs/serving/samples/telemetry-go"
 5.  Replace the image reference path with our published image path in the
     configuration file (`docs/serving/samples/telemetry-go/sample.yaml`):
 
-    - Manually replace:
-      `image: github.com/knative/docs/docs/serving/samples/telemetry-go` with
-      `image: <YOUR_CONTAINER_REGISTRY>/docs/serving/samples/telemetry-go`
+    -   Manually replace:
+        `image: github.com/knative/docs/docs/serving/samples/telemetry-go` with
+        `image: <YOUR_CONTAINER_REGISTRY>/docs/serving/samples/telemetry-go`
 
 
         Or
@@ -89,19 +89,19 @@ kubectl apply --filename docs/serving/samples/telemetry-go/
 
 Inspect the created resources with the `kubectl` commands:
 
-- View the created Route resource:
+-   View the created Route resource:
 
 ```
 kubectl get route --output yaml
 ```
 
-- View the created Configuration resource:
+-   View the created Configuration resource:
 
 ```
 kubectl get configurations --output yaml
 ```
 
-- View the Revision that was created by the Configuration:
+-   View the Revision that was created by the Configuration:
 
 ```
 kubectl get revisions --output yaml

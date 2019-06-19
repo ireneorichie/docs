@@ -45,12 +45,12 @@ overriding `command:` and `args:` for example:
 
 ```yaml
 steps:
-  - image: ubuntu
-    command: ["/bin/bash"]
-    args: ["-c", "echo hello $FOO"]
-    env:
-      - name: "FOO"
-        value: "world"
+    - image: ubuntu
+      command: ["/bin/bash"]
+      args: ["-c", "echo hello $FOO"]
+      env:
+          - name: "FOO"
+            value: "world"
 ```
 
 ### Specialized builders
@@ -63,13 +63,14 @@ example of this are the
 
 Builders should expect a Build to implement the following conventions:
 
-- `/workspace`: The default working directory will be `/workspace`, which is a
-  volume that is filled by the `source:` step and shared across build `steps:`.
+-   `/workspace`: The default working directory will be `/workspace`, which is a
+    volume that is filled by the `source:` step and shared across build
+    `steps:`.
 
-- `/builder/home`: This volume is exposed to steps via `$HOME`.
+-   `/builder/home`: This volume is exposed to steps via `$HOME`.
 
-- Credentials attached to the Build's service account may be exposed as Git or
-  Docker credentials as outlined [here](./auth.md).
+-   Credentials attached to the Build's service account may be exposed as Git or
+    Docker credentials as outlined [here](./auth.md).
 
 ---
 

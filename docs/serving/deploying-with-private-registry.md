@@ -23,35 +23,35 @@ Registry, but most of these concepts will be similar for other clouds.
 
 1. Install the container registry plugin:
 
-   ```
-   ibmcloud plugin install container-registry
-   ```
+    ```
+    ibmcloud plugin install container-registry
+    ```
 
 1. Choose a name for your first namespace, and then create it:
 
-   ```
-   ibmcloud cr namespace-add <my_namespace>
-   ```
+    ```
+    ibmcloud cr namespace-add <my_namespace>
+    ```
 
-   A namespace represents the spot within a registry that holds your images. You
-   can set up multiple namespaces as well as control access to your namespaces
-   by using IAM policies.
+    A namespace represents the spot within a registry that holds your images.
+    You can set up multiple namespaces as well as control access to your
+    namespaces by using IAM policies.
 
 1. Create a token:
 
-   ```
-   ibmcloud cr token-add --description "token description" --non-expiring --readwrite
-   ```
+    ```
+    ibmcloud cr token-add --description "token description" --non-expiring --readwrite
+    ```
 
-   The automated build processes you'll be setting up will use this token to
-   access your images.
+    The automated build processes you'll be setting up will use this token to
+    access your images.
 
 1. The CLI output should include a token identifier and the token. Make note of
    the token. You can verify that the token was created by listing all tokens:
 
-   ```
-   ibmcloud cr token-list
-   ```
+    ```
+    ibmcloud cr token-list
+    ```
 
 ## Provide container registry credentials to Knative
 
@@ -66,27 +66,27 @@ token, or a key. You can also read more about
 
 1. Create a file named `registry-push-secret.yaml` containing the following:
 
-   ```yaml
-   apiVersion: v1
-   kind: Secret
-   metadata:
-     name: registry-push-secret
-     annotations:
-       build.knative.dev/docker-0: https://registry.ng.bluemix.net
-   type: kubernetes.io/basic-auth
-   stringData:
-     username: token
-     password: <token_value>
-   ```
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+        name: registry-push-secret
+        annotations:
+            build.knative.dev/docker-0: https://registry.ng.bluemix.net
+    type: kubernetes.io/basic-auth
+    stringData:
+        username: token
+        password: <token_value>
+    ```
 
 1. Update the "password" with your <token_value>. Note that username will be the
    string `token`. Save the file.
 
 1. Apply the secret to your cluster.
 
-   ```bash
-   kubectl apply --filename registry-push-secret.yaml
-   ```
+    ```bash
+    kubectl apply --filename registry-push-secret.yaml
+    ```
 
 1. You will also need a secret for the knative-serving component to pull down an
    image from the private container registry. This secret will be a
@@ -94,9 +94,9 @@ token, or a key. You can also read more about
    username, simply use the string `token`. For <token_value>, use the token you
    made note of earlier.
 
-   ```bash
-   kubectl create secret docker-registry ibm-cr-secret --docker-server=https://registry.ng.bluemix.net --docker-username=token --docker-password=<token_value>
-   ```
+    ```bash
+    kubectl create secret docker-registry ibm-cr-secret --docker-server=https://registry.ng.bluemix.net --docker-username=token --docker-password=<token_value>
+    ```
 
 A Service Account provides an identity for processes that run in a Pod. This
 Service Account will be used to link the build process for Knative to the
@@ -104,22 +104,22 @@ Secrets you just created.
 
 1. Create a file named `service-account.yaml` containing the following:
 
-   ```yaml
-   apiVersion: v1
-   kind: ServiceAccount
-   metadata:
-     name: build-bot
-   secrets:
-     - name: registry-push-secret
-   imagePullSecrets:
-     - name: ibm-cr-secret
-   ```
+    ```yaml
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+        name: build-bot
+    secrets:
+        - name: registry-push-secret
+    imagePullSecrets:
+        - name: ibm-cr-secret
+    ```
 
 1. Apply the service account to your cluster:
 
-   ```bash
-   kubectl apply --filename service-account.yaml
-   ```
+    ```bash
+    kubectl apply --filename service-account.yaml
+    ```
 
 ## Deploy to Knative
 
@@ -128,120 +128,120 @@ to the IBM Container Registry, we will use the Kaniko build template.
 
 1. Install the Kaniko build template
 
-   ```bash
-   kubectl apply --filename https://raw.githubusercontent.com/knative/build-templates/master/kaniko/kaniko.yaml
-   ```
+    ```bash
+    kubectl apply --filename https://raw.githubusercontent.com/knative/build-templates/master/kaniko/kaniko.yaml
+    ```
 
 1. You need to create a service manifest which defines the service to deploy,
    including where the source code is and which build-template to use. Create a
    file named `service.yaml` and copy the following definition. Make sure to
    replace {NAMESPACE} with your own namespace you created earlier:
 
-   ```yaml
-   apiVersion: serving.knative.dev/v1alpha1
-   kind: Service
-   metadata:
-     name: helloworld-go
-     namespace: default
-   spec:
-     runLatest:
-       configuration:
-         build:
-           apiVersion: build.knative.dev/v1alpha1
-           kind: Build
-           spec:
-             serviceAccountName: build-bot
-             source:
-               git:
-                 url: https://github.com/knative/docs
-                 revision: master
-               subPath: docs/serving/samples/hello-world/helloworld-go
-             template:
-               name: kaniko
-               arguments:
-                 - name: IMAGE
-                   value: registry.ng.bluemix.net/{NAMESPACE}/helloworld-go:latest
-         revisionTemplate:
-           spec:
-             serviceAccountName: build-bot
-             container:
-               image: registry.ng.bluemix.net/{NAMESPACE}/helloworld-go:latest
-               imagePullPolicy: Always
-               env:
-                 - name: TARGET
-                   value: "Go Sample v1"
-   ```
+    ```yaml
+    apiVersion: serving.knative.dev/v1alpha1
+    kind: Service
+    metadata:
+        name: helloworld-go
+        namespace: default
+    spec:
+        runLatest:
+            configuration:
+                build:
+                    apiVersion: build.knative.dev/v1alpha1
+                    kind: Build
+                    spec:
+                        serviceAccountName: build-bot
+                        source:
+                            git:
+                                url: https://github.com/knative/docs
+                                revision: master
+                            subPath: docs/serving/samples/hello-world/helloworld-go
+                        template:
+                            name: kaniko
+                            arguments:
+                                - name: IMAGE
+                                  value: registry.ng.bluemix.net/{NAMESPACE}/helloworld-go:latest
+                revisionTemplate:
+                    spec:
+                        serviceAccountName: build-bot
+                        container:
+                            image: registry.ng.bluemix.net/{NAMESPACE}/helloworld-go:latest
+                            imagePullPolicy: Always
+                            env:
+                                - name: TARGET
+                                  value: "Go Sample v1"
+    ```
 
 1. Apply the configuration using `kubectl`:
 
-   ```bash
-   kubectl apply --filename service.yaml
-   ```
+    ```bash
+    kubectl apply --filename service.yaml
+    ```
 
-   Applying this service definition will kick off a series of events:
+    Applying this service definition will kick off a series of events:
 
-   - Fetches the revision specified from GitHub and builds it into a container,
-     using the Kaniko build template.
-   - Pushes the latest image to the private registry using the
-     registry-push-secret
-   - Pulls down the latest image from the private registry using the
-     ibm-cr-secret.
-   - Starts the service, and your app will be live.
+    - Fetches the revision specified from GitHub and builds it into a container,
+      using the Kaniko build template.
+    - Pushes the latest image to the private registry using the
+      registry-push-secret
+    - Pulls down the latest image from the private registry using the
+      ibm-cr-secret.
+    - Starts the service, and your app will be live.
 
 1. You can run `kubectl get pods --watch` to see the pods initializing.
 
 1. Once all the pods are initialized, you can see that your container image was
    built and pushed to the IBM Container Registry:
 
-   ```
-   ibmcloud cr image-list
-   ```
+    ```
+    ibmcloud cr image-list
+    ```
 
 ## Test Application Behavior
 
 1. Run the following command to find the external IP address for your service:
 
-   ```shell
-   INGRESSGATEWAY=istio-ingressgateway
-   kubectl get svc $INGRESSGATEWAY --namespace istio-system
-   ```
+    ```shell
+    INGRESSGATEWAY=istio-ingressgateway
+    kubectl get svc $INGRESSGATEWAY --namespace istio-system
+    ```
 
-   Example:
+    Example:
 
-   ```shell
-   NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                                      AGE
-   xxxxxxx-ingressgateway   LoadBalancer   10.23.247.74   35.203.155.229   80:32380/TCP,443:32390/TCP,32400:32400/TCP   2d
-   ```
+    ```shell
+    NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                                      AGE
+    xxxxxxx-ingressgateway   LoadBalancer   10.23.247.74   35.203.155.229   80:32380/TCP,443:32390/TCP,32400:32400/TCP   2d
+    ```
 
 1. Run the following command to find the domain URL for your service:
 
-   ```shell
-   kubectl get ksvc helloworld-go  --output=custom-columns=NAME:.metadata.name,URL:.status.url
-   ```
+    ```shell
+    kubectl get ksvc helloworld-go  --output=custom-columns=NAME:.metadata.name,URL:.status.url
+    ```
 
-   Example:
+    Example:
 
-   ```shell
-   NAME                URL
-   helloworld-go       http://helloworld-go.default.example.com
-   ```
+    ```shell
+    NAME                URL
+    helloworld-go       http://helloworld-go.default.example.com
+    ```
 
 1. Test your app by sending it a request. Use the following `curl` command with
    the domain URL `helloworld-go.default.example.com` and `EXTERNAL-IP` address
    that you retrieved in the previous steps:
 
-   ```shell
-   curl -H "Host: helloworld-go.default.example.com" http://{EXTERNAL_IP_ADDRESS}
-   ```
+    ```shell
+    curl -H "Host: helloworld-go.default.example.com" http://{EXTERNAL_IP_ADDRESS}
+    ```
 
-   Example:
+    Example:
 
-   ```shell
-   curl -H "Host: helloworld-go.default.example.com" http://35.203.155.229
-   Hello Go Sample v1!
-   ```
+    ```shell
+    curl -H "Host: helloworld-go.default.example.com" http://35.203.155.229
+    Hello Go Sample v1!
+    ```
 
-   > Note: Add `-v` option to get more detail if the `curl` command failed.
+    > Note: Add `-v` option to get more detail if the `curl` command failed.
 
 ## Removing the sample app deployment
 

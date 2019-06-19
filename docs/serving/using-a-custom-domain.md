@@ -16,32 +16,32 @@ To change the {default-domain} value there are a few steps involved:
 1. Edit the domain configuration config-map to replace `example.com` with your
    own domain, for example `mydomain.com`:
 
-   ```shell
-   kubectl edit cm config-domain --namespace knative-serving
-   ```
+    ```shell
+    kubectl edit cm config-domain --namespace knative-serving
+    ```
 
-   This command opens your default text editor and allows you to edit the config
-   map.
+    This command opens your default text editor and allows you to edit the
+    config map.
 
-   ```yaml
-   apiVersion: v1
-   data:
-     example.com: ""
-   kind: ConfigMap
-   [...]
-   ```
+    ```yaml
+    apiVersion: v1
+    data:
+      example.com: ""
+    kind: ConfigMap
+    [...]
+    ```
 
 1. Edit the file to replace `example.com` with the domain you'd like to use and
    save your changes. In this example, we configure `mydomain.com` for all
    routes:
 
-   ```yaml
-   apiVersion: v1
-   data:
-     mydomain.com: ""
-   kind: ConfigMap
-   [...]
-   ```
+    ```yaml
+    apiVersion: v1
+    data:
+      mydomain.com: ""
+    kind: ConfigMap
+    [...]
+    ```
 
 ## Apply from a file
 
@@ -51,29 +51,29 @@ You can also apply an updated domain configuration:
    replacing the `example.org` and `example.com` values with the new domain you
    want to use:
 
-   ```yaml
-   apiVersion: v1
-   kind: ConfigMap
-   metadata:
-     name: config-domain
-     namespace: knative-serving
-   data:
-     # These are example settings of domain.
-     # example.org will be used for routes having app=prod.
-     example.org: |
-       selector:
-         app: prod
-     # Default value for domain, for routes that does not have app=prod labels.
-     # Although it will match all routes, it is the least-specific rule so it
-     # will only be used if no other domain matches.
-     example.com: ""
-   ```
+    ```yaml
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+        name: config-domain
+        namespace: knative-serving
+    data:
+        # These are example settings of domain.
+        # example.org will be used for routes having app=prod.
+        example.org: |
+            selector:
+              app: prod
+        # Default value for domain, for routes that does not have app=prod labels.
+        # Although it will match all routes, it is the least-specific rule so it
+        # will only be used if no other domain matches.
+        example.com: ""
+    ```
 
 1. Apply updated domain configuration to your cluster:
 
-   ```shell
-   kubectl apply --filename config-domain.yaml
-   ```
+    ```shell
+    kubectl apply --filename config-domain.yaml
+    ```
 
 ## Deploy an application
 
@@ -153,22 +153,23 @@ so that the gateway IP does not change each time your cluster is restarted.
 To publish your domain, you need to update your DNS provider to point to the IP
 address for your service ingress.
 
-- Create a [wildcard record](https://support.google.com/domains/answer/4633759)
-  for the namespace and custom domain to the ingress IP Address, which would
-  enable hostnames for multiple services in the same namespace to work without
-  creating additional DNS entries.
+-   Create a
+    [wildcard record](https://support.google.com/domains/answer/4633759) for the
+    namespace and custom domain to the ingress IP Address, which would enable
+    hostnames for multiple services in the same namespace to work without
+    creating additional DNS entries.
 
-  ```dns
-  *.default.mydomain.com                   59     IN     A   35.237.28.44
-  ```
+    ```dns
+    *.default.mydomain.com                   59     IN     A   35.237.28.44
+    ```
 
-- Create an A record to point from the fully qualified domain name to the IP
-  address of your Knative gateway. This step needs to be done for each Knative
-  Service or Route created.
+-   Create an A record to point from the fully qualified domain name to the IP
+    address of your Knative gateway. This step needs to be done for each Knative
+    Service or Route created.
 
-  ```dns
-  helloworld-go.default.mydomain.com        59     IN     A   35.237.28.44
-  ```
+    ```dns
+    helloworld-go.default.mydomain.com        59     IN     A   35.237.28.44
+    ```
 
 If you are using Google Cloud DNS, you can find step-by-step instructions in the
 [Cloud DNS quickstart](https://cloud.google.com/dns/quickstart).

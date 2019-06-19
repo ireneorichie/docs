@@ -20,8 +20,8 @@ instructions for installing Istio on your cluster using `gcloud`.
 
 You need:
 
-- A Kubernetes cluster created.
-- [`helm`](https://helm.sh/) installed.
+-   A Kubernetes cluster created.
+-   [`helm`](https://helm.sh/) installed.
 
 ## Installing Istio
 
@@ -39,14 +39,14 @@ cover a few useful Istio configurations and their benefits.
 
 You can install Istio with or without a service mesh:
 
-- _automatic sidecar injection_: Enables the Istio service mesh by
-  [automatically injecting the Istio sidecars][1]. The sidecars are injected
-  into each pod of your cluster as they are created.
+-   _automatic sidecar injection_: Enables the Istio service mesh by
+    [automatically injecting the Istio sidecars][1]. The sidecars are injected
+    into each pod of your cluster as they are created.
 
-- _manual sidecar injection_: Provides your Knative installation with traffic
-  routing and ingress, without the Istio service mesh. You do have the option of
-  later enabling the service mesh if you [manually inject the Istio
-  sidecars][2].
+-   _manual sidecar injection_: Provides your Knative installation with traffic
+    routing and ingress, without the Istio service mesh. You do have the option
+    of later enabling the service mesh if you [manually inject the Istio
+    sidecars][2].
 
 If you are just getting started with Knative, we recommend installing Istio
 without automatic sidecar injection.
@@ -55,40 +55,40 @@ without automatic sidecar injection.
 
 1. Enter the following commands to download Istio:
 
-   ```shell
-   # Download and unpack Istio
-   export ISTIO_VERSION=1.1.7
-   curl -L https://git.io/getLatestIstio | sh -
-   cd istio-${ISTIO_VERSION}
-   ```
+    ```shell
+    # Download and unpack Istio
+    export ISTIO_VERSION=1.1.7
+    curl -L https://git.io/getLatestIstio | sh -
+    cd istio-${ISTIO_VERSION}
+    ```
 
 1. Enter the following command to install the Istio CRDs first:
 
-   ```shell
-   for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
-   ```
+    ```shell
+    for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
+    ```
 
-   Wait a few seconds for the CRDs to be committed in the Kubernetes API-server,
-   then continue with these instructions.
+    Wait a few seconds for the CRDs to be committed in the Kubernetes
+    API-server, then continue with these instructions.
 
 1. Create `istio-system` namespace
 
-   ```shell
-   cat <<EOF | kubectl apply -f -
-   apiVersion: v1
-   kind: Namespace
-   metadata:
-     name: istio-system
-     labels:
-       istio-injection: disabled
-   EOF
-   ```
+    ```shell
+    cat <<EOF | kubectl apply -f -
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: istio-system
+      labels:
+        istio-injection: disabled
+    EOF
+    ```
 
 1. Finish the install by applying your desired Istio configuration:
-   - [Installing Istio without sidecar injection](#installing-istio-without-sidecar-injection)(Recommended
-     default installation)
-   - [Installing Istio with sidecar injection](#installing-istio-with-sidecar-injection)
-   - [Installing Istio with SDS to secure the ingress gateway](#installing-istio-with-SDS-to-secure-the-ingress-gateway)
+    - [Installing Istio without sidecar injection](#installing-istio-without-sidecar-injection)(Recommended
+      default installation)
+    - [Installing Istio with sidecar injection](#installing-istio-with-sidecar-injection)
+    - [Installing Istio with SDS to secure the ingress gateway](#installing-istio-with-SDS-to-secure-the-ingress-gateway)
 
 #### Installing Istio without sidecar injection
 
@@ -136,11 +136,11 @@ kubectl apply -f istio-lean.yaml
 If you want to enable the Istio service mesh, you must enable [automatic sidecar
 injection][1]. The Istio service mesh provides a few benefits:
 
-- Allows you to turn on [mutual TLS][4], which secures service-to-service
-  traffic within the cluster.
+-   Allows you to turn on [mutual TLS][4], which secures service-to-service
+    traffic within the cluster.
 
-- Allows you to use the [Istio authorization policy][5], controlling the access
-  to each Knative service based on Istio service roles.
+-   Allows you to use the [Istio authorization policy][5], controlling the
+    access to each Knative service based on Istio service roles.
 
 Enter the following command to install Istio:
 
@@ -176,10 +176,10 @@ kubectl apply -f istio.yaml
 Install Istio with [Secret Discovery Service (SDS)][3] to enable a few
 additional configurations for the gateway TLS. This will allow you to:
 
-- Dynamically update the gateway TLS with multiple TLS certificates to terminate
-  TLS connections.
+-   Dynamically update the gateway TLS with multiple TLS certificates to
+    terminate TLS connections.
 
-- Use [Auto TLS](../serving/using-auto-tls.md).
+-   Use [Auto TLS](../serving/using-auto-tls.md).
 
 The below `helm` flag is needed in your `helm` command to enable `SDS`:
 
@@ -262,12 +262,12 @@ kubectl get pods --namespace istio-system
 
 ## Istio resources
 
-- For the official Istio installation guide, see the
-  [Istio Kubernetes Getting Started Guide](https://istio.io/docs/setup/kubernetes/).
+-   For the official Istio installation guide, see the
+    [Istio Kubernetes Getting Started Guide](https://istio.io/docs/setup/kubernetes/).
 
-- For the full list of available configs when installing Istio with `helm`, see
-  the
-  [Istio Installation Options reference](https://istio.io/docs/reference/config/installation-options/).
+-   For the full list of available configs when installing Istio with `helm`,
+    see the
+    [Istio Installation Options reference](https://istio.io/docs/reference/config/installation-options/).
 
 ## Clean up Istio
 
@@ -280,15 +280,15 @@ rm -rf istio-${ISTIO_VERSION}
 
 ## What's next
 
-- [Install Knative](./README.md).
-- Try the
-  [Getting Started with App Deployment guide](./getting-started-knative-app/)
-  for Knative serving.
+-   [Install Knative](./README.md).
+-   Try the
+    [Getting Started with App Deployment guide](./getting-started-knative-app/)
+    for Knative serving.
 
 [1]:
-  https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#automatic-sidecar-injection
+    https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#automatic-sidecar-injection
 [2]:
-  https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#manual-sidecar-injection
+    https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#manual-sidecar-injection
 [3]: https://istio.io/docs/tasks/traffic-management/secure-ingress/sds/
 [4]: https://istio.io/docs/tasks/security/mutual-tls/
 [5]: https://istio.io/docs/tasks/security/authz-http/

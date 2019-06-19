@@ -49,18 +49,18 @@ in IBM Cloud Private to allow the access to the Knative image:
 
 1. Edit the image security policy:
 
-   ```
-   kubectl edit clusterimagepolicies ibmcloud-default-cluster-image-policy
-   ```
+    ```
+    kubectl edit clusterimagepolicies ibmcloud-default-cluster-image-policy
+    ```
 
 2. Update `spec.repositories` by adding the following entries, for example:
-   ```yaml
-   spec:
-     repositories:
-       - name: gcr.io/knative-releases/*
-       - name: k8s.gcr.io/*
-       - name: quay.io/*
-   ```
+    ```yaml
+    spec:
+        repositories:
+            - name: gcr.io/knative-releases/*
+            - name: k8s.gcr.io/*
+            - name: quay.io/*
+    ```
 
 #### Update pod security policy
 
@@ -71,24 +71,24 @@ Configure the namespaces `knative-serving` into pod security policy
    for this role must be the name of the pod security policy that was created
    previous. Here we use `ibm-privileged-psp`. Run the following command:
 
-   ```shell
-   cat <<EOF | kubectl apply --filename -
-   apiVersion: rbac.authorization.k8s.io/v1
-   kind: ClusterRole
-   metadata:
-     name: knative-role
-   rules:
-   -
-     apiGroups:
-       - extensions
-     resourceNames:
-       - ibm-privileged-psp
-     resources:
-       - podsecuritypolicies
-     verbs:
-       - use
-   EOF
-   ```
+    ```shell
+    cat <<EOF | kubectl apply --filename -
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRole
+    metadata:
+      name: knative-role
+    rules:
+    -
+      apiGroups:
+        - extensions
+      resourceNames:
+        - ibm-privileged-psp
+      resources:
+        - podsecuritypolicies
+      verbs:
+        - use
+    EOF
+    ```
 
 2. In the Knative installation steps below, you have the option of installing a
    Knative installation bundle or individual components. For each component that
@@ -96,26 +96,26 @@ Configure the namespaces `knative-serving` into pod security policy
    account of the Knative namespace and the `ibm-privileged-psp` pod security
    policy that you created.
 
-   For example to create a role binding for the `knative-serving` namespace, run
-   the following command:
+    For example to create a role binding for the `knative-serving` namespace,
+    run the following command:
 
-   ```shell
-   cat <<EOF | kubectl apply --filename -
-   apiVersion: rbac.authorization.k8s.io/v1
-   kind: ClusterRoleBinding
-   metadata:
-     name: knative-serving-psp-users
-   roleRef:
-     apiGroup: rbac.authorization.k8s.io
-     kind: ClusterRole
-     name: knative-role
-   subjects:
-   -
-     apiGroup: rbac.authorization.k8s.io
-     kind: Group
-     name: "system:serviceaccounts:knative-serving"
-   EOF
-   ```
+    ```shell
+    cat <<EOF | kubectl apply --filename -
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: knative-serving-psp-users
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: knative-role
+    subjects:
+    -
+      apiGroup: rbac.authorization.k8s.io
+      kind: Group
+      name: "system:serviceaccounts:knative-serving"
+    EOF
+    ```
 
 **Important**: If you choose to install the Knative Build or observability
 plugin, you must also create cluster role bindings for the service accounts in
@@ -142,98 +142,98 @@ see [Performing a Custom Knative Installation](./Knative-custom-install.md).
    of `knative-ingressgateway`. Then run the following to clean up leftover
    resources:
 
-   ```
-   kubectl delete svc knative-ingressgateway -n istio-system
-   kubectl delete deploy knative-ingressgateway -n istio-system
-   ```
+    ```
+    kubectl delete svc knative-ingressgateway -n istio-system
+    kubectl delete deploy knative-ingressgateway -n istio-system
+    ```
 
-   If you have the Knative Eventing Sources component installed, you will also
-   need to delete the following resource before upgrading:
+    If you have the Knative Eventing Sources component installed, you will also
+    need to delete the following resource before upgrading:
 
-   ```
-   kubectl delete statefulset/controller-manager -n knative-sources
-   ```
+    ```
+    kubectl delete statefulset/controller-manager -n knative-sources
+    ```
 
-   While the deletion of this resource during the upgrade process will not
-   prevent modifications to Eventing Source resources, those changes will not be
-   completed until the upgrade process finishes.
+    While the deletion of this resource during the upgrade process will not
+    prevent modifications to Eventing Source resources, those changes will not
+    be completed until the upgrade process finishes.
 
 1. Run the following commands to install Knative:
 
-   ```shell
-   curl -L https://github.com/knative/serving/releases/download/v0.6.0/serving.yaml \
-     | sed 's/LoadBalancer/NodePort/' \
-     | kubectl apply --selector networking.knative.dev/certificate-provider!=cert-manager --filename -
-   ```
+    ```shell
+    curl -L https://github.com/knative/serving/releases/download/v0.6.0/serving.yaml \
+      | sed 's/LoadBalancer/NodePort/' \
+      | kubectl apply --selector networking.knative.dev/certificate-provider!=cert-manager --filename -
+    ```
 
-   **Notes**:
+    **Notes**:
 
-   > - By default, the Knative Serving component installation (`serving.yaml`)
-   >   includes a controller for
-   >   [enabling automatic TLS certificate provisioning](../serving/using-auto-tls.md).
-   >   If you do intend on immediately enabling auto certificates in Knative,
-   >   you can remove the
-   >   `--selector networking.knative.dev/certificate-provider!=cert-manager`
-   >   statement to install the controller.
+    > - By default, the Knative Serving component installation (`serving.yaml`)
+    >   includes a controller for
+    >   [enabling automatic TLS certificate provisioning](../serving/using-auto-tls.md).
+    >   If you do intend on immediately enabling auto certificates in Knative,
+    >   you can remove the
+    >   `--selector networking.knative.dev/certificate-provider!=cert-manager`
+    >   statement to install the controller.
 
-   ```shell
-   curl -L https://github.com/knative/build/releases/download/v0.6.0/build.yaml \
-     | sed 's/LoadBalancer/NodePort/' \
-     | kubectl apply --filename -
-   ```
+    ```shell
+    curl -L https://github.com/knative/build/releases/download/v0.6.0/build.yaml \
+      | sed 's/LoadBalancer/NodePort/' \
+      | kubectl apply --filename -
+    ```
 
-   ```shell
-   curl -L https://github.com/knative/eventing/releases/download/v0.6.0/release.yaml \
-     | sed 's/LoadBalancer/NodePort/' \
-     | kubectl apply --filename -
-   ```
+    ```shell
+    curl -L https://github.com/knative/eventing/releases/download/v0.6.0/release.yaml \
+      | sed 's/LoadBalancer/NodePort/' \
+      | kubectl apply --filename -
+    ```
 
-   ```shell
-   curl -L https://github.com/knative/eventing-contrib/releases/download/v0.6.0/eventing-sources.yaml \
-     | sed 's/LoadBalancer/NodePort/' \
-     | kubectl apply --filename -
-   ```
+    ```shell
+    curl -L https://github.com/knative/eventing-contrib/releases/download/v0.6.0/eventing-sources.yaml \
+      | sed 's/LoadBalancer/NodePort/' \
+      | kubectl apply --filename -
+    ```
 
-   ```shell
-   curl -L https://github.com/knative/serving/releases/download/v0.6.0/monitoring.yaml \
-     | sed 's/LoadBalancer/NodePort/' \
-     | kubectl apply --filename -
-   ```
+    ```shell
+    curl -L https://github.com/knative/serving/releases/download/v0.6.0/monitoring.yaml \
+      | sed 's/LoadBalancer/NodePort/' \
+      | kubectl apply --filename -
+    ```
 
-   ```shell
-   curl -L https://raw.githubusercontent.com/knative/serving/v0.6.0/third_party/config/build/clusterrole.yaml \
-     | sed 's/LoadBalancer/NodePort/' \
-     | kubectl apply --filename -
-   ```
+    ```shell
+    curl -L https://raw.githubusercontent.com/knative/serving/v0.6.0/third_party/config/build/clusterrole.yaml \
+      | sed 's/LoadBalancer/NodePort/' \
+      | kubectl apply --filename -
+    ```
 
-   > **Note**: If your install fails on the first attempt, try rerunning the
-   > commands. They will likely succeed on the second attempt. For background
-   > info and to track the upcoming solution to this problem, see issues
-   > [#968](https://github.com/knative/docs/issues/968) and
-   > [#1036](https://github.com/knative/docs/issues/1036).
+    > **Note**: If your install fails on the first attempt, try rerunning the
+    > commands. They will likely succeed on the second attempt. For background
+    > info and to track the upcoming solution to this problem, see issues
+    > [#968](https://github.com/knative/docs/issues/968) and
+    > [#1036](https://github.com/knative/docs/issues/1036).
 
-   > **Note**: For the v0.4.0 release and newer, the `clusterrole.yaml` file is
-   > required to enable the Build and Serving components to interact with each
-   > other.
+    > **Note**: For the v0.4.0 release and newer, the `clusterrole.yaml` file is
+    > required to enable the Build and Serving components to interact with each
+    > other.
 
-   See
-   [Installing logging, metrics, and traces](../serving/installing-logging-metrics-traces.md)
-   for details about installing the various supported observability plug-ins.
+    See
+    [Installing logging, metrics, and traces](../serving/installing-logging-metrics-traces.md)
+    for details about installing the various supported observability plug-ins.
 
 1. Monitor the Knative components until all of the components show a `STATUS` of
    `Running`:
 
-   ```bash
-   kubectl get pods --namespace knative-serving
-   kubectl get pods --namespace knative-build
-   kubectl get pods --namespace knative-eventing
-   kubectl get pods --namespace knative-sources
-   kubectl get pods --namespace knative-monitoring
-   ```
+    ```bash
+    kubectl get pods --namespace knative-serving
+    kubectl get pods --namespace knative-build
+    kubectl get pods --namespace knative-eventing
+    kubectl get pods --namespace knative-sources
+    kubectl get pods --namespace knative-monitoring
+    ```
 
-   > Note: Instead of rerunning the command, you can add `--watch` to the above
-   > command to view the component's status updates in real time. Use CTRL+C to
-   > exit watch mode.
+    > Note: Instead of rerunning the command, you can add `--watch` to the above
+    > command to view the component's status updates in real time. Use CTRL+C to
+    > exit watch mode.
 
 Now you can deploy an app to your newly created Knative cluster.
 

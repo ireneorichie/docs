@@ -89,9 +89,9 @@ export IOTCORE_TOPIC_DEVICE="iot-demo-device-pubsub-topic"
 
 1. Install the default `Broker`.
 
-   ```shell
-   kubectl label namespace default knative-eventing-injection=enabled
-   ```
+    ```shell
+    kubectl label namespace default knative-eventing-injection=enabled
+    ```
 
 #### GCP PubSub Source
 
@@ -115,8 +115,8 @@ for all events coming out of it.
     kubectl apply --filename docs/eventing/samples/iot-core/trigger.yaml
     ```
 
-    - This uses a very simple Knative Service to see that events are flowing.
-      Feel free to replace it.
+    -   This uses a very simple Knative Service to see that events are flowing.
+        Feel free to replace it.
 
 #### IoT Core
 

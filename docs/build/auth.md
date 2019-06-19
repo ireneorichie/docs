@@ -11,8 +11,8 @@ build.
 The build system supports two types of authentication, using Kubernetes'
 first-class `Secret` types:
 
-- `kubernetes.io/basic-auth`
-- `kubernetes.io/ssh-auth`
+-   `kubernetes.io/basic-auth`
+-   `kubernetes.io/ssh-auth`
 
 Secrets of these types can be made available to the `Build` by attaching them to
 the `ServiceAccount` as which it runs.
@@ -37,14 +37,14 @@ into their respective files in `$HOME`.
     apiVersion: v1
     kind: Secret
     metadata:
-      name: ssh-key
-      annotations:
-        build.knative.dev/git-0: https://github.com # Described below
+        name: ssh-key
+        annotations:
+            build.knative.dev/git-0: https://github.com # Described below
     type: kubernetes.io/ssh-auth
     data:
-      ssh-privatekey: <base64 encoded>
-      # This is non-standard, but its use is encouraged to make this more secure.
-      known_hosts: <base64 encoded>
+        ssh-privatekey: <base64 encoded>
+        # This is non-standard, but its use is encouraged to make this more secure.
+        known_hosts: <base64 encoded>
     ```
 
     `build.knative.dev/git-0` in the example above specifies which web address
@@ -64,9 +64,9 @@ into their respective files in `$HOME`.
     apiVersion: v1
     kind: ServiceAccount
     metadata:
-      name: build-bot
+        name: build-bot
     secrets:
-      - name: ssh-key
+        - name: ssh-key
     ```
 
 1.  Then use that `ServiceAccount` in your `Build`:
@@ -101,13 +101,13 @@ to authenticate with the Git service.
     apiVersion: v1
     kind: Secret
     metadata:
-      name: basic-user-pass
-      annotations:
-        build.knative.dev/git-0: https://github.com # Described below
+        name: basic-user-pass
+        annotations:
+            build.knative.dev/git-0: https://github.com # Described below
     type: kubernetes.io/basic-auth
     stringData:
-      username: <username>
-      password: <password>
+        username: <username>
+        password: <password>
     ```
 
     `build.knative.dev/git-0` in the example above specifies which web address
@@ -121,9 +121,9 @@ to authenticate with the Git service.
     apiVersion: v1
     kind: ServiceAccount
     metadata:
-      name: build-bot
+        name: build-bot
     secrets:
-      - name: basic-user-pass
+        - name: basic-user-pass
     ```
 
 1.  Use that `ServiceAccount` in your `Build`:
@@ -158,13 +158,13 @@ credentials are then used to authenticate with the Git repository.
     apiVersion: v1
     kind: Secret
     metadata:
-      name: basic-user-pass
-      annotations:
-        build.knative.dev/docker-0: https://gcr.io # Described below
+        name: basic-user-pass
+        annotations:
+            build.knative.dev/docker-0: https://gcr.io # Described below
     type: kubernetes.io/basic-auth
     stringData:
-      username: <username>
-      password: <password>
+        username: <username>
+        password: <password>
     ```
 
     `build.knative.dev/docker-0` in the example above specifies which web
@@ -178,9 +178,9 @@ credentials are then used to authenticate with the Git repository.
     apiVersion: v1
     kind: ServiceAccount
     metadata:
-      name: build-bot
+        name: build-bot
     secrets:
-      - name: basic-user-pass
+        - name: basic-user-pass
     ```
 
 1.  Use that `ServiceAccount` in your `Build`:
@@ -215,41 +215,41 @@ those secrets in addition to the one described above.
 1. Define a `Secret` from a Docker client configuration file, as documented in
    [Pull an Image from a Private Registry](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
 
-   ```bash
-   kubectl create secret generic regcred \
-    --from-file=.dockerconfigjson=<path/to/.docker/config.json> \
-    --type=kubernetes.io/dockerconfigjson
-   ```
+    ```bash
+    kubectl create secret generic regcred \
+     --from-file=.dockerconfigjson=<path/to/.docker/config.json> \
+     --type=kubernetes.io/dockerconfigjson
+    ```
 
 1. Direct a `ServiceAccount` to use this `Secret`:
 
-   ```yaml
-   apiVersion: v1
-   kind: ServiceAccount
-   metadata:
-     name: build-bot
-   secrets:
-     - name: regcred
-   ```
+    ```yaml
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+        name: build-bot
+    secrets:
+        - name: regcred
+    ```
 
 1. Use that `ServiceAccount` in your `Build`:
 
-   ```yaml
-   apiVersion: build.knative.dev/v1alpha1
-   kind: Build
-   metadata:
-     name: build-with-basic-auth
-   spec:
-     serviceAccountName: build-bot
-     steps:
-     ...
-   ```
+    ```yaml
+    apiVersion: build.knative.dev/v1alpha1
+    kind: Build
+    metadata:
+      name: build-with-basic-auth
+    spec:
+      serviceAccountName: build-bot
+      steps:
+      ...
+    ```
 
 1. Execute the build:
 
-   ```shell
-   kubectl apply --filename secret.yaml --filename serviceaccount.yaml --filename build.yaml
-   ```
+    ```shell
+    kubectl apply --filename secret.yaml --filename serviceaccount.yaml --filename build.yaml
+    ```
 
 When this build executes, before steps execute, a `~/.docker/config.json` will
 be generated containing the credentials configured in the `Secret`, and these
@@ -271,14 +271,14 @@ to use to authenticate to different resources, for example:
 apiVersion: v1
 kind: Secret
 metadata:
-  annotations:
-    build.knative.dev/git-0: https://github.com
-    build.knative.dev/git-1: https://gitlab.com
-    build.knative.dev/docker-0: https://gcr.io
+    annotations:
+        build.knative.dev/git-0: https://github.com
+        build.knative.dev/git-1: https://gitlab.com
+        build.knative.dev/docker-0: https://gcr.io
 type: kubernetes.io/basic-auth
 stringData:
-  username: <cleartext non-encoded>
-  password: <cleartext non-encoded>
+    username: <cleartext non-encoded>
+    password: <cleartext non-encoded>
 ```
 
 This describes a "Basic Auth" (username and password) secret that should be used
@@ -291,14 +291,14 @@ Similarly, for SSH:
 apiVersion: v1
 kind: Secret
 metadata:
-  annotations:
-    build.knative.dev/git-0: github.com
+    annotations:
+        build.knative.dev/git-0: github.com
 type: kubernetes.io/ssh-auth
 data:
-  ssh-privatekey: <base64 encoded>
-  # This is non-standard, but its use is encouraged to make this more secure.
-  # Omitting this results in the use of ssh-keyscan (see below).
-  known_hosts: <base64 encoded>
+    ssh-privatekey: <base64 encoded>
+    # This is non-standard, but its use is encouraged to make this more secure.
+    # Omitting this results in the use of ssh-keyscan (see below).
+    known_hosts: <base64 encoded>
 ```
 
 This describes an SSH key secret that should be used to access Git repos at
