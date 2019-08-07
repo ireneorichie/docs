@@ -118,7 +118,7 @@ the recommended configuration for a cluster is:
 1. Create a Kubernetes cluster on GKE with the required specifications:
 
 > Note: If this setup is for development, or a non-Istio networking layer (e.g.
-> [Ambassador](./Knative-with-Ambassador.md) or [Gloo](./Knative-with-Gloo.md)) 
+> [Ambassador](./Knative-with-Ambassador.md) or [Gloo](./Knative-with-Gloo.md))
 > will be used, then you can remove the `--addons` line below.
 
 > Note: If you want to use [Auto TLS feature](../serving/using-auto-tls.md), you
@@ -160,9 +160,9 @@ see [Performing a Custom Knative Installation](./Knative-custom-install.md).
 
    ```bash
    kubectl apply --selector knative.dev/crd-install=true \
-   --filename https://github.com/knative/serving/releases/download/v0.7.0/serving.yaml \
-   --filename https://github.com/knative/eventing/releases/download/v0.7.0/release.yaml \
-   --filename https://github.com/knative/serving/releases/download/v0.7.0/monitoring.yaml
+   --filename https://github.com/knative/serving/releases/download/{{< version >}}/serving.yaml \
+   --filename https://github.com/knative/eventing/releases/download/{{< version >}}/eventing.yaml \
+   --filename https://github.com/knative/serving/releases/download/{{< version >}}/monitoring.yaml
    ```
 
 1. To complete the install of Knative and its dependencies, run the
@@ -170,9 +170,9 @@ see [Performing a Custom Knative Installation](./Knative-custom-install.md).
    complete the install of Knative and its dependencies:
 
    ```bash
-   kubectl apply --filename https://github.com/knative/serving/releases/download/v0.7.0/serving.yaml --selector networking.knative.dev/certificate-provider!=cert-manager \
-   --filename https://github.com/knative/eventing/releases/download/v0.7.0/release.yaml \
-   --filename https://github.com/knative/serving/releases/download/v0.7.0/monitoring.yaml
+   kubectl apply --filename https://github.com/knative/serving/releases/download/{{< version >}}/serving.yaml --selector networking.knative.dev/certificate-provider!=cert-manager \
+   --filename https://github.com/knative/eventing/releases/download/{{< version >}}/eventing.yaml \
+   --filename https://github.com/knative/serving/releases/download/{{< version >}}/monitoring.yaml
    ```
 
    > **Notes**:
