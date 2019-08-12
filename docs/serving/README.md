@@ -1,3 +1,4 @@
+<!-- This file is rendered in knative.dev using the "readfile" shortcode. See the _index.md file in this directory. -->
 Knative Serving builds on Kubernetes and Istio to support deploying and serving
 of serverless applications and functions. Serving is easy to get started with
 and scales to support advanced scenarios.
