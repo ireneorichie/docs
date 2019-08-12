@@ -1,3 +1,6 @@
+{{/* This file is rendered in knative.dev using the "readfile" shortcode in the _index.md file (located in this directory).
+     To ensure that the content renders correctly, insert a blank line at the top of this file. */}}
+
 Knative Eventing is a system that is designed to address a common need for cloud
 native development and provides composable primitives to enable late-binding
 event sources and event consumers.
