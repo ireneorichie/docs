@@ -2,7 +2,7 @@
 title: "Broker and Trigger"
 weight: 20
 type: "docs"
-website: https://www.knative.dev/javascript
+website: https://www.knative.dev/view-this-page
 ---
 
 Broker and Trigger are CRDs providing an event delivery mechanism that hides the
