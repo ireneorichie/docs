@@ -2,6 +2,7 @@
 
 {{< version >}}
 
+
 Welcome to the source file repository for our documentation on
 https://knative.dev.
 
