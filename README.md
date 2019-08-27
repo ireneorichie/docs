@@ -1,6 +1,6 @@
 # Knative documentation {{< version >}}
 
-{{< version >}}
+{{< version >}} {{< branch >}}
 
 Welcome to the source file repository for our documentation on
 https://knative.dev.
