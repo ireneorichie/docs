@@ -1,9 +1,9 @@
 ---
-title: "Welcome to Knative"
+title: "Welcome to Knative {{< version >}}"
 linkTitle: "Documentation"
 weight: 10
 type: "docs"
 ---
-## Version {{< version >}}
+## {{< version >}}
 
 {{% readfile file="README.md" relative="true" markdown="true" %}}
