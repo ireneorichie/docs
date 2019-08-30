@@ -1,4 +1,4 @@
-{{< version >}}
+<h1>{{< version >}}</h1>
 
 Knative (pronounced kay-nay-tiv) extends
 [Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
