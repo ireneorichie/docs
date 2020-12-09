@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: serving.knative.dev/v1alpha1
+apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: search-service
@@ -31,9 +31,8 @@ spec:
           httpGet:
             path: /
           initialDelaySeconds: 3
-          periodSeconds: 3
 ---
-apiVersion: serving.knative.dev/v1alpha1
+apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: login-service
@@ -52,4 +51,3 @@ spec:
           httpGet:
             path: /
           initialDelaySeconds: 3
-          periodSeconds: 3

@@ -1,10 +1,13 @@
-FROM golang:1.11
+# Use the official Alpine image for a lean production container.
+# https://hub.docker.com/_/alpine
+FROM alpine:3
 
-WORKDIR /go/src/invoke
+# Update & install netcat (nc)
+RUN apk update \
+ && apk add netcat-openbsd
 
-COPY invoke.go .
-RUN go install -v
+# Copy over the service script
+COPY script.sh /
 
-COPY . .
-
-CMD ["invoke"]
+# Start up the webserver
+CMD [ "/bin/sh", "/script.sh" ]

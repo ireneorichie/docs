@@ -1,10 +1,3 @@
----
-title: "Hello World - Java (Quarkus)"
-linkTitle: "Java (Quarkus)"
-weight: 1
-type: "docs"
----
-
 A simple [JAX-RS REST API](https://github.com/jax-rs) application that is
 written in Java and uses [Quarkus](https://quarkus.io/).
 
@@ -89,7 +82,7 @@ which you update and create the necessary build and configuration files:
    ```
 
 1. Update `src/main/resources/application.properties` to configuration the
-   application to default to port 8080, but allow the port to be overriden by
+   application to default to port 8080, but allow the port to be overridden by
    the `PORT` environmental variable:
 
    ```
@@ -188,7 +181,7 @@ which you update and create the necessary build and configuration files:
    username.
 
    ```yaml
-   apiVersion: serving.knative.dev/v1alpha1
+   apiVersion: serving.knative.dev/v1
    kind: Service
    metadata:
      name: helloworld-java-quarkus
@@ -249,48 +242,20 @@ folder) you're ready to build and deploy the sample app.
      for your app.
    - Automatically scale your pods up and down (including to zero active pods).
 
-1. To find the IP address for your service, use. If your cluster is new, it may
-   take sometime for the service to get assigned an external IP address.
-
-   ```shell
-   # In Knative 0.2.x and prior versions, the `knative-ingressgateway` service was used instead of `istio-ingressgateway`.
-   INGRESSGATEWAY=knative-ingressgateway
-
-   # The use of `knative-ingressgateway` is deprecated in Knative v0.3.x.
-   # Use `istio-ingressgateway` instead, since `knative-ingressgateway`
-   # will be removed in Knative v0.4.
-   if kubectl get configmap config-istio -n knative-serving &> /dev/null; then
-       INGRESSGATEWAY=istio-ingressgateway
-   fi
-
-   kubectl get svc $INGRESSGATEWAY --namespace istio-system
-
-   NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                                      AGE
-   xxxxxxx-ingressgateway   LoadBalancer   10.23.247.74   35.203.155.229   80:32380/TCP,443:32390/TCP,32400:32400/TCP   2d
-
-   # Now you can assign the external IP address to the env variable.
-   export IP_ADDRESS=<EXTERNAL-IP column from the command above>
-
-   # Or just execute:
-   export IP_ADDRESS=$(kubectl get svc $INGRESSGATEWAY \
-     --namespace istio-system \
-     --output jsonpath="{.status.loadBalancer.ingress[*].ip}")
-   ```
-
 1. To find the URL for your service, use
 
    ```shell
    kubectl get ksvc helloworld-java-quarkus
 
    NAME                     URL
-   helloworld-java-quarkus  http://helloworld-java-quarkus.default.example.com
+   helloworld-java-quarkus  http://helloworld-java-quarkus.default.1.2.3.4.xip.io
    ```
 
-1. Now you can make a request to your app to see the result. Presuming, the IP
-   address you got in the step above is in the `${IP_ADDRESS}` env variable:
+1. Now you can make a request to your app and see the result. Replace
+   the URL below with the URL returned in the previous command.
 
    ```shell
-   curl -H "Host: helloworld-java-quarkus.default.example.com" http://${IP_ADDRESS}
+   curl http://helloworld-java-quarkus.default.1.2.3.4.xip.io
 
    Namaste Knative World!
    ```

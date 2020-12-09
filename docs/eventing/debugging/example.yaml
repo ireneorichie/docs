@@ -11,47 +11,45 @@ metadata:
 
 # The event source.
 
-apiVersion: sources.eventing.knative.dev/v1alpha1
-kind: KubernetesEventSource
+apiVersion: sources.knative.dev/v1alpha1
+kind: ApiServerSource
 metadata:
   name: src
   namespace: knative-debug
 spec:
-  namespace: knative-debug
   serviceAccountName: service-account
+  mode: Resource
+  resources:
+    - apiVersion: v1
+      kind: Event
   sink:
-    apiVersion: eventing.knative.dev/v1alpha1
-    kind: Channel
-    name: chan
+    ref:
+      apiVersion: messaging.knative.dev/v1
+      kind: InMemoryChannel
+      name: chan
 
 ---
 
 # The Channel events are sent to.
 
-apiVersion: eventing.knative.dev/v1alpha1
-kind: Channel
+apiVersion: messaging.knative.dev/v1
+kind: InMemoryChannel
 metadata:
   name: chan
   namespace: knative-debug
-spec:
-  provisioner:
-    apiVersion: eventing.knative.dev/v1alpha1
-    kind: ClusterChannelProvisioner
-    name: in-memory-channel
-
 ---
 
-# The Subscription to the Channel.
+# The Subscription to the InMemoryChannel.
 
-apiVersion: eventing.knative.dev/v1alpha1
+apiVersion: messaging.knative.dev/v1
 kind: Subscription
 metadata:
   name: sub
   namespace: knative-debug
 spec:
   channel:
-    apiVersion: eventing.knative.dev/v1alpha1
-    kind: Channel
+    apiVersion: messaging.knative.dev/v1
+    kind: InMemoryChannel
     name: chan
   subscriber:
     ref:
@@ -92,8 +90,6 @@ spec:
       app: fn
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
       labels:
         app: fn
     spec:
@@ -101,7 +97,7 @@ spec:
         - name: user-container
           # This corresponds to
           # https://github.com/knative/eventing-contrib/blob/v0.2.1/cmd/message_dumper/dumper.go.
-          image: gcr.io/knative-releases/github.com/knative/eventing-sources/cmd/message_dumper@sha256:ab5391755f11a5821e7263686564b3c3cd5348522f5b31509963afb269ddcd63
+          image: gcr.io/knative-releases/knative.dev/eventing-sources/cmd/message_dumper
           ports:
             - containerPort: 8080
 
