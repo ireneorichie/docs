@@ -33,13 +33,13 @@ spec:
       # in order to redirect requests to Search service.
       authority: search-service.default.example.com
     route:
-      # knative-ingressgateway is the k8s service created by Knative as the
-      # shared gateway of all traffic incoming to the cluster.
       # Basically here we redirect the request to the cluster entry again with
       # updated header "search-service.default.example.com" so the request will
       # eventually be directed to Search service.
       - destination:
           host: istio-ingressgateway.istio-system.svc.cluster.local
+          port:
+            number: 80
         weight: 100
   - match:
     - uri:
@@ -54,4 +54,6 @@ spec:
       # eventually be directed to LOgin service.
       - destination:
           host: istio-ingressgateway.istio-system.svc.cluster.local
+          port:
+            number: 80
         weight: 100

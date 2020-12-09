@@ -1,6 +1,6 @@
 ---
 title: "Event registry"
-weight: 20
+weight: 25
 type: "docs"
 ---
 
@@ -8,12 +8,12 @@ type: "docs"
 
 The Event Registry maintains a catalog of the event types that can be consumed
 from the different Brokers. It introduces a new
-[EventType](../reference/eventing/eventing.md) CRD in order to persist the event
+[EventType](../reference/eventing/) CRD in order to persist the event
 type's information in the cluster's data store.
 
 ## Before you begin
 
-1. Read about the [Broker and Trigger objects](./broker-trigger.md).
+1. Read about the [Broker](./broker/) and [Trigger](./triggers/) objects.
 1. Be familiar with the
    [CloudEvents spec](https://github.com/cloudevents/spec/blob/master/spec.md),
    particularly the
@@ -47,7 +47,7 @@ google.pubsub.topic.publish-hrxhh            google.pubsub.topic.publish        
 ```
 
 We can see that there are seven different EventTypes in the registry of the
-`default` namespace. Let's pick the first one and see how the EventType yaml
+`default` namespace. Let's pick the first one and see what the EventType yaml
 looks like:
 
 `kubectl get eventtype dev.knative.source.github.push-34cnb -o yaml`
@@ -55,7 +55,7 @@ looks like:
 Omitting irrelevant fields:
 
 ```yaml
-apiVersion: eventing.knative.dev/v1alpha1
+apiVersion: eventing.knative.dev/v1
 kind: EventType
 metadata:
   name: dev.knative.source.github.push-34cnb
@@ -120,7 +120,7 @@ Here are a few example Triggers that subscribe to events using exact matching on
 1. Subscribes to GitHub _pushes_ from any source.
 
    ```yaml
-   apiVersion: eventing.knative.dev/v1alpha1
+   apiVersion: eventing.knative.dev/v1
    kind: Trigger
    metadata:
      name: push-trigger
@@ -128,11 +128,11 @@ Here are a few example Triggers that subscribe to events using exact matching on
    spec:
      broker: default
      filter:
-       sourceAndType:
+       attributes:
          type: dev.knative.source.github.push
      subscriber:
        ref:
-         apiVersion: serving.knative.dev/v1alpha1
+         apiVersion: serving.knative.dev/v1
          kind: Service
          name: push-service
    ```
@@ -145,7 +145,7 @@ Here are a few example Triggers that subscribe to events using exact matching on
 1. Subscribes to GitHub _pull requests_ from _knative's eventing_ repository.
 
    ```yaml
-   apiVersion: eventing.knative.dev/v1alpha1
+   apiVersion: eventing.knative.dev/v1
    kind: Trigger
    metadata:
      name: gh-knative-eventing-pull-trigger
@@ -153,12 +153,12 @@ Here are a few example Triggers that subscribe to events using exact matching on
    spec:
      broker: default
      filter:
-       sourceAndType:
+       attributes:
          type: dev.knative.source.github.pull_request
          source: https://github.com/knative/eventing
      subscriber:
        ref:
-         apiVersion: serving.knative.dev/v1alpha1
+         apiVersion: serving.knative.dev/v1
          kind: Service
          name: gh-knative-eventing-pull-service
    ```
@@ -166,7 +166,7 @@ Here are a few example Triggers that subscribe to events using exact matching on
 1. Subscribes to Kafka messages sent to the _knative-demo_ topic
 
    ```yaml
-   apiVersion: eventing.knative.dev/v1alpha1
+   apiVersion: eventing.knative.dev/v1
    kind: Trigger
    metadata:
      name: kafka-knative-demo-trigger
@@ -174,12 +174,12 @@ Here are a few example Triggers that subscribe to events using exact matching on
    spec:
      broker: default
      filter:
-       sourceAndType:
+       attributes:
          type: dev.knative.kafka.event
          source: /apis/v1/namespaces/default/kafkasources/kafka-sample#knative-demo
      subscriber:
        ref:
-         apiVersion: serving.knative.dev/v1alpha1
+         apiVersion: serving.knative.dev/v1
          kind: Service
          name: kafka-knative-demo-service
    ```
@@ -188,7 +188,7 @@ Here are a few example Triggers that subscribe to events using exact matching on
    _testing_ topic
 
    ```yaml
-   apiVersion: eventing.knative.dev/v1alpha1
+   apiVersion: eventing.knative.dev/v1
    kind: Trigger
    metadata:
      name: gcp-pubsub-knative-testing-trigger
@@ -196,11 +196,11 @@ Here are a few example Triggers that subscribe to events using exact matching on
    spec:
      broker: dev
      filter:
-       sourceAndType:
+       attributes:
          source: //pubsub.googleapis.com/knative/topics/testing
      subscriber:
        ref:
-         apiVersion: serving.knative.dev/v1alpha1
+         apiVersion: serving.knative.dev/v1
          kind: Service
          name: gcp-pubsub-knative-testing-service
    ```
@@ -241,24 +241,26 @@ the next topic: How do we actually populate the registry in the first place?
   like.
 
   ```yaml
-  apiVersion: sources.eventing.knative.dev/v1alpha1
+  apiVersion: sources.knative.dev/v1beta1
   kind: KafkaSource
   metadata:
     name: kafka-sample
     namespace: default
   spec:
-    consumerGroup: knative-group
-    bootstrapServers: my-cluster-kafka-bootstrap.kafka:9092
-    topics: knative-demo,news
+    bootstrapServers:
+     - my-cluster-kafka-bootstrap.kafka:9092
+    topics:
+     - knative-demo
+      - news
     sink:
-      apiVersion: eventing.knative.dev/v1alpha1
+      apiVersion: eventing.knative.dev/v1
       kind: Broker
       name: default
   ```
 
   If you are interested in more information regarding configuration options of a
   KafkaSource, please refer to the
-  [KafKaSource example](https://github.com/knative/eventing-contrib/tree/master/kafka/source/samples).
+  [KafKaSource sample](./samples/kafka/).
 
   For this discussion, the relevant information from the yaml above are the
   `sink` and the `topics`. We observe that the `sink` is of kind `Broker`. We
@@ -276,7 +278,7 @@ the next topic: How do we actually populate the registry in the first place?
 To get started, install Knative Eventing if you haven't yet, and try
 experimenting with different Event Sources in your Knative cluster.
 
-1. [Installing Knative](./install/README.md) in case you haven't already done
+1. [Installing Knative](../install/README.md) in case you haven't already done
    so.
 1. [Getting started with eventing](./README.md) in case you haven't read it.
 1. [Knative code samples](./samples/) is a useful resource to better understand

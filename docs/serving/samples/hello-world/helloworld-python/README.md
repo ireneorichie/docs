@@ -1,10 +1,3 @@
----
-title: "Hello World - Python"
-linkTitle: "Python"
-weight: 1
-type: "docs"
----
-
 A simple web app written in Python that you can use for testing. It reads in an
 env variable `TARGET` and prints "Hello \${TARGET}!". If TARGET is not
 specified, it will use "World" as the TARGET.
@@ -20,7 +13,7 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-python
 
 ## Before you begin
 
-- A Kubernetes cluster with Knative installed. Follow the
+- A Kubernetes cluster with Knative installed and DNS configured. Follow the
   [installation instructions](../../../../install/README.md) if you need to
   create one.
 - [Docker](https://www.docker.com) installed and running on your local machine,
@@ -58,14 +51,17 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-python
    details.
 
    ```docker
-   # Use the official Python image.
+   # Use the official lightweight Python image.
    # https://hub.docker.com/_/python
-   FROM python:3.7
+   FROM python:3.7-slim
+
+   # Allow statements and log messages to immediately appear in the Knative logs
+   ENV PYTHONUNBUFFERED True
 
    # Copy local code to the container image.
    ENV APP_HOME /app
    WORKDIR $APP_HOME
-   COPY . .
+   COPY . ./
 
    # Install production dependencies.
    RUN pip install Flask gunicorn
@@ -74,7 +70,7 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-python
    # webserver, with one worker process and 8 threads.
    # For environments with multiple CPU cores, increase the number of workers
    # to be equal to the cores available.
-   CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 app:app
+   CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 app:app
    ```
 
 1. Create a `.dockerignore` file to ensure that any files related to a local
@@ -94,7 +90,7 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-python
    username.
 
    ```yaml
-   apiVersion: serving.knative.dev/v1alpha1
+   apiVersion: serving.knative.dev/v1
    kind: Service
    metadata:
      name: helloworld-python
@@ -142,40 +138,19 @@ folder) you're ready to build and deploy the sample app.
      for your app.
    - Automatically scale your pods up and down (including to zero active pods).
 
-1. To find the IP address for your service, use these commands to get the
-   ingress IP for your cluster. If your cluster is new, it may take sometime for
-   the service to get asssigned an external IP address.
-
-   ```shell
-   # In Knative 0.2.x and prior versions, the `knative-ingressgateway` service was used instead of `istio-ingressgateway`.
-   INGRESSGATEWAY=knative-ingressgateway
-
-   # The use of `knative-ingressgateway` is deprecated in Knative v0.3.x.
-   # Use `istio-ingressgateway` instead, since `knative-ingressgateway`
-   # will be removed in Knative v0.4.
-   if kubectl get configmap config-istio -n knative-serving &> /dev/null; then
-      INGRESSGATEWAY=istio-ingressgateway
-   fi
-
-   kubectl get svc $INGRESSGATEWAY --namespace istio-system
-
-   NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                                      AGE
-   xxxxxxx-ingressgateway   LoadBalancer   10.23.247.74   35.203.155.229   80:32380/TCP,443:32390/TCP,32400:32400/TCP   2d
-   ```
-
 1. To find the URL for your service, use
 
    ```
    kubectl get ksvc helloworld-python  --output=custom-columns=NAME:.metadata.name,URL:.status.url
    NAME                URL
-   helloworld-python   http://helloworld-python.default.example.com
+   helloworld-python   http://helloworld-python.default.1.2.3.4.xip.io
    ```
 
-1. Now you can make a request to your app to see the result. Replace
-   `{IP_ADDRESS}` with the address you see returned in the previous step.
+1. Now you can make a request to your app and see the result. Replace
+   the URL below with the URL returned in the previous command.
 
    ```shell
-   curl -H "Host: helloworld-python.default.example.com" http://{IP_ADDRESS}
+   curl http://helloworld-python.default.1.2.3.4.xip.io
    Hello Python Sample v1!
    ```
 

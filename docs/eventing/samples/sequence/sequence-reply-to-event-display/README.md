@@ -1,15 +1,11 @@
----
-title: "Sequence wired to event-display"
-linkTitle: "Displaying sequence output"
-weight: 20
-type: "docs"
----
-
 We are going to create the following logical configuration. We create a
-CronJobSource, feeding events to a [`Sequence`](../../../sequence.md), then
+PingSource, feeding events to a [`Sequence`](../../../flows/sequence.md), then
 taking the output of that `Sequence` and displaying the resulting output.
 
 ![Logical Configuration](./sequence-reply-to-event-display.png)
+
+The functions used in these examples live in
+[https://github.com/knative/eventing-contrib/blob/master/cmd/appender/main.go](https://github.com/knative/eventing-contrib/blob/master/cmd/appender/main.go).
 
 ## Prerequisites
 
@@ -29,7 +25,7 @@ Change `default` below to create the steps in the Namespace where you want
 resources created.
 
 ```yaml
-apiVersion: serving.knative.dev/v1alpha1
+apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: first
@@ -37,13 +33,13 @@ spec:
   template:
     spec:
       containers:
-        - image: us.gcr.io/probable-summer-223122/cmd-03315b715ae8f3e08e3a9378df706fbb@sha256:2656f39a7fcb6afd9fc79e7a4e215d14d651dc674f38020d1d18c6f04b220700
+        - image: gcr.io/knative-releases/knative.dev/eventing-contrib/cmd/appender
           env:
-            - name: STEP
-              value: "0"
+            - name: MESSAGE
+              value: " - Handled by 0"
 
 ---
-apiVersion: serving.knative.dev/v1alpha1
+apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: second
@@ -51,12 +47,12 @@ spec:
   template:
     spec:
       containers:
-        - image: us.gcr.io/probable-summer-223122/cmd-03315b715ae8f3e08e3a9378df706fbb@sha256:2656f39a7fcb6afd9fc79e7a4e215d14d651dc674f38020d1d18c6f04b220700
+        - image: gcr.io/knative-releases/knative.dev/eventing-contrib/cmd/appender
           env:
-            - name: STEP
-              value: "1"
+            - name: MESSAGE
+              value: " - Handled by 1"
 ---
-apiVersion: serving.knative.dev/v1alpha1
+apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: third
@@ -64,10 +60,10 @@ spec:
   template:
     spec:
       containers:
-        - image: us.gcr.io/probable-summer-223122/cmd-03315b715ae8f3e08e3a9378df706fbb@sha256:2656f39a7fcb6afd9fc79e7a4e215d14d651dc674f38020d1d18c6f04b220700
+        - image: gcr.io/knative-releases/knative.dev/eventing-contrib/cmd/appender
           env:
-            - name: STEP
-              value: "2"
+            - name: MESSAGE
+              value: " - Handled by 2"
 ---
 
 ```
@@ -83,31 +79,32 @@ If you are using a different type of Channel, you need to change the
 spec.channelTemplate to point to your desired Channel.
 
 ```yaml
-apiVersion: messaging.knative.dev/v1alpha1
+apiVersion: flows.knative.dev/v1
 kind: Sequence
 metadata:
   name: sequence
 spec:
   channelTemplate:
-    apiVersion: messaging.knative.dev/v1alpha1
+    apiVersion: messaging.knative.dev/v1
     kind: InMemoryChannel
   steps:
     - ref:
-        apiVersion: serving.knative.dev/v1alpha1
+        apiVersion: serving.knative.dev/v1
         kind: Service
         name: first
     - ref:
-        apiVersion: serving.knative.dev/v1alpha1
+        apiVersion: serving.knative.dev/v1
         kind: Service
         name: second
     - ref:
-        apiVersion: serving.knative.dev/v1alpha1
+        apiVersion: serving.knative.dev/v1
         kind: Service
         name: third
   reply:
-    kind: Service
-    apiVersion: serving.knative.dev/v1alpha1
-    name: event-display
+    ref:
+      kind: Service
+      apiVersion: serving.knative.dev/v1
+      name: event-display
 ```
 
 Change `default` below to create the `Sequence` in the Namespace where you want
@@ -120,7 +117,7 @@ kubectl -n default create -f ./sequence.yaml
 ### Create the Service displaying the events created by Sequence
 
 ```yaml
-apiVersion: serving.knative.dev/v1alpha1
+apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: event-display
@@ -128,7 +125,7 @@ spec:
   template:
     spec:
       containers:
-        - image: gcr.io/knative-releases/github.com/knative/eventing-sources/cmd/event_display
+        - image: gcr.io/knative-releases/knative.dev/eventing-contrib/cmd/event_display
 ```
 
 Change `default` below to create the `Sequence` in the Namespace where you want
@@ -138,27 +135,29 @@ your resources to be created.
 kubectl -n default create -f ./event-display.yaml
 ```
 
-### Create the CronJobSource targeting the Sequence
+### Create the PingSource targeting the Sequence
 
-This will create a CronJobSource which will send a CloudEvent with {"message":
+This will create a PingSource which will send a CloudEvent with {"message":
 "Hello world!"} as the data payload every 2 minutes.
 
 ```yaml
-apiVersion: sources.eventing.knative.dev/v1alpha1
-kind: CronJobSource
+apiVersion: sources.knative.dev/v1beta2
+kind: PingSource
 metadata:
-  name: cronjob-source
+  name: ping-source
 spec:
   schedule: "*/2 * * * *"
+  contentType: "application/json"
   data: '{"message": "Hello world!"}'
   sink:
-    apiVersion: messaging.knative.dev/v1alpha1
-    kind: Sequence
-    name: sequence
+    ref:
+      apiVersion: flows.knative.dev/v1
+      kind: Sequence
+      name: sequence
 ```
 
 ```shell
-kubectl -n default create -f ./cron-source.yaml
+kubectl -n default create -f ./ping-source.yaml
 ```
 
 ### Inspecting the results
@@ -170,19 +169,22 @@ pods.
 kubectl -n default get pods
 ```
 
-Then look at the logs for the event-display pod:
+Wait a bit and then look at the logs for the event-display pod:
 
 ```shell
-kubectl -n default logs -l serving.knative.dev/service=event-display -c user-container
+kubectl -n default logs -l serving.knative.dev/service=event-display -c user-container --tail=-1
 ☁️  cloudevents.Event
 Validation: valid
 Context Attributes,
-  cloudEventsVersion: 0.1
-  eventType: samples.http.mod3
-  source: /transformer/2
-  eventID: df52b47e-02fd-45b2-8180-dabb572573f5
-  eventTime: 2019-06-18T14:18:42.478140635Z
-  contentType: application/json
+  specversion: 1.0
+  type: samples.http.mode3
+  source: /apis/v1/namespaces/default/pingsources/ping-source
+  id: e8fa7906-ab62-4e61-9c13-a9406e2130a9
+  time: 2020-03-02T20:52:00.0004957Z
+  datacontenttype: application/json
+Extensions,
+  knativehistory: sequence-kn-sequence-0-kn-channel.default.svc.cluster.local; sequence-kn-sequence-1-kn-channel.default.svc.cluster.local; sequence-kn-sequence-2-kn-channel.default.svc.cluster.local
+  traceparent: 00-6e2947379387f35ddc933b9190af16ad-de3db0bc4e442394-00
 Data,
   {
     "id": 0,
@@ -190,5 +192,5 @@ Data,
   }
 ```
 
-And you can see that the initial Cron Source message ("Hello World!") has been
+And you can see that the initial PingSource message `("Hello World!")` has been
 appended to it by each of the steps in the Sequence.

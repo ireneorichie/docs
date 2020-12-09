@@ -1,10 +1,3 @@
----
-title: "Hello World - Kotlin"
-linkTitle: "Kotlin"
-weight: 1
-type: "docs"
----
-
 A simple web app written in Kotlin using [Ktor](https://ktor.io/) that you can
 use for testing. It reads in an env variable `TARGET` and prints "Hello
 \${TARGET}". If TARGET is not specified, it will use "World" as the TARGET.
@@ -20,7 +13,7 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-kotlin
 
 ## Before you begin
 
-- A Kubernetes cluster with Knative installed. Follow the
+- A Kubernetes cluster with Knative installed and DNS configured. Follow the
   [installation instructions](../../../../install/README.md) if you need to
   create one.
 - [Docker](https://www.docker.com) installed and running on your local machine,
@@ -58,7 +51,7 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-kotlin
       embeddedServer(Netty, port.toInt()) {
           routing {
               get("/") {
-                  call.respondText("Hello $target!", ContentType.Text.Html)
+                  call.respondText("Hello $target!\n", ContentType.Text.Html)
               }
           }
       }.start(wait = true)
@@ -70,35 +63,10 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-kotlin
 4. Create a new file, `build.gradle` and copy the following setting
 
    ```groovy
-   buildscript {
-       ext.kotlin_version = '1.2.61'
-       ext.ktor_version = '0.9.4'
-
-       repositories {
-           mavenCentral()
-       }
-       dependencies {
-           classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-       }
+   plugins {
+       id "org.jetbrains.kotlin.jvm" version "1.4.10"
    }
-
-   apply plugin: 'java'
-   apply plugin: 'kotlin'
    apply plugin: 'application'
-
-   sourceCompatibility = 1.8
-   compileKotlin {
-       kotlinOptions.jvmTarget = "1.8"
-   }
-
-   compileTestKotlin {
-       kotlinOptions.jvmTarget = "1.8"
-   }
-
-   repositories {
-       jcenter()
-       maven { url "https://dl.bintray.com/kotlin/ktor" }
-   }
 
    mainClassName = 'com.example.hello.MainKt'
 
@@ -106,13 +74,15 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-kotlin
        manifest {
            attributes 'Main-Class': mainClassName
        }
-      from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+       from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+   }
+
+   repositories {
+       mavenCentral()
    }
 
    dependencies {
-       compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-       compile "io.ktor:ktor-server-netty:$ktor_version"
-       testCompile group: 'junit', name: 'junit', version: '4.12'
+       compile "io.ktor:ktor-server-netty:1.3.1"
    }
    ```
 
@@ -121,7 +91,7 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-kotlin
    ```docker
    # Use the official gradle image to create a build artifact.
    # https://hub.docker.com/_/gradle
-   FROM gradle:4.10 as builder
+   FROM gradle:6.7 as builder
 
    # Copy local code to the container image.
    COPY build.gradle .
@@ -130,11 +100,10 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-kotlin
    # Build a release artifact.
    RUN gradle clean build --no-daemon
 
-   # Use AdoptOpenJDK for base image.
-   # It's important to use OpenJDK 8u191 or above that has container support enabled.
-   # https://hub.docker.com/r/adoptopenjdk/openjdk8
+   # Use the Official OpenJDK image for a lean production stage of our multi-stage build.
+   # https://hub.docker.com/_/openjdk
    # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
-   FROM adoptopenjdk/openjdk8:jdk8u202-b08-alpine-slim
+   FROM openjdk:8-jre-alpine
 
    # Copy the jar to the production image from the builder stage.
    COPY --from=builder /home/gradle/build/libs/gradle.jar /helloworld.jar
@@ -148,7 +117,7 @@ cd knative-docs/docs/serving/samples/hello-world/helloworld-kotlin
    username.
 
    ```yaml
-   apiVersion: serving.knative.dev/v1alpha1
+   apiVersion: serving.knative.dev/v1
    kind: Service
    metadata:
      name: helloworld-kotlin
@@ -196,43 +165,20 @@ folder) you're ready to build and deploy the sample app.
      for your app.
    - Automatically scale your pods up and down (including to zero active pods).
 
-1. To find the IP address for your service, use
-   `kubectl get service knative-ingressgateway --namespace istio-system` to get
-   the ingress IP for your cluster. If your cluster is new, it may take sometime
-   for the service to get assigned an external IP address.
-
-   ```shell
-   kubectl get service knative-ingressgateway --namespace istio-system
-
-   NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                                      AGE
-   knative-ingressgateway   LoadBalancer   10.23.247.74   35.203.155.229   80:32380/TCP,443:32390/TCP,32400:32400/TCP   2d
-
-   # Now you can assign the external IP address to the env variable.
-   export IP_ADDRESS=<EXTERNAL-IP column from the command above>
-
-   # Or just execute:
-   export IP_ADDRESS=$(kubectl get svc $INGRESSGATEWAY \
-     --namespace istio-system \
-     --output jsonpath="{.status.loadBalancer.ingress[*].ip}")
-   ```
-
 1. To find the URL for your service, use
 
    ```shell
    kubectl get ksvc helloworld-kotlin  --output=custom-columns=NAME:.metadata.name,URL:.status.url
 
    NAME                URL
-   helloworld-kotlin   http://helloworld-kotlin.default.example.com
+   helloworld-kotlin   http://helloworld-kotlin.default.1.2.3.4.xip.io
    ```
 
-1. Now you can make a request to your app to see the result. Presuming, the IP
-   address you got in the step above is in the `${IP_ADDRESS}` env variable:
+1. Now you can make a request to your app and see the result. Replace
+   the URL below with the URL returned in the previous command.
 
    ```shell
-   curl -H "Host: helloworld-kotlin.default.example.com" http://${IP_ADDRESS}
-   ```
-
-   ```terminal
+   curl http://helloworld-kotlin.default.1.2.3.4.xip.io
    Hello Kotlin Sample v1!
    ```
 
